@@ -99,9 +99,12 @@
     border-color: var(--aqua);
   }
   .cursor.grow {
-    width: 64px;
-    height: 64px;
-    background: rgba(62, 197, 230, 0.12);
+    /* Ring, not a filled bubble — a transparent interior doesn't participate in
+       the difference blend, so it no longer erases the (also difference-blended)
+       nav links it passes over. */
+    width: 58px;
+    height: 58px;
+    background: transparent;
   }
   @media (hover: none) {
     .cursor {
@@ -213,7 +216,8 @@
     position: relative;
     z-index: 3;
     width: 100%;
-    padding-bottom: 7vh;
+    /* Lifts the headline block up off the bottom edge — less dead space above. */
+    padding-bottom: clamp(80px, 14vh, 160px);
     pointer-events: none;
   }
   .hero-eyebrow {

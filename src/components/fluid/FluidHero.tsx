@@ -15,6 +15,7 @@ const FLUID_CONFIG: FluidOptions = {
   simResolution: 128, // velocity field — cheap to raise
   dyeResolution: 512, // dye/colour field — the main GPU cost
   pressureIterations: 18, // fluid "stiffness"; fewer = softer + faster
+  curl: 24, // vorticity / swirl — 0 = calm ink, ~30 = lively water, too high = chaotic
   velocityDissipation: 0.99,
   densityDissipation: 0.985,
   splatRadiusVelocity: 0.00015,
@@ -44,7 +45,14 @@ export function FluidHero() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const handle = createFluidSim(canvas, { ...FLUID_CONFIG, onFps: setFps });
+    const handle = createFluidSim(canvas, {
+      ...FLUID_CONFIG,
+      onFps: setFps,
+      // Don't stir the water while the pointer is over the nav (or any opted-out
+      // UI) — keeps the difference-blended nav from shifting behind the dye.
+      shouldSuppressInject: (e) =>
+        !!(e.target as Element | null)?.closest?.("header, [data-no-fluid]"),
+    });
     if (!handle.supported) {
       setFallback(true);
       return;
