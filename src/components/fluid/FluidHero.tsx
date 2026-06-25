@@ -15,7 +15,6 @@ const FLUID_CONFIG: FluidOptions = {
   simResolution: 128, // velocity field — cheap to raise
   dyeResolution: 512, // dye/colour field — the main GPU cost
   pressureIterations: 18, // fluid "stiffness"; fewer = softer + faster
-  curl: 24, // vorticity / swirl — 0 = calm ink, ~30 = lively water, too high = chaotic
   velocityDissipation: 0.99,
   densityDissipation: 0.985,
   splatRadiusVelocity: 0.00015,

@@ -49,7 +49,17 @@ export function RisingNarrative() {
   return (
     <section className={`narrative ${reduced ? "narrative--static" : ""}`.trim()} id="story" ref={rootRef}>
       <div className="narr-stick">
-        <div className="narr-water" aria-hidden="true" />
+        <div className="narr-water" aria-hidden="true">
+          <span className="narr-surface">
+            <svg className="narr-wave narr-wave--back" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M0,60 C150,100 350,0 600,60 C850,120 1050,20 1200,60 L1200,120 L0,120 Z" />
+            </svg>
+            <svg className="narr-wave narr-wave--front" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M0,72 C200,40 400,112 600,72 C800,32 1000,104 1200,72 L1200,120 L0,120 Z" />
+            </svg>
+          </span>
+          <span className="narr-caustics" />
+        </div>
         <div className="narr-panels">
           {narrative.map((panel, i) => (
             <div className="narr-panel" key={i} data-panel={i}>

@@ -26,7 +26,6 @@ export type FluidOptions = {
   splatRadiusVelocity?: number;
   splatRadiusDye?: number;
   maxDPR?: number;
-  curl?: number;
   dyeColor?: [number, number, number];
   ambientColor?: [number, number, number];
   /** Return true to skip dye/velocity injection for this pointer event (e.g. over UI). */
@@ -48,10 +47,7 @@ const ADV = `precision highp float;varying vec2 v;uniform sampler2D uVel;uniform
 const DIV = `precision mediump float;varying vec2 v;varying vec2 vL;varying vec2 vR;varying vec2 vT;varying vec2 vB;uniform sampler2D uVel;void main(){float l=texture2D(uVel,vL).x;float r=texture2D(uVel,vR).x;float t=texture2D(uVel,vT).y;float b=texture2D(uVel,vB).y;float div=.5*(r-l+t-b);gl_FragColor=vec4(div,0.,0.,1.);}`;
 const PRES = `precision mediump float;varying vec2 v;varying vec2 vL;varying vec2 vR;varying vec2 vT;varying vec2 vB;uniform sampler2D uPres;uniform sampler2D uDiv;void main(){float l=texture2D(uPres,vL).x;float r=texture2D(uPres,vR).x;float t=texture2D(uPres,vT).x;float b=texture2D(uPres,vB).x;float d=texture2D(uDiv,v).x;gl_FragColor=vec4((l+r+b+t-d)*.25,0.,0.,1.);}`;
 const GRAD = `precision mediump float;varying vec2 v;varying vec2 vL;varying vec2 vR;varying vec2 vT;varying vec2 vB;uniform sampler2D uPres;uniform sampler2D uVel;void main(){float l=texture2D(uPres,vL).x;float r=texture2D(uPres,vR).x;float t=texture2D(uPres,vT).x;float b=texture2D(uPres,vB).x;vec2 vel=texture2D(uVel,v).xy;vel-=vec2(r-l,t-b);gl_FragColor=vec4(vel,0.,1.);}`;
-const CURL = `precision mediump float;varying vec2 v;varying vec2 vL;varying vec2 vR;varying vec2 vT;varying vec2 vB;uniform sampler2D uVel;void main(){float L=texture2D(uVel,vL).y;float R=texture2D(uVel,vR).y;float T=texture2D(uVel,vT).x;float B=texture2D(uVel,vB).x;float vort=R-L-T+B;gl_FragColor=vec4(.5*vort,0.,0.,1.);}`;
-const VORT = `precision highp float;varying vec2 v;varying vec2 vL;varying vec2 vR;varying vec2 vT;varying vec2 vB;uniform sampler2D uVel;uniform sampler2D uCurl;uniform float curl;uniform float dt;void main(){float L=texture2D(uCurl,vL).x;float R=texture2D(uCurl,vR).x;float T=texture2D(uCurl,vT).x;float B=texture2D(uCurl,vB).x;float C=texture2D(uCurl,v).x;vec2 force=.5*vec2(abs(T)-abs(B),abs(R)-abs(L));force/=length(force)+.0001;force*=curl*C;force.y*=-1.;vec2 vel=texture2D(uVel,v).xy;vel+=force*dt;vel=clamp(vel,-1000.,1000.);gl_FragColor=vec4(vel,0.,1.);}`;
-// Display: foam-lift the dense cores toward white so it reads as aerated water.
-const DISP = `precision highp float;varying vec2 v;uniform sampler2D uDye;void main(){vec3 c=texture2D(uDye,v).rgb;float a=max(c.r,max(c.g,c.b));vec3 foam=mix(c,vec3(.85,.96,1.),smoothstep(.55,1.,a)*.6);gl_FragColor=vec4(foam,a);}`;
+const DISP = `precision highp float;varying vec2 v;uniform sampler2D uDye;void main(){vec3 c=texture2D(uDye,v).rgb;float a=max(c.r,max(c.g,c.b));gl_FragColor=vec4(c,a);}`;
 
 type FBO = { t: WebGLTexture; f: WebGLFramebuffer; w: number; h: number };
 
@@ -81,7 +77,6 @@ export function createFluidSim(canvas: HTMLCanvasElement, opts: FluidOptions = {
     splatRadiusVelocity: opts.splatRadiusVelocity ?? 0.00015,
     splatRadiusDye: opts.splatRadiusDye ?? 0.0002,
     maxDPR: opts.maxDPR ?? 2,
-    curl: opts.curl ?? 24,
     dyeColor: opts.dyeColor ?? ([0.24, 0.77, 0.9] as [number, number, number]),
     ambientColor: opts.ambientColor ?? ([0.05, 0.32, 0.42] as [number, number, number]),
     shouldSuppressInject: opts.shouldSuppressInject,
@@ -124,8 +119,6 @@ export function createFluidSim(canvas: HTMLCanvasElement, opts: FluidOptions = {
   const P = {
     splat: program(VERT, SPLAT),
     adv: program(VERT, ADV),
-    curl: program(VERT, CURL),
-    vort: program(VERT, VORT),
     div: program(VERT, DIV),
     pres: program(VERT, PRES),
     grad: program(VERT, GRAD),
@@ -180,7 +173,6 @@ export function createFluidSim(canvas: HTMLCanvasElement, opts: FluidOptions = {
   const vel = dbl(SIM, SIM);
   const dye = dbl(DYE, DYE);
   const divFbo = fbo(SIM, SIM);
-  const curlFbo = fbo(SIM, SIM);
   const pres = dbl(SIM, SIM);
 
   const draw = (target: FBO | null) => {
@@ -227,30 +219,6 @@ export function createFluidSim(canvas: HTMLCanvasElement, opts: FluidOptions = {
     gl.bindTexture(gl.TEXTURE_2D, vel.r.t);
     gl.uniform1f(u(P.adv, "dt"), dt);
     gl.uniform1f(u(P.adv, "diss"), o.velocityDissipation);
-    draw(vel.w);
-    vel.swap();
-
-    // vorticity confinement (curl) — adds swirl so the flow reads as water
-    gl.viewport(0, 0, SIM, SIM);
-    gl.useProgram(P.curl);
-    bindQuad(P.curl);
-    setTexel(P.curl, SIM, SIM);
-    gl.uniform1i(u(P.curl, "uVel"), 0);
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, vel.r.t);
-    draw(curlFbo);
-
-    gl.useProgram(P.vort);
-    bindQuad(P.vort);
-    setTexel(P.vort, SIM, SIM);
-    gl.uniform1i(u(P.vort, "uVel"), 0);
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, vel.r.t);
-    gl.uniform1i(u(P.vort, "uCurl"), 1);
-    gl.activeTexture(gl.TEXTURE1);
-    gl.bindTexture(gl.TEXTURE_2D, curlFbo.t);
-    gl.uniform1f(u(P.vort, "curl"), o.curl);
-    gl.uniform1f(u(P.vort, "dt"), dt);
     draw(vel.w);
     vel.swap();
 

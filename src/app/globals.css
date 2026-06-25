@@ -99,12 +99,10 @@
     border-color: var(--aqua);
   }
   .cursor.grow {
-    /* Ring, not a filled bubble — a transparent interior doesn't participate in
-       the difference blend, so it no longer erases the (also difference-blended)
-       nav links it passes over. */
-    width: 58px;
-    height: 58px;
-    background: transparent;
+    /* Original "water bubble" — a soft aqua-tinted disc that swells on hover. */
+    width: 64px;
+    height: 64px;
+    background: rgba(62, 197, 230, 0.12);
   }
   @media (hover: none) {
     .cursor {
@@ -451,20 +449,80 @@
     right: 0;
     bottom: 0;
     height: 0%;
-    background: linear-gradient(180deg, rgba(62, 197, 230, 0.18), rgba(10, 110, 150, 0.5));
+    background: linear-gradient(
+      180deg,
+      rgba(62, 197, 230, 0.3) 0%,
+      rgba(10, 110, 150, 0.52) 38%,
+      rgba(6, 64, 90, 0.62) 100%
+    );
     z-index: 1;
     transition: none;
   }
+  /* soft foam glow at the waterline, under the animated surface */
   .narr-water::before {
     content: "";
     position: absolute;
-    top: -3px;
+    top: -1px;
     left: 0;
     right: 0;
-    height: 3px;
-    background: var(--aqua);
-    opacity: 0.7;
-    box-shadow: 0 0 24px var(--aqua);
+    height: 10px;
+    background: linear-gradient(180deg, rgba(220, 245, 255, 0.55), transparent);
+    filter: blur(1px);
+    opacity: 0.8;
+  }
+  /* undulating water surface — two offset wave layers cresting above the line */
+  .narr-surface {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    transform: translateY(-86%);
+    pointer-events: none;
+  }
+  .narr-wave {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 200%;
+    height: 100%;
+    display: block;
+  }
+  .narr-wave--back {
+    fill: rgba(62, 197, 230, 0.22);
+    animation: narrWave 13s linear infinite;
+  }
+  .narr-wave--front {
+    fill: rgba(130, 214, 238, 0.42);
+    animation: narrWave 8s linear infinite;
+  }
+  @keyframes narrWave {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  /* caustic light shimmer drifting through the body */
+  .narr-caustics {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    background:
+      radial-gradient(60% 42% at 28% 18%, rgba(190, 238, 255, 0.12), transparent 70%),
+      radial-gradient(48% 36% at 72% 38%, rgba(190, 238, 255, 0.1), transparent 72%),
+      radial-gradient(40% 30% at 50% 72%, rgba(190, 238, 255, 0.08), transparent 72%);
+    animation: narrCaustic 10s ease-in-out infinite alternate;
+  }
+  @keyframes narrCaustic {
+    from {
+      transform: translate(0, 0) scale(1);
+    }
+    to {
+      transform: translate(2.5%, 1.5%) scale(1.04);
+    }
   }
   .narr-panels {
     position: relative;
@@ -1033,6 +1091,10 @@
     animation: none !important;
   }
   .rev-quote {
+    animation: none !important;
+  }
+  .narr-wave,
+  .narr-caustics {
     animation: none !important;
   }
   .cursor {
