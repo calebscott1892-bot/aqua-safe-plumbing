@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aqua Safe Plumbing — Perth | Water, handled properly</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500&f[]=hanken-grotesk@400,500,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --abyss:#04141d;
+    --abyss-2:#082430;
+    --foam:#f3f9fb;
+    --aqua:#3ec5e6;
+    --depth:#0a6e96;
+    --brass:#c9a24b;
+    --muted:#7da3b3;
+    --line:rgba(243,249,251,.12);
+    --maxw:1280px;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--abyss);color:var(--foam)}
+  body{font-family:'Hanken Grotesk',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,h4{font-family:'Clash Display','Hanken Grotesk',sans-serif;font-weight:600;line-height:1.02;letter-spacing:-.02em}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+  ::selection{background:var(--aqua);color:var(--abyss)}
+
+  /* cursor */
+  .cursor{position:fixed;top:0;left:0;width:34px;height:34px;border:1.5px solid var(--aqua);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s var(--ease),height .25s var(--ease),background .25s,border-color .25s;mix-blend-mode:difference}
+  .cursor.dot{width:6px;height:6px;background:var(--aqua);border-color:var(--aqua)}
+  .cursor.grow{width:64px;height:64px;background:rgba(62,197,230,.12)}
+  @media(hover:none){.cursor{display:none}}
+
+  /* nav */
+  header{position:fixed;top:0;left:0;right:0;z-index:100;mix-blend-mode:difference}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:88px}
+  .brand{font-family:'Clash Display';font-weight:700;font-size:21px;letter-spacing:-.03em;display:flex;align-items:center;gap:10px}
+  .brand svg{width:26px;height:26px}
+  nav{display:flex;gap:34px;align-items:center}
+  nav a{font-size:14.5px;font-weight:500;letter-spacing:.01em;position:relative;opacity:.85}
+  nav a::after{content:"";position:absolute;left:0;bottom:-5px;height:1px;width:0;background:currentColor;transition:width .3s var(--ease)}
+  nav a:hover::after{width:100%}
+  .nav-call{font-family:'Clash Display';font-weight:600;font-size:15px}
+  @media(max-width:860px){nav .navlink{display:none}}
+
+  /* HERO */
+  .hero{position:relative;height:100svh;min-height:680px;overflow:hidden;display:flex;align-items:flex-end}
+  #fluid{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
+  .hero-grad{position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:linear-gradient(180deg,rgba(4,20,29,.55) 0%,rgba(4,20,29,.05) 30%,rgba(4,20,29,.2) 60%,rgba(4,20,29,.92) 100%)}
+  .hero-inner{position:relative;z-index:3;width:100%;padding-bottom:7vh;pointer-events:none}
+  .hero-eyebrow{display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--aqua);margin-bottom:22px;font-weight:600}
+  .hero-eyebrow .ln{width:48px;height:1px;background:var(--aqua);opacity:.6}
+  .hero h1{font-size:clamp(46px,8.4vw,128px);font-weight:600;letter-spacing:-.035em;line-height:.94}
+  .hero h1 .row{overflow:hidden;display:block}
+  .hero h1 .row span{display:inline-block}
+  .hero h1 em{font-style:normal;color:var(--aqua)}
+  .hero-sub{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-top:34px;flex-wrap:wrap}
+  .hero-sub p{font-size:clamp(16px,1.5vw,19px);max-width:440px;color:#cfe4ec}
+  .hero-cta{display:flex;gap:14px;pointer-events:auto}
+  .scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:10px}
+  .scroll-hint .bar{width:1px;height:42px;background:linear-gradient(var(--aqua),transparent);position:relative;overflow:hidden}
+  .scroll-hint .bar::after{content:"";position:absolute;top:-42px;left:0;width:1px;height:42px;background:var(--foam);animation:drip 2.2s var(--ease) infinite}
+  @keyframes drip{0%{top:-42px}60%,100%{top:42px}}
+
+  /* buttons */
+  .btn{position:relative;display:inline-flex;align-items:center;gap:10px;font-family:'Clash Display';font-weight:600;font-size:15px;padding:15px 26px;border-radius:2px;cursor:pointer;border:none;overflow:hidden;transition:color .3s var(--ease)}
+  .btn-fill{background:var(--aqua);color:var(--abyss)}
+  .btn-fill::before{content:"";position:absolute;inset:0;background:var(--foam);transform:translateY(101%);transition:transform .4s var(--ease);z-index:0}
+  .btn-fill:hover::before{transform:translateY(0)}
+  .btn-fill span{position:relative;z-index:1}
+  .btn-line{background:transparent;color:var(--foam);border:1px solid var(--line)}
+  .btn-line::before{content:"";position:absolute;inset:0;background:var(--foam);transform:translateY(101%);transition:transform .4s var(--ease);z-index:0}
+  .btn-line:hover{color:var(--abyss)}
+  .btn-line:hover::before{transform:translateY(0)}
+  .btn-line span{position:relative;z-index:1}
+
+  /* marquee ticker */
+  .ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0;overflow:hidden;white-space:nowrap;background:var(--abyss-2)}
+  .ticker-track{display:inline-flex;gap:44px;align-items:center;will-change:transform}
+  .ticker-track span{font-family:'Clash Display';font-weight:500;font-size:17px;color:var(--muted);display:inline-flex;gap:44px;align-items:center}
+  .ticker-track .dot{width:6px;height:6px;border-radius:50%;background:var(--brass)}
+
+  /* section scaffolding */
+  section.blk{padding:130px 0;position:relative}
+  .idx-head{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:start;margin-bottom:72px}
+  .idx-head .num{font-family:'Clash Display';font-weight:500;font-size:14px;color:var(--aqua);padding-top:10px;border-top:1px solid var(--aqua);letter-spacing:.1em}
+  .idx-head h2{font-size:clamp(32px,4.6vw,62px);font-weight:600;max-width:14ch}
+  .idx-head .lead{grid-column:2;color:var(--muted);font-size:18px;max-width:48ch;margin-top:18px}
+
+  /* PINNED narrative — water rises */
+  .narrative{height:300vh;position:relative}
+  .narr-stick{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;align-items:center}
+  .narr-water{position:absolute;left:0;right:0;bottom:0;height:0%;background:
+    linear-gradient(180deg,rgba(62,197,230,.18),rgba(10,110,150,.5));z-index:1;transition:none}
+  .narr-water::before{content:"";position:absolute;top:-3px;left:0;right:0;height:3px;background:var(--aqua);opacity:.7;box-shadow:0 0 24px var(--aqua)}
+  .narr-panels{position:relative;z-index:2;width:100%}
+  .narr-panel{position:absolute;inset:0;display:flex;align-items:center;opacity:0}
+  .narr-panel .wrap{width:100%}
+  .narr-panel .kic{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--aqua);margin-bottom:20px;font-weight:600}
+  .narr-panel h3{font-size:clamp(34px,6vw,84px);font-weight:600;max-width:16ch;line-height:.98}
+  .narr-panel p{margin-top:24px;font-size:19px;color:#cfe4ec;max-width:42ch}
+  .narr-progress{position:absolute;right:32px;top:50%;transform:translateY(-50%);z-index:3;display:flex;flex-direction:column;gap:14px}
+  .narr-progress i{width:8px;height:8px;border-radius:50%;border:1px solid var(--muted);transition:.3s}
+  .narr-progress i.on{background:var(--aqua);border-color:var(--aqua);box-shadow:0 0 12px var(--aqua)}
+
+  /* HORIZONTAL services track */
+  .svc-section{position:relative;background:var(--abyss-2)}
+  .svc-pin{height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+  .svc-top{display:flex;justify-content:space-between;align-items:flex-end;padding:0 32px;margin-bottom:46px;max-width:var(--maxw);margin-left:auto;margin-right:auto;width:100%}
+  .svc-top .num{font-family:'Clash Display';font-size:14px;color:var(--aqua);border-top:1px solid var(--aqua);padding-top:10px;letter-spacing:.1em}
+  .svc-top h2{font-size:clamp(30px,4.4vw,58px);max-width:13ch}
+  .svc-top .hint{color:var(--muted);font-size:13px;letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+  .svc-track{display:flex;gap:26px;padding:0 32px;will-change:transform}
+  .svc-card{flex:0 0 clamp(300px,30vw,420px);background:var(--abyss);border:1px solid var(--line);border-radius:4px;padding:40px 34px;min-height:440px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:border-color .4s}
+  .svc-card::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:0;background:linear-gradient(180deg,transparent,rgba(62,197,230,.08));transition:height .5s var(--ease)}
+  .svc-card:hover{border-color:rgba(62,197,230,.45)}
+  .svc-card:hover::after{height:100%}
+  .svc-card .sn{font-family:'Clash Display';font-size:13px;color:var(--brass);letter-spacing:.1em;margin-bottom:auto}
+  .svc-card .ic{width:56px;height:56px;color:var(--aqua);margin:0 0 22px}
+  .svc-card h3{font-size:26px;margin-bottom:12px;position:relative;z-index:1}
+  .svc-card p{color:var(--muted);font-size:15px;position:relative;z-index:1}
+  .svc-card .price{margin-top:22px;font-family:'Clash Display';font-weight:500;font-size:15px;color:var(--foam);position:relative;z-index:1}
+  .svc-card .price b{color:var(--aqua);font-weight:600}
+
+  /* WHY — sticky list with figures */
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+  .why-sticky{position:sticky;top:18vh}
+  .why-sticky .big{font-family:'Clash Display';font-weight:600;font-size:clamp(64px,11vw,150px);line-height:.9;color:var(--aqua)}
+  .why-sticky .big small{display:block;font-size:18px;color:var(--muted);font-family:'Hanken Grotesk';font-weight:400;margin-top:18px;letter-spacing:0;max-width:30ch;line-height:1.5}
+  .why-items{display:flex;flex-direction:column}
+  .why-item{padding:38px 0;border-top:1px solid var(--line)}
+  .why-item:last-child{border-bottom:1px solid var(--line)}
+  .why-item .t{display:flex;gap:18px;align-items:baseline}
+  .why-item .t .n{font-family:'Clash Display';color:var(--brass);font-size:14px}
+  .why-item h4{font-size:24px;font-weight:600}
+  .why-item p{color:var(--muted);font-size:16px;margin-top:12px;padding-left:32px;max-width:46ch}
+  @media(max-width:860px){.why-grid{grid-template-columns:1fr;gap:40px}.why-sticky{position:static}}
+
+  /* REVIEW — single big rotating quote */
+  .rev-wrap{text-align:left;max-width:1000px}
+  .rev-quote{font-family:'Clash Display';font-weight:500;font-size:clamp(28px,4.2vw,56px);line-height:1.08;letter-spacing:-.02em;min-height:3.4em}
+  .rev-quote .qq{color:var(--aqua)}
+  .rev-meta{display:flex;align-items:center;gap:18px;margin-top:40px}
+  .rev-meta .av{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--aqua),var(--depth));display:flex;align-items:center;justify-content:center;font-family:'Clash Display';font-weight:600;color:var(--abyss);font-size:18px}
+  .rev-meta b{font-family:'Clash Display';font-weight:600;font-size:17px;display:block}
+  .rev-meta small{color:var(--muted)}
+  .rev-nav{display:flex;gap:12px;margin-top:48px}
+  .rev-nav button{width:50px;height:50px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--foam);cursor:pointer;transition:.3s;font-size:18px}
+  .rev-nav button:hover{background:var(--aqua);color:var(--abyss);border-color:var(--aqua)}
+  .rev-count{font-family:'Clash Display';color:var(--muted);font-size:14px;display:flex;align-items:center;margin-left:8px}
+
+  /* AREAS */
+  .areas-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:70px;align-items:center}
+  .suburbs{display:flex;flex-wrap:wrap;gap:12px}
+  .suburbs a{font-family:'Clash Display';font-weight:500;font-size:clamp(15px,1.4vw,18px);color:var(--muted);padding:8px 4px;transition:color .3s;position:relative}
+  .suburbs a:hover{color:var(--aqua)}
+  .suburbs a:not(:last-child)::after{content:"·";margin-left:12px;color:var(--line)}
+  @media(max-width:860px){.areas-grid{grid-template-columns:1fr;gap:36px}}
+
+  /* CTA */
+  .cta{position:relative;overflow:hidden;background:var(--abyss-2);text-align:center;padding:150px 0}
+  .cta h2{font-size:clamp(40px,7vw,104px);font-weight:600;letter-spacing:-.03em}
+  .cta h2 em{font-style:normal;color:var(--aqua)}
+  .cta p{color:var(--muted);font-size:19px;margin:26px auto 40px;max-width:46ch}
+  .cta .cta-call{font-family:'Clash Display';font-weight:600;font-size:clamp(24px,3vw,38px);margin-top:34px;display:inline-flex;gap:14px;align-items:center}
+  .cta .cta-call svg{color:var(--aqua)}
+
+  /* footer */
+  footer{padding:80px 0 40px;border-top:1px solid var(--line)}
+  .foot-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:64px}
+  footer .brand{margin-bottom:20px}
+  footer .about{color:var(--muted);max-width:34ch;font-size:15px}
+  .lic{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+  .lic span{font-size:12px;color:var(--muted);border:1px solid var(--line);padding:5px 10px;border-radius:2px}
+  footer h5{font-family:'Clash Display';font-weight:500;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+  footer ul{list-style:none;display:grid;gap:11px}
+  footer ul a{font-size:15px;opacity:.9;transition:color .25s}
+  footer ul a:hover{color:var(--aqua)}
+  .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;padding-top:28px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+  @media(max-width:820px){.foot-top{grid-template-columns:1fr 1fr;gap:32px}}
+
+  .reveal{opacity:0;transform:translateY(30px)}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1!important;transform:none!important}
+    .scroll-hint .bar::after{animation:none}
+  }
+  /* mobile sticky call */
+  .mbar{position:fixed;left:0;right:0;bottom:0;z-index:90;display:none;gap:10px;padding:12px 16px;background:rgba(4,20,29,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+  .mbar .btn{flex:1;justify-content:center}
+  @media(max-width:860px){.mbar{display:flex}}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#" data-cursor>
+      <svg viewBox="0 0 40 40" fill="none"><path d="M20 3s12 13 12 22a12 12 0 1 1-24 0C8 16 20 3 20 3Z" fill="#3ec5e6"/></svg>
+      Aqua Safe
+    </a>
+    <nav>
+      <a class="navlink" href="#services" data-cursor>Services</a>
+      <a class="navlink" href="#why" data-cursor>Why us</a>
+      <a class="navlink" href="#reviews" data-cursor>Reviews</a>
+      <a class="navlink" href="#areas" data-cursor>Areas</a>
+      <a class="nav-call" href="tel:0800000000" data-cursor>(08) 0000 0000</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="fluid"></canvas>
+  <div class="hero-grad"></div>
+  <div class="hero-inner">
+    <div class="wrap">
+      <div class="hero-eyebrow reveal"><span class="ln"></span> Perth · Licensed plumbers &amp; gas fitters</div>
+      <h1>
+        <span class="row"><span data-line>Water,</span></span>
+        <span class="row"><span data-line>handled <em>properly.</em></span></span>
+      </h1>
+      <div class="hero-sub">
+        <p class="reveal">Upfront fixed quotes. No call-out fees. Plumbers who turn up when they say they will — and leave it better than they found it.</p>
+        <div class="hero-cta reveal">
+          <a class="btn btn-fill" href="#book" data-cursor><span>Book a plumber</span></a>
+          <a class="btn btn-line" href="tel:0800000000" data-cursor><span>Call now</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>Scroll</span><span class="bar"></span></div>
+</section>
+
+<!-- ticker -->
+<div class="ticker">
+  <div class="ticker-track" id="ticker">
+    <span>Blocked drains<i class="dot"></i>Hot water<i class="dot"></i>Gas fitting<i class="dot"></i>Burst pipes<i class="dot"></i>Bathroom renos<i class="dot"></i>Reticulation<i class="dot"></i>Leak detection<i class="dot"></i>Water filtration<i class="dot"></i></span>
+    <span>Blocked drains<i class="dot"></i>Hot water<i class="dot"></i>Gas fitting<i class="dot"></i>Burst pipes<i class="dot"></i>Bathroom renos<i class="dot"></i>Reticulation<i class="dot"></i>Leak detection<i class="dot"></i>Water filtration<i class="dot"></i></span>
+  </div>
+</div>
+
+<!-- PINNED NARRATIVE -->
+<section class="narrative" id="story">
+  <div class="narr-stick">
+    <div class="narr-water" id="narrWater"></div>
+    <div class="narr-panels">
+      <div class="narr-panel" data-panel="0">
+        <div class="wrap">
+          <div class="kic">The problem</div>
+          <h3>It always starts small.</h3>
+          <p>A slow drain. A patch of damp. A water bill that crept up. The little things are the warning — and they never fix themselves.</p>
+        </div>
+      </div>
+      <div class="narr-panel" data-panel="1">
+        <div class="wrap">
+          <div class="kic">The call</div>
+          <h3>One call, a real plumber.</h3>
+          <p>No call centre, no runaround. You talk to someone who knows the job and can be at your door — often the same day.</p>
+        </div>
+      </div>
+      <div class="narr-panel" data-panel="2">
+        <div class="wrap">
+          <div class="kic">The fix</div>
+          <h3>Done once. Done right.</h3>
+          <p>A fixed price agreed before we start, quality parts, and a workmanship guarantee that means it stays fixed.</p>
+        </div>
+      </div>
+    </div>
+    <div class="narr-progress"><i class="on"></i><i></i><i></i></div>
+  </div>
+</section>
+
+<!-- HORIZONTAL SERVICES -->
+<section class="svc-section" id="services">
+  <div class="svc-pin">
+    <div class="svc-top">
+      <div>
+        <div class="num">02 — Services</div>
+        <h2>Everything plumbing<br>and gas.</h2>
+      </div>
+      <div class="hint">Drag / scroll →</div>
+    </div>
+    <div class="svc-track" id="svcTrack">
+      <article class="svc-card" data-cursor>
+        <div class="sn">01</div>
+        <svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M4 7h9a3 3 0 0 1 3 3 3 3 0 0 0 3 3h1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M7 7V4m0 16v-3m-3 0h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>Blocked drains</h3>
+        <p>CCTV drain cameras and high-pressure jetting that clears the blockage and finds the cause — so it doesn't come back next month.</p>
+        <div class="price">From <b>$149</b></div>
+      </article>
+      <article class="svc-card" data-cursor>
+        <div class="sn">02</div>
+        <svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M12 3c4 4 6 7 6 10a6 6 0 0 1-12 0c0-3 2-6 6-10Z" stroke="currentColor" stroke-width="1.6"/><path d="M9 13a3 3 0 0 0 3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>Hot water</h3>
+        <p>Gas, electric and heat-pump systems supplied, installed and repaired. Most replacements sorted the same day you call.</p>
+        <div class="price">Supply &amp; install from <b>$890</b></div>
+      </article>
+      <article class="svc-card" data-cursor>
+        <div class="sn">03</div>
+        <svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M7 12V8a2 2 0 0 1 4 0v8a2 2 0 0 0 4 0v-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>Gas fitting</h3>
+        <p>Cooktops, heaters, and gas leaks handled by licensed gas fitters. Safe, compliant, and certified to standard.</p>
+        <div class="price">Appliance install from <b>$249</b></div>
+      </article>
+      <article class="svc-card" data-cursor>
+        <div class="sn">04</div>
+        <svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M4 20v-5l9-9 5 5-9 9H4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m13 6 3 3" stroke="currentColor" stroke-width="1.6"/></svg>
+        <h3>Bathroom renos</h3>
+        <p>Full bathroom and laundry fit-outs, project-managed from rough-in through to the final silicone bead.</p>
+        <div class="price">Free design consult</div>
+      </article>
+      <article class="svc-card" data-cursor>
+        <div class="sn">05</div>
+        <svg class="ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v3m0 12v3M3 12h3m12 0h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>Reticulation</h3>
+        <p>Garden retic and bore pump install and repair. Keep the lawn green through a Perth summer without the guesswork.</p>
+        <div class="price">Repairs from <b>$129</b></div>
+      </article>
+      <article class="svc-card" data-cursor>
+        <div class="sn">06</div>
+        <svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M6 3h12v4l-4 4v7l-4 2v-9L6 7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <h3>Water filtration</h3>
+        <p>Whole-of-home and under-sink filtration, installed by the team behind Next Gen Water Systems.</p>
+        <div class="price">Supply &amp; install from <b>$495</b></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="blk" id="why">
+  <div class="wrap">
+    <div class="why-grid">
+      <div class="why-sticky">
+        <div class="num" style="font-family:'Clash Display';font-size:14px;color:var(--aqua);border-top:1px solid var(--aqua);padding-top:10px;letter-spacing:.1em;display:inline-block;margin-bottom:40px">03 — Why Aqua Safe</div>
+        <div class="big" data-count="15">0<span style="color:var(--foam)">+</span><small>Years keeping Perth homes flowing — one honest job at a time. No nonsense, no upsell, no surprises on the invoice.</small></div>
+      </div>
+      <div class="why-items">
+        <div class="why-item reveal"><div class="t"><span class="n">01</span><h4>Fixed quotes, in writing</h4></div><p>You approve the price before we lift a spanner. The quote becomes the invoice — no hourly creep, no end-of-job shock.</p></div>
+        <div class="why-item reveal"><div class="t"><span class="n">02</span><h4>We stay local</h4></div><p>We're not burning your time crossing the city. Local means we reach you faster and it costs you less.</p></div>
+        <div class="why-item reveal"><div class="t"><span class="n">03</span><h4>Respectful in your home</h4></div><p>Shoe covers on, mess cleaned up, and we explain the options so you decide — never a hard sell.</p></div>
+        <div class="why-item reveal"><div class="t"><span class="n">04</span><h4>Guaranteed workmanship</h4></div><p>Every job carries our workmanship guarantee. If something isn't right, we come back and make it right.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="blk" id="reviews" style="background:var(--abyss-2)">
+  <div class="wrap">
+    <div class="num" style="font-family:'Clash Display';font-size:14px;color:var(--aqua);border-top:1px solid var(--aqua);padding-top:10px;letter-spacing:.1em;display:inline-block;margin-bottom:46px">04 — From 480+ five-star reviews</div>
+    <div class="rev-wrap">
+      <div class="rev-quote" id="revQuote"><span class="qq">“</span>Burst pipe on a Sunday night and they were here within the hour. Quoted on the spot, fixed it fast, and the price was exactly what they said.<span class="qq">”</span></div>
+      <div class="rev-meta">
+        <div class="av" id="revAv">SM</div>
+        <div><b id="revName">Sarah M.</b><small id="revLoc">Scarborough · Google review</small></div>
+      </div>
+      <div class="rev-nav">
+        <button id="revPrev" data-cursor aria-label="Previous">←</button>
+        <button id="revNext" data-cursor aria-label="Next">→</button>
+        <span class="rev-count" id="revCount">01 / 04</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AREAS -->
+<section class="blk" id="areas">
+  <div class="wrap">
+    <div class="areas-grid">
+      <div>
+        <div class="num" style="font-family:'Clash Display';font-size:14px;color:var(--aqua);border-top:1px solid var(--aqua);padding-top:10px;letter-spacing:.1em;display:inline-block;margin-bottom:28px">05 — Service areas</div>
+        <h2 style="font-size:clamp(30px,4vw,52px)">Across the<br>Perth metro.</h2>
+        <p style="color:var(--muted);font-size:17px;margin-top:20px;max-width:34ch">North or south of the river — if you're in Perth, we'll get to you. Can't see your suburb? Call us, we probably cover it.</p>
+      </div>
+      <div class="suburbs">
+        <a href="#" data-cursor>Joondalup</a><a href="#" data-cursor>Scarborough</a><a href="#" data-cursor>Subiaco</a><a href="#" data-cursor>Fremantle</a><a href="#" data-cursor>Canning Vale</a><a href="#" data-cursor>Morley</a><a href="#" data-cursor>Cannington</a><a href="#" data-cursor>Midland</a><a href="#" data-cursor>Rockingham</a><a href="#" data-cursor>Wanneroo</a><a href="#" data-cursor>Mandurah</a><a href="#" data-cursor>Armadale</a><a href="#" data-cursor>Bayswater</a><a href="#" data-cursor>Cottesloe</a><a href="#" data-cursor>Ellenbrook</a><a href="#" data-cursor>Baldivis</a><a href="#" data-cursor>Kalamunda</a><a href="#" data-cursor>Hillarys</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="book">
+  <div class="wrap">
+    <h2>Let's get it <em>sorted.</em></h2>
+    <p>Free quote, no call-out fee, and a plumber who actually turns up. Book online or call the team direct.</p>
+    <a class="btn btn-fill" href="#" data-cursor style="font-size:16px;padding:17px 32px"><span>Book online</span></a>
+    <div>
+      <a class="cta-call" href="tel:0800000000" data-cursor>
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8a13 13 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.4.6 3.6.6.6 0 1 .5 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.3 1l-2.1 2.2Z" fill="currentColor"/></svg>
+        (08) 0000 0000
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <a class="brand" href="#"><svg viewBox="0 0 40 40" fill="none" width="26" height="26"><path d="M20 3s12 13 12 22a12 12 0 1 1-24 0C8 16 20 3 20 3Z" fill="#3ec5e6"/></svg> Aqua Safe</a>
+        <p class="about">Perth's straight-talking plumbers and gas fitters. Upfront pricing, no call-out fees, workmanship we stand behind.</p>
+        <div class="lic"><span>PL 0000</span><span>GF 00000</span><span>Fully insured</span></div>
+      </div>
+      <div><h5>Services</h5><ul><li><a href="#">Blocked drains</a></li><li><a href="#">Hot water</a></li><li><a href="#">Gas fitting</a></li><li><a href="#">Bathroom renos</a></li><li><a href="#">Water filtration</a></li></ul></div>
+      <div><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Reviews</a></li><li><a href="#">Service areas</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div><h5>Contact</h5><ul><li><a href="tel:0800000000">(08) 0000 0000</a></li><li><a href="#">hello@aquasafeplumbing.com.au</a></li><li>All Perth metro</li></ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Aqua Safe Plumbing</span>
+      <span>Concept design — C4 Studios</span>
+    </div>
+  </div>
+</footer>
+
+<div class="mbar">
+  <a class="btn btn-line" href="tel:0800000000" style="flex:1;justify-content:center"><span>Call</span></a>
+  <a class="btn btn-fill" href="#book" style="flex:1;justify-content:center"><span>Book now</span></a>
+</div>
+
+<!-- libs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.23/dist/lenis.min.js"></script>
+<script>
+const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* ---------------- WebGL fluid simulation ----------------
+   GPU stable-fluids: advect velocity + dye, divergence, jacobi pressure,
+   gradient subtract. Cursor injects velocity + aqua dye. */
+(function fluid(){
+  const canvas=document.getElementById('fluid');
+  const gl=canvas.getContext('webgl')||canvas.getContext('experimental-webgl');
+  if(!gl){canvas.style.background='radial-gradient(120% 90% at 70% 10%,#0a6e96,#04141d)';return;}
+  const ext=gl.getExtension('OES_texture_half_float');
+  const extLin=gl.getExtension('OES_texture_half_float_linear');
+  const halfFloat = ext ? ext.HALF_FLOAT_OES : null;
+  const texType = halfFloat || gl.UNSIGNED_BYTE;
+  const filtering = extLin ? gl.LINEAR : gl.NEAREST;
+
+  let SIM=128, DYE=512;
+  function comp(src,frag){const s=gl.createShader(src);gl.shaderSource(s,frag);gl.compileShader(s);return s;}
+  function prog(vs,fs){const p=gl.createProgram();gl.attachShader(p,comp(gl.VERTEX_SHADER,vs));gl.attachShader(p,comp(gl.FRAGMENT_SHADER,fs));gl.linkProgram(p);return p;}
+  const baseVS=`attribute vec2 p;varying vec2 v;varying vec2 vL;varying vec2 vR;varying vec2 vT;varying vec2 vB;uniform vec2 texel;void main(){v=p*.5+.5;vL=v-vec2(texel.x,0.);vR=v+vec2(texel.x,0.);vT=v+vec2(0.,texel.y);vB=v-vec2(0.,texel.y);gl_Position=vec4(p,0.,1.);}`;
+  const clearFS=`precision mediump float;varying vec2 v;uniform sampler2D uTex;uniform float val;void main(){gl_FragColor=val*texture2D(uTex,v);}`;
+  const splatFS=`precision highp float;varying vec2 v;uniform sampler2D uTarget;uniform float aspect;uniform vec3 color;uniform vec2 point;uniform float radius;void main(){vec2 p=v-point;p.x*=aspect;vec3 splat=exp(-dot(p,p)/radius)*color;gl_FragColor=vec4(texture2D(uTarget,v).rgb+splat,1.);}`;
+  const advFS=`precision highp float;varying vec2 v;uniform sampler2D uVel;uniform sampler2D uSrc;uniform vec2 texel;uniform float dt;uniform float diss;void main(){vec2 c=v-dt*texture2D(uVel,v).xy*texel;gl_FragColor=diss*texture2D(uSrc,c);gl_FragColor.a=1.;}`;
+  const divFS=`precision mediump float;varying vec2 v;varying vec2 vL;varying vec2 vR;varying vec2 vT;varying vec2 vB;uniform sampler2D uVel;void main(){float l=texture2D(uVel,vL).x;float r=texture2D(uVel,vR).x;float t=texture2D(uVel,vT).y;float b=texture2D(uVel,vB).y;float div=.5*(r-l+t-b);gl_FragColor=vec4(div,0.,0.,1.);}`;
+  const presFS=`precision mediump float;varying vec2 v;varying vec2 vL;varying vec2 vR;varying vec2 vT;varying vec2 vB;uniform sampler2D uPres;uniform sampler2D uDiv;void main(){float l=texture2D(uPres,vL).x;float r=texture2D(uPres,vR).x;float t=texture2D(uPres,vT).x;float b=texture2D(uPres,vB).x;float d=texture2D(uDiv,v).x;gl_FragColor=vec4((l+r+b+t-d)*.25,0.,0.,1.);}`;
+  const gradFS=`precision mediump float;varying vec2 v;varying vec2 vL;varying vec2 vR;varying vec2 vT;varying vec2 vB;uniform sampler2D uPres;uniform sampler2D uVel;void main(){float l=texture2D(uPres,vL).x;float r=texture2D(uPres,vR).x;float t=texture2D(uPres,vT).x;float b=texture2D(uPres,vB).x;vec2 vel=texture2D(uVel,v).xy;vel-=vec2(r-l,t-b);gl_FragColor=vec4(vel,0.,1.);}`;
+  const dispFS=`precision highp float;varying vec2 v;uniform sampler2D uDye;void main(){vec3 c=texture2D(uDye,v).rgb;float a=max(c.r,max(c.g,c.b));gl_FragColor=vec4(c,a);}`;
+
+  const P={clear:prog(baseVS,clearFS),splat:prog(baseVS,splatFS),adv:prog(baseVS,advFS),div:prog(baseVS,divFS),pres:prog(baseVS,presFS),grad:prog(baseVS,gradFS),disp:prog(baseVS,dispFS)};
+  const quad=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,quad);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  function bindQuad(p){const l=gl.getAttribLocation(p,'p');gl.bindBuffer(gl.ARRAY_BUFFER,quad);gl.enableVertexAttribArray(l);gl.vertexAttribPointer(l,2,gl.FLOAT,false,0,0);}
+  function fbo(w,h){const t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,filtering);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,filtering);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,w,h,0,gl.RGBA,texType,null);const f=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,f);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,t,0);gl.viewport(0,0,w,h);gl.clear(gl.COLOR_BUFFER_BIT);return{t,f,w,h};}
+  function dbl(w,h){let a=fbo(w,h),b=fbo(w,h);return{get r(){return a},get w(){return b},swap(){const t=a;a=b;b=t;}};}
+  let vel,dye,div,pres;
+  function init(){vel=dbl(SIM,SIM);dye=dbl(DYE,DYE);div=fbo(SIM,SIM);pres=dbl(SIM,SIM);}
+  init();
+
+  function draw(target){gl.bindFramebuffer(gl.FRAMEBUFFER,target?target.f:null);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);}
+  function setTexel(p,w,h){gl.uniform2f(gl.getUniformLocation(p,'texel'),1/w,1/h);}
+
+  let lastT=performance.now();
+  const pointer={x:.5,y:.5,dx:0,dy:0,down:false,moved:false};
+  function splat(x,y,dx,dy,color){
+    gl.viewport(0,0,SIM,SIM);gl.useProgram(P.splat);bindQuad(P.splat);
+    gl.uniform1i(gl.getUniformLocation(P.splat,'uTarget'),0);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,vel.r.t);
+    gl.uniform1f(gl.getUniformLocation(P.splat,'aspect'),canvas.width/canvas.height);
+    gl.uniform2f(gl.getUniformLocation(P.splat,'point'),x,y);
+    gl.uniform3f(gl.getUniformLocation(P.splat,'color'),dx,dy,0);
+    gl.uniform1f(gl.getUniformLocation(P.splat,'radius'),.00015);
+    draw(vel.w);vel.swap();
+    gl.viewport(0,0,DYE,DYE);
+    gl.bindTexture(gl.TEXTURE_2D,dye.r.t);
+    gl.uniform3f(gl.getUniformLocation(P.splat,'color'),color[0],color[1],color[2]);
+    gl.uniform1f(gl.getUniformLocation(P.splat,'radius'),.0002);
+    draw(dye.w);dye.swap();
+  }
+
+  function step(dt){
+    gl.disable(gl.BLEND);gl.viewport(0,0,SIM,SIM);
+    // advect velocity
+    gl.useProgram(P.adv);bindQuad(P.adv);setTexel(P.adv,SIM,SIM);
+    gl.uniform1i(gl.getUniformLocation(P.adv,'uVel'),0);gl.uniform1i(gl.getUniformLocation(P.adv,'uSrc'),0);
+    gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,vel.r.t);
+    gl.uniform1f(gl.getUniformLocation(P.adv,'dt'),dt);gl.uniform1f(gl.getUniformLocation(P.adv,'diss'),.99);
+    draw(vel.w);vel.swap();
+    // advect dye
+    gl.viewport(0,0,DYE,DYE);setTexel(P.adv,DYE,DYE);
+    gl.uniform1i(gl.getUniformLocation(P.adv,'uVel'),0);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,vel.r.t);
+    gl.uniform1i(gl.getUniformLocation(P.adv,'uSrc'),1);gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,dye.r.t);
+    gl.uniform1f(gl.getUniformLocation(P.adv,'diss'),.985);
+    draw(dye.w);dye.swap();
+    gl.viewport(0,0,SIM,SIM);
+    // divergence
+    gl.useProgram(P.div);bindQuad(P.div);setTexel(P.div,SIM,SIM);
+    gl.uniform1i(gl.getUniformLocation(P.div,'uVel'),0);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,vel.r.t);
+    draw(div);
+    // pressure jacobi
+    gl.useProgram(P.pres);bindQuad(P.pres);setTexel(P.pres,SIM,SIM);
+    for(let i=0;i<18;i++){
+      gl.uniform1i(gl.getUniformLocation(P.pres,'uPres'),0);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,pres.r.t);
+      gl.uniform1i(gl.getUniformLocation(P.pres,'uDiv'),1);gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,div.t);
+      draw(pres.w);pres.swap();
+    }
+    // gradient subtract
+    gl.useProgram(P.grad);bindQuad(P.grad);setTexel(P.grad,SIM,SIM);
+    gl.uniform1i(gl.getUniformLocation(P.grad,'uPres'),0);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,pres.r.t);
+    gl.uniform1i(gl.getUniformLocation(P.grad,'uVel'),1);gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,vel.r.t);
+    draw(vel.w);vel.swap();
+  }
+
+  function render(){
+    gl.bindFramebuffer(gl.FRAMEBUFFER,null);gl.viewport(0,0,canvas.width,canvas.height);
+    gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
+    gl.useProgram(P.disp);bindQuad(P.disp);
+    gl.uniform1i(gl.getUniformLocation(P.disp,'uDye'),0);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,dye.r.t);
+    draw(null);
+  }
+
+  let autoT=0;
+  function frame(now){
+    let dt=Math.min((now-lastT)/1000,.016);lastT=now;
+    if(pointer.moved){
+      splat(pointer.x,pointer.y,pointer.dx*6,pointer.dy*6,[.24,.77,.9]);
+      pointer.moved=false;
+    }
+    // ambient self-motion so it's alive before interaction
+    autoT+=dt;
+    if(autoT>0.9){autoT=0;const ax=.2+Math.random()*.6,ay=.15+Math.random()*.5;splat(ax,ay,(Math.random()-.5)*2,(Math.random()-.5)*2,[.05,.32,.42]);}
+    step(dt);render();
+    requestAnimationFrame(frame);
+  }
+  function resize(){const dpr=Math.min(devicePixelRatio,2);canvas.width=canvas.clientWidth*dpr;canvas.height=canvas.clientHeight*dpr;}
+  addEventListener('resize',resize);resize();
+  // seed
+  for(let i=0;i<6;i++)splat(Math.random(),Math.random()*.6+.2,(Math.random()-.5)*3,(Math.random()-.5)*3,[.12,.5,.62]);
+  requestAnimationFrame(frame);
+
+  function move(cx,cy){const r=canvas.getBoundingClientRect();const x=(cx-r.left)/r.width;const y=1-(cy-r.top)/r.height;pointer.dx=x-pointer.x;pointer.dy=y-pointer.y;pointer.x=x;pointer.y=y;pointer.moved=true;}
+  addEventListener('mousemove',e=>{if(e.clientY<innerHeight)move(e.clientX,e.clientY);});
+  addEventListener('touchmove',e=>{const t=e.touches[0];if(t)move(t.clientX,t.clientY);},{passive:true});
+})();
+
+/* ---------------- Lenis + GSAP ---------------- */
+if(!reduce){
+  const lenis=new Lenis({lerp:.09,wheelMultiplier:1});
+  function raf(t){lenis.raf(t);requestAnimationFrame(raf);}requestAnimationFrame(raf);
+  gsap.registerPlugin(ScrollTrigger,SplitText);
+  lenis.on('scroll',ScrollTrigger.update);
+
+  // hero headline reveal
+  window.addEventListener('load',()=>{
+    document.querySelectorAll('[data-line]').forEach((el,i)=>{
+      gsap.from(el,{yPercent:115,duration:1.1,ease:'power4.out',delay:.15+i*.12});
+    });
+    gsap.to('.hero-eyebrow,.hero-sub p,.hero-cta',{opacity:1,y:0,duration:1,stagger:.12,delay:.5,ease:'power3.out'});
+    gsap.set('.hero-eyebrow,.hero-sub p,.hero-cta',{clearProps:'transform'});
+  });
+  gsap.set('.hero-eyebrow,.hero-sub p,.hero-cta',{opacity:0,y:24});
+
+  // ticker
+  gsap.to('#ticker',{xPercent:-50,repeat:-1,duration:24,ease:'none'});
+
+  // generic reveals
+  gsap.utils.toArray('.reveal').forEach(el=>{
+    gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 85%'}});
+  });
+
+  // PINNED narrative: water rises, panels cross-fade
+  const panels=gsap.utils.toArray('.narr-panel');
+  const dots=gsap.utils.toArray('.narr-progress i');
+  gsap.set(panels[0],{opacity:1});
+  ScrollTrigger.create({
+    trigger:'.narrative',start:'top top',end:'bottom bottom',scrub:.6,
+    onUpdate:self=>{
+      const p=self.progress;
+      document.getElementById('narrWater').style.height=(p*100)+'%';
+      const idx=Math.min(panels.length-1,Math.floor(p*panels.length));
+      panels.forEach((pan,i)=>gsap.to(pan,{opacity:i===idx?1:0,duration:.3,overwrite:true}));
+      dots.forEach((d,i)=>d.classList.toggle('on',i===idx));
+    }
+  });
+
+  // HORIZONTAL services
+  const track=document.getElementById('svcTrack');
+  const getScroll=()=>track.scrollWidth-track.parentElement.clientWidth+64;
+  gsap.to(track,{x:()=>-getScroll(),ease:'none',
+    scrollTrigger:{trigger:'.svc-section',start:'top top',end:()=>'+='+getScroll(),scrub:.8,pin:true,invalidateOnRefresh:true}});
+
+  // count up
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const target=+el.getAttribute('data-count');const node=el.firstChild;
+    ScrollTrigger.create({trigger:el,start:'top 80%',once:true,onEnter:()=>{
+      gsap.fromTo({v:0},{v:0},{v:target,duration:1.6,ease:'power2.out',onUpdate(){node.textContent=Math.round(this.targets()[0].v);}});
+    }});
+  });
+} else {
+  // reduced motion fallbacks
+  document.querySelectorAll('[data-line]').forEach(el=>el.style.transform='none');
+  document.getElementById('narrWater').style.height='60%';
+  gsap.utils && null;
+}
+
+/* ---------------- magnetic cursor (no GSAP dependency) ---------------- */
+(function cursor(){
+  const c=document.getElementById('cursor');if(!matchMedia('(hover:hover)').matches)return;
+  let x=innerWidth/2,y=innerHeight/2,tx=x,ty=y;
+  addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY;});
+  (function loop(){x+=(tx-x)*.18;y+=(ty-y)*.18;c.style.transform=`translate(${x}px,${y}px) translate(-50%,-50%)`;requestAnimationFrame(loop);})();
+  document.querySelectorAll('[data-cursor]').forEach(el=>{
+    el.addEventListener('mouseenter',()=>c.classList.add('grow'));
+    el.addEventListener('mouseleave',()=>c.classList.remove('grow'));
+  });
+  addEventListener('mousedown',()=>c.classList.add('dot'));
+  addEventListener('mouseup',()=>c.classList.remove('dot'));
+})();
+
+/* ---------------- reviews rotator ---------------- */
+(function reviews(){
+  const data=[
+    {q:'Burst pipe on a Sunday night and they were here within the hour. Quoted on the spot, fixed it fast, and the price was exactly what they said.',n:'Sarah M.',l:'Scarborough · Google review',a:'SM'},
+    {q:'Replaced our old hot water unit same day. Explained the options without pushing the dearest one, and left the place spotless.',n:'Daniel T.',l:'Canning Vale · Google review',a:'DT'},
+    {q:'A blocked drain two other plumbers couldn\u2019t sort. Aqua Safe used a camera, found the real problem and cleared it properly.',n:'Rebecca P.',l:'Joondalup · Google review',a:'RP'},
+    {q:'Honest, on time, and tidy. They walked me through the quote line by line and there were zero surprises on the invoice.',n:'James K.',l:'Fremantle · Facebook review',a:'JK'}
+  ];
+  let i=0;const q=document.getElementById('revQuote'),nm=document.getElementById('revName'),lo=document.getElementById('revLoc'),av=document.getElementById('revAv'),ct=document.getElementById('revCount');
+  function show(n){i=(n+data.length)%data.length;const d=data[i];
+    q.style.opacity=0;
+    setTimeout(()=>{q.innerHTML='<span class="qq">\u201C</span>'+d.q+'<span class="qq">\u201D</span>';nm.textContent=d.n;lo.textContent=d.l;av.textContent=d.a;ct.textContent=String(i+1).padStart(2,'0')+' / '+String(data.length).padStart(2,'0');q.style.opacity=1;},220);
+  }
+  q.style.transition='opacity .25s ease';
+  document.getElementById('revNext').onclick=()=>show(i+1);
+  document.getElementById('revPrev').onclick=()=>show(i-1);
+  let auto=setInterval(()=>show(i+1),6000);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+/* ===========================================================================
+   Design tokens — single source of truth (Tailwind maps to these in config).
+   =========================================================================== */
+:root {
+  --abyss: #04141d;
+  --abyss-2: #082430;
+  --foam: #f3f9fb;
+  --aqua: #3ec5e6;
+  --depth: #0a6e96;
+  --brass: #c9a24b;
+  --muted: #7da3b3;
+  --line: rgba(243, 249, 251, 0.12);
+  --maxw: 1280px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===========================================================================
+   Base
+   =========================================================================== */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--abyss);
+    color: var(--foam);
+    font-family: var(--font-hanken), system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-clash), var(--font-hanken), sans-serif;
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  ::selection {
+    background: var(--aqua);
+    color: var(--abyss);
+  }
+  :focus-visible {
+    outline: 2px solid var(--aqua);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Lenis smooth-scroll recommended base styles */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+}
+
+/* ===========================================================================
+   Components — ported from the approved concept (font names → CSS variables).
+   =========================================================================== */
+@layer components {
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---- custom cursor ---- */
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid var(--aqua);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.25s var(--ease), height 0.25s var(--ease), background 0.25s,
+      border-color 0.25s;
+    mix-blend-mode: difference;
+  }
+  .cursor.dot {
+    width: 6px;
+    height: 6px;
+    background: var(--aqua);
+    border-color: var(--aqua);
+  }
+  .cursor.grow {
+    width: 64px;
+    height: 64px;
+    background: rgba(62, 197, 230, 0.12);
+  }
+  @media (hover: none) {
+    .cursor {
+      display: none;
+    }
+  }
+
+  /* ---- nav ---- */
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    mix-blend-mode: difference;
+  }
+  header .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 88px;
+  }
+  .brand {
+    font-family: var(--font-clash), sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand svg {
+    width: 26px;
+    height: 26px;
+  }
+  nav {
+    display: flex;
+    gap: 34px;
+    align-items: center;
+  }
+  nav a {
+    font-size: 14.5px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    position: relative;
+    opacity: 0.85;
+  }
+  nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    height: 1px;
+    width: 0;
+    background: currentColor;
+    transition: width 0.3s var(--ease);
+  }
+  nav a:hover::after {
+    width: 100%;
+  }
+  .nav-call {
+    font-family: var(--font-clash), sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  @media (max-width: 860px) {
+    nav .navlink {
+      display: none;
+    }
+  }
+
+  /* ---- hero ---- */
+  .hero {
+    position: relative;
+    height: 100svh;
+    min-height: 680px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+  #fluid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 1;
+  }
+  .hero-fallback {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(120% 90% at 70% 10%, var(--depth), var(--abyss));
+  }
+  .hero-grad {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(4, 20, 29, 0.55) 0%,
+      rgba(4, 20, 29, 0.05) 30%,
+      rgba(4, 20, 29, 0.2) 60%,
+      rgba(4, 20, 29, 0.92) 100%
+    );
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    padding-bottom: 7vh;
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--aqua);
+    margin-bottom: 22px;
+    font-weight: 600;
+  }
+  .hero-eyebrow .ln {
+    width: 48px;
+    height: 1px;
+    background: var(--aqua);
+    opacity: 0.6;
+  }
+  .hero h1 {
+    font-size: clamp(46px, 8.4vw, 128px);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.94;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--aqua);
+  }
+  .hero-sub {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+    margin-top: 34px;
+    flex-wrap: wrap;
+  }
+  .hero-sub p {
+    font-size: clamp(16px, 1.5vw, 19px);
+    max-width: 440px;
+    color: #cfe4ec;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+    pointer-events: auto;
+  }
+  .scroll-hint {
+    position: absolute;
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .scroll-hint .bar {
+    width: 1px;
+    height: 42px;
+    background: linear-gradient(var(--aqua), transparent);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-hint .bar::after {
+    content: "";
+    position: absolute;
+    top: -42px;
+    left: 0;
+    width: 1px;
+    height: 42px;
+    background: var(--foam);
+    animation: drip 2.2s var(--ease) infinite;
+  }
+  @keyframes drip {
+    0% {
+      top: -42px;
+    }
+    60%,
+    100% {
+      top: 42px;
+    }
+  }
+
+  /* ---- buttons ---- */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-clash), sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 15px 26px;
+    border-radius: 2px;
+    cursor: pointer;
+    border: none;
+    overflow: hidden;
+    transition: color 0.3s var(--ease);
+  }
+  .btn-fill {
+    background: var(--aqua);
+    color: var(--abyss);
+  }
+  .btn-fill::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--foam);
+    transform: translateY(101%);
+    transition: transform 0.4s var(--ease);
+    z-index: 0;
+  }
+  .btn-fill:hover::before {
+    transform: translateY(0);
+  }
+  .btn-fill span {
+    position: relative;
+    z-index: 1;
+  }
+  .btn-line {
+    background: transparent;
+    color: var(--foam);
+    border: 1px solid var(--line);
+  }
+  .btn-line::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--foam);
+    transform: translateY(101%);
+    transition: transform 0.4s var(--ease);
+    z-index: 0;
+  }
+  .btn-line:hover {
+    color: var(--abyss);
+  }
+  .btn-line:hover::before {
+    transform: translateY(0);
+  }
+  .btn-line span {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* SplitText line masks */
+  .split-line {
+    overflow: hidden;
+  }
+}
+
+/* ===========================================================================
+   Utilities
+   =========================================================================== */
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+}
+
+/* ===========================================================================
+   Reduced motion — instant reveals, no ambient animation, native cursor.
+   =========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .scroll-hint .bar::after {
+    animation: none !important;
+  }
+  .cursor {
+    display: none !important;
+  }
+}
