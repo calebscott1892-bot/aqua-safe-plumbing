@@ -1,18 +1,22 @@
 import { Nav } from "@/components/Nav";
-import { FluidHero } from "@/components/fluid/FluidHero";
+import { HeroStage } from "@/components/hero/HeroStage";
+import { DEFAULT_VARIANT, isHeroVariant } from "@/components/hero/heroVariants";
 
-export default function Home() {
+export default function Home({ searchParams }: { searchParams: { hero?: string } }) {
+  // `?hero=<id>` selects the concept on first paint (shareable links). Falls
+  // back to the default when absent/unknown.
+  const heroParam = searchParams?.hero;
+  const initialVariant = isHeroVariant(heroParam) ? heroParam : DEFAULT_VARIANT;
+
   return (
     <>
       <Nav />
       <main>
-        <FluidHero />
+        <HeroStage initialVariant={initialVariant} />
 
         {/*
-          MILESTONE 1: hero only.
-          Remaining sections (ticker → rising narrative → horizontal services →
-          why → reviews → areas → CTA → footer) land after frame-rate sign-off.
-          This spacer just confirms smooth scroll + the hero's full-viewport sizing.
+          MILESTONE 1: hero only (now with switchable concepts for the pitch).
+          Remaining sections land after the hero direction is chosen.
         */}
         <section
           aria-hidden="true"

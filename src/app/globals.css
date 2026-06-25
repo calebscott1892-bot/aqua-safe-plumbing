@@ -372,6 +372,184 @@
   .split-line {
     overflow: hidden;
   }
+
+  /* =========================================================================
+     Concept C — Editorial split (no WebGL): headline left, rising-tide column.
+     ========================================================================= */
+  .hero--editorial {
+    display: block;
+    height: auto;
+    min-height: 100svh;
+  }
+  .hero--editorial .he-grid {
+    display: grid;
+    grid-template-columns: 1.12fr 0.88fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+    min-height: 100svh;
+    padding: clamp(110px, 16vh, 200px) 0 clamp(64px, 10vh, 120px);
+  }
+  .hero--editorial h1 {
+    font-size: clamp(40px, 5.6vw, 88px);
+  }
+  .he-left {
+    max-width: 38ch;
+  }
+  .he-column {
+    position: relative;
+    align-self: stretch;
+    min-height: min(72vh, 620px);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: radial-gradient(120% 80% at 50% 0%, rgba(10, 110, 150, 0.18), transparent 60%),
+      var(--abyss-2);
+    overflow: hidden;
+  }
+  .he-column::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--brass), transparent);
+    opacity: 0.75;
+  }
+  .he-drop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: clamp(86px, 12vw, 150px);
+    height: auto;
+    transform: translate(-50%, -56%);
+    color: var(--foam);
+    opacity: 0.9;
+    filter: drop-shadow(0 8px 30px rgba(62, 197, 230, 0.25));
+  }
+  .he-tide {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 58%;
+    background: linear-gradient(180deg, rgba(62, 197, 230, 0.18), rgba(10, 110, 150, 0.55));
+    animation: tideRise 1.9s var(--ease) both;
+  }
+  .he-tide::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--aqua);
+    opacity: 0.7;
+    box-shadow: 0 0 22px var(--aqua);
+  }
+  .he-caption {
+    position: absolute;
+    left: 20px;
+    bottom: 18px;
+    z-index: 2;
+    font-family: var(--font-clash), sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--foam);
+    opacity: 0.85;
+  }
+  @keyframes tideRise {
+    from {
+      height: 0%;
+    }
+    to {
+      height: 58%;
+    }
+  }
+  @media (max-width: 860px) {
+    .hero--editorial .he-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding-top: clamp(110px, 14vh, 150px);
+    }
+    .he-left {
+      max-width: none;
+    }
+    .he-column {
+      min-height: 36vh;
+      order: 2;
+    }
+  }
+
+  /* =========================================================================
+     Hero concept switcher — pitch tool. Remove for the final single-hero build.
+     ========================================================================= */
+  .hero-switcher {
+    position: fixed;
+    z-index: 200;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px 7px 16px;
+    background: rgba(4, 20, 29, 0.72);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.4);
+  }
+  .hs-label {
+    font-family: var(--font-clash), sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .hs-pills {
+    display: flex;
+    gap: 4px;
+  }
+  .hs-pill {
+    font-family: var(--font-clash), sans-serif;
+    font-weight: 500;
+    font-size: 13.5px;
+    color: var(--foam);
+    background: transparent;
+    border: none;
+    padding: 7px 15px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: color 0.25s var(--ease), background 0.25s var(--ease);
+  }
+  .hs-pill:hover {
+    color: var(--aqua);
+  }
+  .hs-pill.is-active {
+    background: var(--aqua);
+    color: var(--abyss);
+  }
+  .hs-blurb {
+    font-size: 12px;
+    color: var(--muted);
+    border-left: 1px solid var(--line);
+    padding-left: 10px;
+  }
+  @media (max-width: 560px) {
+    .hero-switcher {
+      left: 12px;
+      right: 12px;
+      transform: none;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .hs-blurb {
+      display: none;
+    }
+  }
 }
 
 /* ===========================================================================
@@ -393,6 +571,9 @@
     transform: none !important;
   }
   .scroll-hint .bar::after {
+    animation: none !important;
+  }
+  .he-tide {
     animation: none !important;
   }
   .cursor {
