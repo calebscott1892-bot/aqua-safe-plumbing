@@ -3,6 +3,7 @@ import "./globals.css";
 import { clash, hanken } from "./fonts";
 import { SmoothScroll } from "@/lib/providers/SmoothScroll";
 import { Cursor } from "@/components/Cursor";
+import { WateryButtons } from "@/components/WateryButtons";
 import { MobileCallBar } from "@/components/MobileCallBar";
 import { localBusinessJsonLd } from "@/lib/jsonld";
 import { business } from "@/content/business";
@@ -55,6 +56,7 @@ export default function RootLayout({
         />
         <SmoothScroll>
           <Cursor />
+          <WateryButtons />
           {children}
         </SmoothScroll>
         <MobileCallBar />

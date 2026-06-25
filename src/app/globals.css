@@ -305,8 +305,10 @@
     }
   }
 
-  /* ---- buttons ---- */
+  /* ---- buttons — watery hover ---- */
   .btn {
+    --mx: 50%;
+    --my: 50%;
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -319,51 +321,103 @@
     cursor: pointer;
     border: none;
     overflow: hidden;
-    transition: color 0.3s var(--ease);
+    isolation: isolate;
+    transition: color 0.35s var(--ease), border-color 0.35s var(--ease);
+  }
+  .btn > span:not(.btn-ripple) {
+    position: relative;
+    z-index: 2;
+  }
+  /* water floods in from the pointer entry point (--mx/--my set by WateryButtons) */
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: 0;
+    background: radial-gradient(
+      115% 130% at var(--mx) var(--my),
+      var(--foam) 0%,
+      #d8f1f8 24%,
+      var(--aqua) 58%,
+      #c2e9f3 100%
+    );
+    clip-path: circle(0% at var(--mx) var(--my));
+    transition: clip-path 0.55s var(--ease);
+  }
+  /* caustic shimmer + foam meniscus over the fill */
+  .btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    background:
+      radial-gradient(46% 60% at 28% 22%, rgba(62, 197, 230, 0.55), transparent 60%),
+      radial-gradient(40% 55% at 72% 64%, rgba(62, 197, 230, 0.4), transparent 62%),
+      radial-gradient(70% 26% at 50% 0%, rgba(255, 255, 255, 0.7), transparent 70%);
+    transition: opacity 0.5s var(--ease);
+  }
+  .btn:focus-visible::before {
+    clip-path: circle(150% at 50% 50%);
+  }
+  .btn:focus-visible::after {
+    opacity: 0.75;
+  }
+  @media (hover: hover) {
+    .btn:hover::before {
+      clip-path: circle(150% at var(--mx) var(--my));
+    }
+    .btn:hover::after {
+      opacity: 0.75;
+      animation: btnCaustic 5s ease-in-out infinite alternate;
+    }
+    .btn-line:hover {
+      color: var(--abyss);
+      border-color: transparent;
+    }
+  }
+  @keyframes btnCaustic {
+    from {
+      transform: translate(0, 0) scale(1);
+    }
+    to {
+      transform: translate(3%, 2%) scale(1.06);
+    }
+  }
+  /* click ripple, spawned by WateryButtons */
+  .btn-ripple {
+    position: absolute;
+    z-index: 1;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.65),
+      rgba(62, 197, 230, 0.25) 55%,
+      transparent 72%
+    );
+    transform: translate(-50%, -50%) scale(0);
+    pointer-events: none;
+    animation: btnRipple 0.6s var(--ease) forwards;
+  }
+  @keyframes btnRipple {
+    to {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0;
+    }
   }
   .btn-fill {
     background: var(--aqua);
     color: var(--abyss);
-  }
-  .btn-fill::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--foam);
-    transform: translateY(101%);
-    transition: transform 0.4s var(--ease);
-    z-index: 0;
-  }
-  .btn-fill:hover::before {
-    transform: translateY(0);
-  }
-  .btn-fill span {
-    position: relative;
-    z-index: 1;
   }
   .btn-line {
     background: transparent;
     color: var(--foam);
     border: 1px solid var(--line);
   }
-  .btn-line::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--foam);
-    transform: translateY(101%);
-    transition: transform 0.4s var(--ease);
-    z-index: 0;
-  }
-  .btn-line:hover {
+  .btn-line:focus-visible {
     color: var(--abyss);
-  }
-  .btn-line:hover::before {
-    transform: translateY(0);
-  }
-  .btn-line span {
-    position: relative;
-    z-index: 1;
+    border-color: transparent;
   }
 
   /* SplitText line masks */
@@ -1105,6 +1159,11 @@
   }
   .narr-wave,
   .narr-caustics {
+    animation: none !important;
+  }
+  .btn::before,
+  .btn::after {
+    transition: none !important;
     animation: none !important;
   }
   .cursor {
