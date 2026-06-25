@@ -3,6 +3,8 @@ import "./globals.css";
 import { clash, hanken } from "./fonts";
 import { SmoothScroll } from "@/lib/providers/SmoothScroll";
 import { Cursor } from "@/components/Cursor";
+import { MobileCallBar } from "@/components/MobileCallBar";
+import { localBusinessJsonLd } from "@/lib/jsonld";
 import { business } from "@/content/business";
 
 const SITE_DESCRIPTION =
@@ -47,10 +49,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${clash.variable} ${hanken.variable}`}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+        />
         <SmoothScroll>
           <Cursor />
           {children}
         </SmoothScroll>
+        <MobileCallBar />
       </body>
     </html>
   );
