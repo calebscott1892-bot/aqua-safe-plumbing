@@ -524,6 +524,16 @@
       transform: translate(2.5%, 1.5%) scale(1.04);
     }
   }
+  /* WebGL water surface canvas — covers the sticky area, behind the panels */
+  .narr-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: block;
+    pointer-events: none;
+  }
   .narr-panels {
     position: relative;
     z-index: 2;

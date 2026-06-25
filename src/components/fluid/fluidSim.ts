@@ -47,7 +47,9 @@ const ADV = `precision highp float;varying vec2 v;uniform sampler2D uVel;uniform
 const DIV = `precision mediump float;varying vec2 v;varying vec2 vL;varying vec2 vR;varying vec2 vT;varying vec2 vB;uniform sampler2D uVel;void main(){float l=texture2D(uVel,vL).x;float r=texture2D(uVel,vR).x;float t=texture2D(uVel,vT).y;float b=texture2D(uVel,vB).y;float div=.5*(r-l+t-b);gl_FragColor=vec4(div,0.,0.,1.);}`;
 const PRES = `precision mediump float;varying vec2 v;varying vec2 vL;varying vec2 vR;varying vec2 vT;varying vec2 vB;uniform sampler2D uPres;uniform sampler2D uDiv;void main(){float l=texture2D(uPres,vL).x;float r=texture2D(uPres,vR).x;float t=texture2D(uPres,vT).x;float b=texture2D(uPres,vB).x;float d=texture2D(uDiv,v).x;gl_FragColor=vec4((l+r+b+t-d)*.25,0.,0.,1.);}`;
 const GRAD = `precision mediump float;varying vec2 v;varying vec2 vL;varying vec2 vR;varying vec2 vT;varying vec2 vB;uniform sampler2D uPres;uniform sampler2D uVel;void main(){float l=texture2D(uPres,vL).x;float r=texture2D(uPres,vR).x;float t=texture2D(uPres,vT).x;float b=texture2D(uPres,vB).x;vec2 vel=texture2D(uVel,v).xy;vel-=vec2(r-l,t-b);gl_FragColor=vec4(vel,0.,1.);}`;
-const DISP = `precision highp float;varying vec2 v;uniform sampler2D uDye;void main(){vec3 c=texture2D(uDye,v).rgb;float a=max(c.r,max(c.g,c.b));gl_FragColor=vec4(c,a);}`;
+// Lit water surface: treat dye luminance as a height field, derive a normal
+// from its gradient, add Blinn-Phong specular + Fresnel rim + depth tint.
+const DISP = `precision highp float;varying vec2 v;varying vec2 vL;varying vec2 vR;varying vec2 vT;varying vec2 vB;uniform sampler2D uDye;float lum(vec3 c){return max(c.r,max(c.g,c.b));}void main(){vec3 c=texture2D(uDye,v).rgb;float h=lum(c);float hl=lum(texture2D(uDye,vL).rgb);float hr=lum(texture2D(uDye,vR).rgb);float ht=lum(texture2D(uDye,vT).rgb);float hb=lum(texture2D(uDye,vB).rgb);vec3 n=normalize(vec3(hl-hr,hb-ht,0.25));vec3 L=normalize(vec3(0.35,0.65,0.7));vec3 H=normalize(L+vec3(0.0,0.0,1.0));float spec=pow(max(dot(n,H),0.0),64.0);float fres=pow(1.0-max(n.z,0.0),3.0);vec3 deep=vec3(0.024,0.122,0.169);vec3 aqua=vec3(0.243,0.770,0.900);vec3 water=mix(deep,aqua,smoothstep(0.02,0.55,h));vec3 col=water+spec*vec3(0.95,0.99,1.0)*h+fres*aqua*0.45*h;float a=clamp(h*1.25,0.0,1.0);gl_FragColor=vec4(col,a);}`;
 
 type FBO = { t: WebGLTexture; f: WebGLFramebuffer; w: number; h: number };
 
@@ -282,6 +284,7 @@ export function createFluidSim(canvas: HTMLCanvasElement, opts: FluidOptions = {
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     gl.useProgram(P.disp);
     bindQuad(P.disp);
+    setTexel(P.disp, DYE, DYE); // neighbour offsets for the height-field normal
     gl.uniform1i(u(P.disp, "uDye"), 0);
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, dye.r.t);
