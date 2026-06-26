@@ -7,6 +7,13 @@
       "runtimeArgs": ["dev"],
       "port": 3001,
       "autoPort": true
+    },
+    {
+      "name": "ng-dev",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["-C", "C:/Users/belac/Projects/Clients/NextGenWaterSystems", "dev"],
+      "port": 3002,
+      "autoPort": true
     }
   ]
 }
