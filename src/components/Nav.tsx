@@ -11,9 +11,13 @@ export function Nav() {
       <div className="wrap">
         <Link className="brand" href="/" data-cursor>
           <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            {/* foam-rim stroke keeps the silhouette when difference-blending
+                lands the drop over same-coloured dye (aqua-on-aqua ≈ black) */}
             <path
               d="M20 3s12 13 12 22a12 12 0 1 1-24 0C8 16 20 3 20 3Z"
               fill="#3ec5e6"
+              stroke="#f3f9fb"
+              strokeWidth="1.5"
             />
           </svg>
           {business.shortName}

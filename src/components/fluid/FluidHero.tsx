@@ -108,6 +108,12 @@ export function FluidHero() {
           ease: "power4.out",
           stagger: 0.12,
           delay: 0.15,
+          // the masks are only needed during the reveal — revert so the tight
+          // line-height stops clipping descenders ("handled properly.")
+          onComplete: () => {
+            split?.revert();
+            split = null;
+          },
         });
       } catch {
         gsap.fromTo(
