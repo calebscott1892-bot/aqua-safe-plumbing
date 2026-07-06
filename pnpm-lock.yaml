@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@gsap/react':
+        specifier: ^2.1.2
+        version: 2.1.2(gsap@3.15.0)(react@18.3.1)
       gsap:
         specifier: ^3.13.0
         version: 3.15.0
@@ -51,6 +54,12 @@ packages:
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
+
+  '@gsap/react@2.1.2':
+    resolution: {integrity: sha512-JqliybO1837UcgH2hVOM4VO+38APk3ECNrsuSM4MuXp+rbf+/2IG2K1YJiqfTcXQHH7XlA0m3ykniFYstfq0Iw==}
+    peerDependencies:
+      gsap: ^3.12.5
+      react: '>=17'
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -570,6 +579,11 @@ packages:
 snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
+
+  '@gsap/react@2.1.2(gsap@3.15.0)(react@18.3.1)':
+    dependencies:
+      gsap: 3.15.0
+      react: 18.3.1
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:

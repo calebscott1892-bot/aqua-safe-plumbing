@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { business } from "@/content/business";
+import C4FooterCredit from "@/components/c4-footer-credit/C4FooterCredit";
 
 export function Footer() {
   return (
@@ -56,8 +57,18 @@ export function Footer() {
         </div>
 
         <div className="foot-bottom">
-          <span>© 2026 {business.name}</span>
-          <span>Concept design — C4 Studios</span>
+          <span>© 2026 {business.name} · Concept design</span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            <span style={{ fontSize: "10px", letterSpacing: "0.05em", opacity: 0.4 }}>Designed by</span>
+            <C4FooterCredit
+              href="https://c4studios.com.au"
+              label="Designed by C4 Studios"
+              size={34}
+              showText={false}
+              openInNewTab
+              colorScheme="dark"
+            />
+          </span>
         </div>
       </div>
     </footer>
