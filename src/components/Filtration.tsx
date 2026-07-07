@@ -4,7 +4,8 @@ import { useState } from "react";
 import { filtration } from "@/content/filtration";
 
 const CLARITY = ["#b3ad63", "#5fa8a0", "#2ba6c6"]; // murky → clear per stage
-const CX = [106, 210, 314]; // canister centres in the 420-wide viewBox
+const CAP = ["#e7aebf", "#b9a7dd", "#9ec7e8"]; // stage caps (echo the product: rose / lavender / blue)
+const CX = [130, 210, 290]; // canister centres in the 420-wide viewBox
 
 export function Filtration() {
   const [a, setA] = useState(0);
@@ -15,6 +16,7 @@ export function Filtration() {
       <div className="wrap">
         <span className="eyebrow">{filtration.kicker}</span>
         <h2 className="h-sec">{filtration.title}</h2>
+        <p className="filt-spec">{filtration.spec}</p>
         <p className="lead">{filtration.lead}</p>
 
         <div className="filt-grid">
@@ -73,74 +75,67 @@ export function Filtration() {
 function FilterSchematic({ active }: { active: number }) {
   return (
     <svg viewBox="0 0 420 420" width="100%" height="100%" aria-hidden="true">
-      {/* mounting rail */}
-      <rect x="20" y="70" width="360" height="10" rx="5" fill="#cde0e8" />
+      <text x="60" y="72" fontSize="11" fill="#46626f">MAINS IN</text>
 
-      {/* base manifold pipe */}
-      <line x1="24" y1="96" x2="372" y2="96" stroke="#b7cdd6" strokeWidth="11" strokeLinecap="round" />
+      {/* stainless frame */}
+      <rect x="58" y="84" width="304" height="286" rx="18" fill="none" stroke="#9fb6c2" strokeWidth="6" />
+      <rect x="58" y="84" width="304" height="286" rx="18" fill="none" stroke="#dce9ee" strokeWidth="2" />
 
-      {/* clean-water progress overlay along the manifold (grows with stage) */}
-      <line
-        x1="24"
-        y1="96"
-        x2={CX[active]}
-        y2="96"
-        stroke="#2ba6c6"
-        strokeWidth="11"
-        strokeLinecap="round"
-        className="filt-flow"
-      />
+      {/* top manifold rail */}
+      <line x1="80" y1="126" x2="340" y2="126" stroke="#b7cdd6" strokeWidth="10" strokeLinecap="round" />
+      {/* clean-water progress along the rail (grows with stage) */}
+      <line x1="80" y1="126" x2={CX[active]} y2="126" stroke="#2ba6c6" strokeWidth="10" strokeLinecap="round" className="filt-flow" />
 
-      {/* inlet label */}
-      <text x="20" y="58" fontSize="11" fill="#5b7686" fontFamily="var(--font-hanken)">MAINS IN</text>
+      {/* pressure gauges on top */}
+      {CX.map((cx, i) => (
+        <g key={`g${i}`} opacity={i <= active ? 1 : 0.5} style={{ transition: "opacity 0.4s" }}>
+          <circle cx={cx} cy="106" r="12" fill="#fff" stroke="#9fb6c2" strokeWidth="2" />
+          <line x1={cx} y1="106" x2={cx + (i <= active ? 7 : -3)} y2={i <= active ? 99 : 101} stroke="#0f5c7a" strokeWidth="2" strokeLinecap="round" />
+        </g>
+      ))}
 
       {CX.map((cx, i) => {
         const on = i <= active;
         const current = i === active;
         return (
-          <g key={i} opacity={on ? 1 : 0.4} style={{ transition: "opacity 0.4s" }}>
-            {/* connector down-tube */}
-            <line x1={cx} y1="96" x2={cx} y2="122" stroke="#9fbecb" strokeWidth="8" />
+          <g key={i} opacity={on ? 1 : 0.45} style={{ transition: "opacity 0.4s" }}>
+            {/* down-tube */}
+            <line x1={cx} y1="126" x2={cx} y2="156" stroke="#9fbecb" strokeWidth="7" />
             {/* housing */}
-            <rect x={cx - 32} y="122" width="64" height="196" rx="18" fill="#f4fafc" stroke={current ? "#2ba6c6" : "#a9c4cf"} strokeWidth={current ? 3 : 2} />
-            {/* cap */}
-            <rect x={cx - 22} y="112" width="44" height="18" rx="6" fill="#cadfe7" />
-            {/* water fill */}
+            <rect x={cx - 30} y="156" width="60" height="174" rx="16" fill="#eef5f8" stroke={current ? "#2ba6c6" : "#a9c4cf"} strokeWidth={current ? 3 : 2} />
+            {/* coloured stage cap (echoes the product) */}
+            <rect x={cx - 24} y="148" width="48" height="16" rx="5" fill={CAP[i]} />
+            {/* water fill (clarity improves per stage) */}
             <rect
-              x={cx - 26}
-              y="138"
-              width="52"
-              height="172"
-              rx="12"
+              x={cx - 25}
+              y="170"
+              width="50"
+              height="158"
+              rx="11"
               fill={CLARITY[i]}
               opacity={on ? 0.9 : 0}
               style={{ transition: "opacity 0.5s, fill 0.5s" }}
             />
-            {/* media speckle */}
             {on && (
-              <g fill="#ffffff" opacity="0.35">
-                <circle cx={cx - 12} cy="170" r="2.4" />
-                <circle cx={cx + 8} cy="200" r="2" />
-                <circle cx={cx - 4} cy="235" r="2.6" />
-                <circle cx={cx + 12} cy="270" r="2" />
-                <circle cx={cx - 14} cy="290" r="2.2" />
+              <g fill="#ffffff" opacity="0.32">
+                <circle cx={cx - 11} cy="200" r="2.4" />
+                <circle cx={cx + 9} cy="232" r="2" />
+                <circle cx={cx - 4} cy="266" r="2.5" />
+                <circle cx={cx + 11} cy="298" r="2" />
               </g>
             )}
-            {/* stage number */}
-            <text x={cx} y="352" fontSize="13" fontWeight="600" textAnchor="middle" fill={current ? "#0f5c7a" : "#5b7686"} fontFamily="var(--font-clash)">
-              {String(i + 1).padStart(2, "0")}
+            {/* stage label */}
+            <text x={cx} y="352" fontSize="12" fontWeight="600" textAnchor="middle" fill={current ? "#0f5c7a" : "#46626f"}>
+              Stage {i + 1}
             </text>
           </g>
         );
       })}
 
-      {/* outlet + tap (clear only once fully filtered) */}
-      <path d="M372 96 H392 V300 H372" fill="none" stroke={active >= 2 ? "#2ba6c6" : "#b7cdd6"} strokeWidth="9" strokeLinecap="round" style={{ transition: "stroke 0.5s" }} />
-      <rect x="350" y="298" width="42" height="12" rx="4" fill="#9fbecb" />
-      {active >= 2 && (
-        <circle cx="371" cy="330" r="6" fill="#2ba6c6" className="filt-drip" />
-      )}
-      <text x="371" y="372" fontSize="11" textAnchor="middle" fill="#5b7686" fontFamily="var(--font-hanken)">FILTERED OUT</text>
+      {/* outlet (clear only once fully filtered) */}
+      <path d="M340 126 H372 V300 H354" fill="none" stroke={active >= 2 ? "#2ba6c6" : "#b7cdd6"} strokeWidth="8" strokeLinecap="round" style={{ transition: "stroke 0.5s" }} />
+      {active >= 2 && <circle cx="371" cy="330" r="6" fill="#2ba6c6" className="filt-drip" />}
+      <text x="368" y="356" fontSize="11" textAnchor="middle" fill="#46626f">FILTERED</text>
     </svg>
   );
 }

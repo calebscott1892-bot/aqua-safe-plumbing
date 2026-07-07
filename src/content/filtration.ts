@@ -8,47 +8,46 @@ export type FilterStage = {
 
 /**
  * Whole-house 3-stage water filtration — the interactive centrepiece.
- *
- * ⚠️ Stage names/media below are indicative of a typical 3-stage whole-house
- *    system. CONFIRM the exact media and claims against the clear2o unit
- *    Aqua-Safe supplies (https://www.clear2o.com.au/services/whole-house-filtration/)
- *    before launch — filtration performance claims are regulated.
+ * Matched to the client's actual unit: Clear2O FHWR-3SI-20 Series
+ * (see the supplied spec sheet). Stage media/claims are per that sheet —
+ * re-confirm with the client before launch (filtration claims are regulated).
  */
 export const filtration = {
   kicker: "Whole-home water filtration",
   title: "Cleaner water, from every tap.",
+  spec: "3-stage · genuine 20″ stainless housings · up to 18-month cartridges",
   lead:
-    "One system, installed where the water enters your home — so every shower, tap and appliance runs on filtered water. Click through the three stages to see how it works.",
+    "One 3-stage system, installed where the water enters your home — so every shower, tap and appliance runs on filtered water. Click through the stages to see how it works.",
   stages: [
     {
       n: "01",
-      name: "Sediment",
-      sub: "Pre-filter",
+      name: "Sediment Filter",
+      sub: "3-layer pre-filter",
       body:
-        "The first stage traps rust, sand, silt and grit before they reach the finer media — protecting the filters that follow and your appliances.",
-      removes: ["Sediment", "Rust", "Sand", "Silt"],
+        "Advanced 3-layer media traps dirt, rust and grit down to 1 micron — protecting the carbon stages and your appliances. Food-grade throughout.",
+      removes: ["Sediment", "Rust", "Grit", "1 micron"],
     },
     {
       n: "02",
-      name: "KDF + Carbon",
-      sub: "Reduction media",
+      name: "Heavy Metal & Taste",
+      sub: "KDF 55/85 + coconut carbon",
       body:
-        "High-purity KDF and granular activated carbon reduce chlorine, dissolved metals and scale — the stage that does the heavy lifting.",
-      removes: ["Chlorine", "Heavy metals", "Scale"],
+        "KDF 55 reduces heavy metals while KDF 85 adds anti-bacterial protection, and natural coconut carbon lifts taste and odour. Up to an 18-month cartridge life.",
+      removes: ["Heavy metals", "Chlorine", "Bacteria"],
     },
     {
       n: "03",
-      name: "Carbon Block",
-      sub: "Final polish",
+      name: "Limescale & Taste",
+      sub: "Scale-reduction carbon",
       body:
-        "A dense coconut-shell carbon block gives the water a final polish — knocking out lingering taste, odour and chemicals on the way to the tap.",
-      removes: ["Taste", "Odour", "Chemicals"],
+        "Limescale-reduction media — more efficient than the traditional stuff — plus coconut carbon gives a final 1-micron polish for softer, better-tasting water.",
+      removes: ["Limescale", "Scale", "Odour"],
     },
   ] as FilterStage[],
   addon: {
     name: "Reverse Osmosis",
     tag: "Add-on · available separately",
     body:
-      "Want lab-grade drinking water too? Add an under-sink reverse-osmosis system for a dedicated drinking tap — removing dissolved solids the whole-house filter leaves behind.",
+      "Want lab-grade drinking water too? Add an under-sink reverse-osmosis system for a dedicated drinking tap — removing the dissolved solids the whole-house filter leaves behind.",
   },
 };
