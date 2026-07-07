@@ -1,35 +1,32 @@
 import Link from "next/link";
+import { regions } from "@/content/regions";
 import { suburbs } from "@/content/suburbs";
-import { IndexLabel } from "@/components/ui/IndexLabel";
 
-/**
- * Perth suburb list. Each links to /areas/[slug] — the hook for future
- * programmatic landing pages (the real SEO engine for a trades site).
- */
 export function ServiceAreas() {
   return (
-    <section className="blk" id="areas">
+    <section id="areas" className="section">
       <div className="wrap">
+        <span className="eyebrow">Service areas</span>
+        <h2 className="h-sec">Across the Perth metro.</h2>
+        <p className="lead">
+          North or south of the river, the eastern suburbs, the hills or the CBD — if you&rsquo;re in
+          Perth, we&rsquo;ll get to you.
+        </p>
+
         <div className="areas-grid">
-          <div>
-            <IndexLabel num="05" label="Service areas" />
-            <h2>
-              Across the
-              <br />
-              Perth metro.
-            </h2>
-            <p className="areas-lead">
-              North or south of the river — if you’re in Perth, we’ll get to you. Can’t see your
-              suburb? Call us, we probably cover it.
-            </p>
-          </div>
-          <div className="suburbs">
-            {suburbs.map((s) => (
-              <Link key={s.slug} href={`/areas/${s.slug}`} data-cursor>
-                {s.name}
-              </Link>
-            ))}
-          </div>
+          {regions.map((r) => (
+            <div className="area-card reveal" key={r.name}>
+              <h3>{r.name}</h3>
+              <p>{r.blurb}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="areas-actions">
+          <Link className="btn btn-fill" href="/areas">
+            View all service areas
+          </Link>
+          <span className="areas-count">{suburbs.length} suburbs across the metro</span>
         </div>
       </div>
     </section>

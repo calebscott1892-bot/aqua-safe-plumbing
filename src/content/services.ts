@@ -1,69 +1,98 @@
 export type Service = {
-  sn: string;
   title: string;
   body: string;
-  /** e.g. "From" / "Supply & install from" / "Free design consult" */
-  price: string;
-  /** Highlighted $ amount (omit for non-priced services). */
-  priceAmount?: string;
+  /** icon id — mapped to an inline SVG in the Services component */
+  icon: string;
 };
 
 /**
- * ⚠️ PLACEHOLDER PRICING — invented "from" prices for the concept/demo.
- *    CLIENT MUST VERIFY every price before this goes live.
+ * Services are grouped Residential / Commercial. No pricing is shown anywhere
+ * on the site (client direction) — the FAQ explains how charging works.
  */
-export const services: Service[] = [
+export const residentialServices: Service[] = [
   {
-    sn: "01",
-    title: "Blocked drains",
-    body: "CCTV drain cameras and high-pressure jetting that clears the blockage and finds the cause — so it doesn't come back next month.",
-    price: "From",
-    priceAmount: "$149",
+    title: "Blocked Drains",
+    body: "CCTV camera diagnosis and high-pressure jetting that clears the blockage and finds the cause.",
+    icon: "drain",
   },
   {
-    sn: "02",
-    title: "Hot water",
-    body: "Gas, electric and heat-pump systems supplied, installed and repaired. Most replacements sorted the same day you call.",
-    price: "Supply & install from",
-    priceAmount: "$890",
+    title: "Bathroom Renovations",
+    body: "Bathroom and laundry plumbing roughed-in and fitted off to standard, coordinated around your build.",
+    icon: "bath",
   },
   {
-    sn: "03",
-    title: "Gas fitting",
-    body: "Cooktops, heaters, and gas leaks handled by licensed gas fitters. Safe, compliant, and certified to standard.",
-    price: "Appliance install from",
-    priceAmount: "$249",
+    title: "Burst Pipes",
+    body: "Fast isolation and a permanent repair of burst and leaking pipes — before the damage spreads.",
+    icon: "pipe",
   },
   {
-    sn: "04",
-    title: "Bathroom renos",
-    body: "Full bathroom and laundry fit-outs, project-managed from rough-in through to the final silicone bead.",
-    price: "Free design consult",
+    title: "Gas Fitting",
+    body: "Licensed gas fitting — cooktops, heaters, hot water and leak repairs, certified to standard.",
+    icon: "flame",
   },
   {
-    sn: "05",
-    title: "Reticulation",
-    body: "Garden retic and bore pump install and repair. Keep the lawn green through a Perth summer without the guesswork.",
-    price: "Repairs from",
-    priceAmount: "$129",
+    title: "Water Filtration",
+    body: "Whole-of-home and under-sink filtration supplied and installed, with a reverse-osmosis add-on available.",
+    icon: "filter",
   },
   {
-    sn: "06",
-    title: "Water filtration",
-    body: "Whole-of-home and under-sink filtration, installed by the team behind Next Gen Water Systems.",
-    price: "Supply & install from",
-    priceAmount: "$495",
+    title: "General Plumbing Maintenance",
+    body: "Taps, toilets, leaks and the everyday repairs that keep a home running properly.",
+    icon: "wrench",
+  },
+  {
+    title: "Real Estate Maintenance",
+    body: "Reliable, documented plumbing maintenance for rentals and managed properties.",
+    icon: "home",
   },
 ];
 
-/** Short labels for the scrolling marquee ticker. */
+export const commercialServices: Service[] = [
+  {
+    title: "Strata Maintenance",
+    body: "Responsive plumbing maintenance for strata-managed complexes and common property.",
+    icon: "building",
+  },
+  {
+    title: "High Pressure Jetting",
+    body: "Trailer-jetter power that clears heavy commercial blockages and tree-root intrusion.",
+    icon: "jet",
+  },
+  {
+    title: "Insurance Repairs",
+    body: "Make-safe, condition reports and repairs coordinated for insurance claims.",
+    icon: "shield",
+  },
+  {
+    title: "Commercial Maintenance",
+    body: "Scheduled and reactive maintenance for offices, retail, hospitality and industrial sites.",
+    icon: "commercial",
+  },
+  {
+    title: "CCTV Drain Inspections",
+    body: "Camera surveys that locate faults and give you a recorded condition report.",
+    icon: "camera",
+  },
+  {
+    title: "Preventative Maintenance",
+    body: "Planned servicing that catches problems before they interrupt trade.",
+    icon: "calendar",
+  },
+  {
+    title: "Pre-Purchase Plumbing Inspections",
+    body: "Independent plumbing inspections before you buy — know exactly what you're taking on.",
+    icon: "search",
+  },
+];
+
+/** Short labels for the trust marquee ticker (no pricing, no reticulation). */
 export const tickerServices = [
   "Blocked drains",
-  "Hot water",
+  "Hot water systems",
   "Gas fitting",
   "Burst pipes",
-  "Bathroom renos",
-  "Reticulation",
-  "Leak detection",
   "Water filtration",
+  "Strata maintenance",
+  "CCTV drain inspections",
+  "High-pressure jetting",
 ];

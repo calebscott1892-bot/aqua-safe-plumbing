@@ -1,32 +1,31 @@
-import { Nav } from "@/components/Nav";
-import { FluidHero } from "@/components/fluid/FluidHero";
+import { Hero } from "@/components/Hero";
 import { Ticker } from "@/components/Ticker";
-import { RisingNarrative } from "@/components/RisingNarrative";
-import { HorizontalServices } from "@/components/HorizontalServices";
+import { Specialists } from "@/components/Specialists";
+import { Filtration } from "@/components/Filtration";
+import { Services } from "@/components/Services";
+import { HotWater } from "@/components/HotWater";
 import { WhyUs } from "@/components/WhyUs";
+import { Respectful } from "@/components/Respectful";
 import { Reviews } from "@/components/Reviews";
 import { ServiceAreas } from "@/components/ServiceAreas";
+import { Faq } from "@/components/Faq";
 import { FinalCTA } from "@/components/FinalCTA";
-import { Footer } from "@/components/Footer";
-import { Reveals } from "@/components/Reveals";
 
 export default function Home() {
   return (
-    <>
-      <Nav />
-      <main>
-        <FluidHero />
-        <Ticker />
-        <RisingNarrative />
-        <HorizontalServices />
-        <WhyUs />
-        <Reviews />
-        <ServiceAreas />
-        <FinalCTA />
-      </main>
-      <Footer />
-      {/* Global scroll-reveal controller (mounted last so all .reveal nodes exist) */}
-      <Reveals />
-    </>
+    <main>
+      <Hero />
+      <Ticker />
+      <Specialists />
+      <Filtration />
+      <Services />
+      <HotWater />
+      <WhyUs />
+      <Respectful />
+      <Reviews />
+      <ServiceAreas />
+      <Faq />
+      <FinalCTA />
+    </main>
   );
 }

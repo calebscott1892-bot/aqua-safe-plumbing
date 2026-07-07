@@ -1,22 +1,22 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { clash, hanken } from "./fonts";
-import { SmoothScroll } from "@/lib/providers/SmoothScroll";
-import { Cursor } from "@/components/Cursor";
-import { WateryButtons } from "@/components/WateryButtons";
+import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/Footer";
 import { MobileCallBar } from "@/components/MobileCallBar";
+import { Reveals } from "@/components/Reveals";
 import { localBusinessJsonLd } from "@/lib/jsonld";
 import { business } from "@/content/business";
 
 const SITE_DESCRIPTION =
-  "Perth licensed plumbers & gas fitters. Upfront fixed quotes, no call-out fees, workmanship guaranteed. (Concept demo — C4 Studios.)";
+  "Aqua-Safe Plumbing & Maintenance — Perth's trusted maintenance plumbers and gas fitters. Blocked drains, hot water, gas fitting, water filtration and commercial maintenance, done properly.";
 
 export const metadata: Metadata = {
   // metadataBase is a placeholder — swap for the real production domain at launch.
   metadataBase: new URL("https://aquasafeplumbing.example"),
   title: {
-    default: "Aqua Safe Plumbing — Perth | Water, handled properly",
-    template: "%s | Aqua Safe Plumbing",
+    default: "Aqua-Safe Plumbing & Maintenance — Perth | Plumbing, done properly",
+    template: "%s | Aqua-Safe Plumbing & Maintenance",
   },
   description: SITE_DESCRIPTION,
   applicationName: business.name,
@@ -24,24 +24,23 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_AU",
     siteName: business.name,
-    title: "Aqua Safe Plumbing — Perth | Water, handled properly",
+    title: "Aqua-Safe Plumbing & Maintenance — Perth",
     description: SITE_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aqua Safe Plumbing — Perth",
+    title: "Aqua-Safe Plumbing & Maintenance — Perth",
     description: SITE_DESCRIPTION,
   },
-  robots: {
-    // Concept/demo — keep it out of the index until it's the real site.
-    index: false,
-    follow: false,
-  },
+  // ⚠️ Demo build on a temporary URL with PLACEHOLDER phone/email. Keep out of
+  // the index until the real domain + verified contact details are in place,
+  // then delete this `robots` block to make the (SEO-ready) pages indexable.
+  robots: { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#04141d",
-  colorScheme: "dark",
+  themeColor: "#0f5c7a",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
@@ -54,12 +53,11 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
-        <SmoothScroll>
-          <Cursor />
-          <WateryButtons />
-          {children}
-        </SmoothScroll>
+        <Nav />
+        {children}
+        <Footer />
         <MobileCallBar />
+        <Reveals />
       </body>
     </html>
   );

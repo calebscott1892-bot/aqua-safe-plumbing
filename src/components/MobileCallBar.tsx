@@ -1,16 +1,16 @@
-import { Button } from "@/components/ui/Button";
+import Link from "next/link";
 import { business } from "@/content/business";
 
-/** Sticky bottom call/book bar — shown on small screens only (CSS). */
+/** Sticky mobile action bar — call + book. Shown under 900px (see globals.css). */
 export function MobileCallBar() {
   return (
-    <div className="mbar">
-      <Button variant="line" href={business.phoneHref} ariaLabel={`Call ${business.name}`}>
-        Call
-      </Button>
-      <Button variant="fill" href="#book">
-        Book now
-      </Button>
+    <div className="mbar" aria-label="Quick contact">
+      <a className="btn btn-line" href={business.phoneHref}>
+        Call us
+      </a>
+      <Link className="btn btn-fill" href="/#book">
+        Book your quote
+      </Link>
     </div>
   );
 }

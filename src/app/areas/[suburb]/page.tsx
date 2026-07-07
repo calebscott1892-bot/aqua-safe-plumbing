@@ -1,17 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Nav } from "@/components/Nav";
-import { Footer } from "@/components/Footer";
-import { Button } from "@/components/ui/Button";
 import { suburbs, getSuburb } from "@/content/suburbs";
 import { business } from "@/content/business";
+import { residentialServices } from "@/content/services";
 
 /*
-  SEO STUB — programmatic service-area landing page.
-  This is the hook the brief asks for: suburb links are ready to become real,
-  individually-rankable pages. Data lives in src/content/suburbs.ts. Expand each
-  with suburb-specific copy, local reviews, a map, FAQs, etc.
+  Programmatic service-area landing page. Suburb data lives in
+  src/content/suburbs.ts — expand each with suburb-specific copy, local reviews,
+  a map and FAQs to make these individually rankable.
 */
 
 export function generateStaticParams() {
@@ -22,8 +19,8 @@ export function generateMetadata({ params }: { params: { suburb: string } }): Me
   const s = getSuburb(params.suburb);
   if (!s) return {};
   return {
-    title: `Plumber in ${s.name} | Aqua Safe Plumbing`,
-    description: `Licensed plumbers and gas fitters servicing ${s.name} and the surrounding Perth metro. Upfront fixed quotes, no call-out fees.`,
+    title: `Plumber in ${s.name}`,
+    description: `Licensed plumbers and gas fitters servicing ${s.name} and the surrounding Perth metro — upfront pricing, fully insured, and a workmanship guarantee.`,
   };
 }
 
@@ -32,44 +29,43 @@ export default function SuburbPage({ params }: { params: { suburb: string } }) {
   if (!s) notFound();
 
   return (
-    <>
-      <Nav />
-      <main>
-        <section className="blk" style={{ paddingTop: "clamp(140px, 20vh, 220px)" }}>
-          <div className="wrap">
-            <div className="num">Service area</div>
-            <h1
-              style={{
-                fontSize: "clamp(40px, 7vw, 96px)",
-                letterSpacing: "-0.03em",
-                lineHeight: 0.98,
-                maxWidth: "16ch",
-              }}
-            >
-              Plumber in{" "}
-              <em style={{ fontStyle: "normal", color: "var(--aqua)" }}>{s.name}</em>.
-            </h1>
-            <p style={{ color: "var(--muted)", fontSize: 19, maxWidth: "46ch", marginTop: 22 }}>
-              Licensed plumbers and gas fitters servicing {s.name} and the surrounding Perth metro —
-              upfront fixed quotes, no call-out fees, and a workmanship guarantee.
-            </p>
-            <div style={{ display: "flex", gap: 14, marginTop: 36, flexWrap: "wrap" }}>
-              <Button variant="fill" href="/#book">
-                Book a plumber
-              </Button>
-              <Button variant="line" href={business.phoneHref}>
-                Call {business.phoneDisplay}
-              </Button>
-            </div>
-            <p style={{ marginTop: 56, fontSize: 14 }}>
-              <Link href="/" data-cursor style={{ color: "var(--aqua)" }}>
-                ← Back to {business.shortName}
-              </Link>
-            </p>
+    <main>
+      <section className="section" style={{ paddingTop: "clamp(130px, 18vh, 200px)" }}>
+        <div className="wrap">
+          <span className="eyebrow">Service area</span>
+          <h1 className="h-sec" style={{ fontSize: "clamp(40px, 7vw, 88px)", maxWidth: "16ch" }}>
+            Plumber in{" "}
+            <span style={{ color: "var(--teal)" }}>{s.name}</span>.
+          </h1>
+          <p className="lead">
+            Licensed plumbers and gas fitters servicing {s.name} and the surrounding Perth metro —
+            upfront pricing, fully insured, and workmanship we stand behind.
+          </p>
+          <div className="areas-actions" style={{ marginTop: 32 }}>
+            <Link className="btn btn-fill" href="/#book">
+              Book your quote
+            </Link>
+            <a className="btn btn-line" href={business.phoneHref}>
+              Call {business.phoneDisplay}
+            </a>
           </div>
-        </section>
-      </main>
-      <Footer />
-    </>
+
+          <div className="svc-grid" style={{ marginTop: 56 }}>
+            {residentialServices.slice(0, 6).map((svc) => (
+              <article className="svc-card" key={svc.title}>
+                <h3>{svc.title}</h3>
+                <p>{svc.body}</p>
+              </article>
+            ))}
+          </div>
+
+          <p style={{ marginTop: 48, fontSize: 15 }}>
+            <Link href="/areas" style={{ color: "var(--teal)", fontWeight: 600 }}>
+              ← All service areas
+            </Link>
+          </p>
+        </div>
+      </section>
+    </main>
   );
 }

@@ -1,32 +1,20 @@
 import { whyUs } from "@/content/whyUs";
-import { IndexLabel } from "@/components/ui/IndexLabel";
-import { Counter } from "@/components/ui/Counter";
+import { copy } from "@/content/copy";
 
-/** Sticky count-up figure against a bordered numbered list. */
 export function WhyUs() {
   return (
-    <section className="blk" id="why">
+    <section id="why" className="section">
       <div className="wrap">
+        <span className="eyebrow">Why Aqua-Safe</span>
+        <h2 className="h-sec">{copy.trustedPlumbers}</h2>
         <div className="why-grid">
-          <div className="why-sticky">
-            <IndexLabel num="03" label="Why Aqua Safe" />
-            <div className="big">
-              <Counter to={whyUs.years} />
-              <span style={{ color: "var(--foam)" }}>+</span>
-              <small>{whyUs.intro}</small>
+          {whyUs.map((item) => (
+            <div className="why-item reveal" key={item.n}>
+              <div className="why-n">{item.n}</div>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
             </div>
-          </div>
-          <div className="why-items">
-            {whyUs.items.map((item) => (
-              <div className="why-item reveal" key={item.n}>
-                <div className="t">
-                  <span className="n">{item.n}</span>
-                  <h4>{item.title}</h4>
-                </div>
-                <p>{item.body}</p>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </section>

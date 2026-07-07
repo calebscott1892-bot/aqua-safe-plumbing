@@ -1,65 +1,71 @@
-# Aqua Safe Plumbing — concept site
+# Aqua-Safe Plumbing & Maintenance
 
-A concept/demo build for a Perth plumber pitch, by **C4 Studios**. Next.js 14 (App
-Router) + TypeScript + Tailwind, with a cursor-reactive WebGL water hero, GSAP
-ScrollTrigger scroll moments, and Lenis smooth scroll.
+Marketing site for a Perth maintenance-plumbing business, by **C4 Studios**.
+Next.js 14 (App Router) + TypeScript + Tailwind, statically exported to GitHub
+Pages. Light, brand-teal design with **click-driven** interactions (no
+scroll-jacking) — including an interactive 3-stage whole-house water-filter.
 
-> **All content is placeholder** and deliberately fake — phone `(08) 0000 0000`,
-> licence `PL 0000 / GF 00000`, invented "from" prices, sample reviews. Verify
-> everything before launch (pricing especially — flagged with `TODO`/`⚠️` in code).
+> **Contact details are still placeholder** — phone `(08) 0000 0000`, email, and
+> ABN must be confirmed before launch. Licence numbers are **real** (Plumbing
+> `PL10802`, Gas Fitting `GF22810`). There is **no pricing** anywhere on the site
+> (client direction). The site is `robots: noindex` until the real domain +
+> verified contact details are in place — see `src/app/layout.tsx`.
 
 ## Run
 
 ```bash
 pnpm install
-pnpm dev          # http://localhost:3000
-pnpm build && pnpm start   # production build
+pnpm dev            # http://localhost:3000
+pnpm build          # static export → ./out
 ```
 
-Requires Node 18+ and pnpm 9 (`corepack enable pnpm` or `npm i -g pnpm`).
-Deploys to **Vercel** with zero config (framework auto-detected).
+Requires Node 18+ and pnpm 9 (`corepack enable pnpm`).
+
+## Deploy
+
+Static export (`output: 'export'`) to **GitHub Pages** via
+`.github/workflows/deploy.yml` (auto-deploys on push to `main`). Served at
+`/<repo>/` — `basePath`/`assetPrefix` are prod-gated so `next dev` stays at root.
+
+## The original concept (preserved)
+
+The first direction — a dark, cursor-reactive **WebGL water hero** with GSAP
+scroll moments and Lenis smooth-scroll — is kept as a frozen artifact:
+
+- Full source on branch **`concept/scroll-hero`** (tag `concept-scroll-v1`).
+- A built snapshot in `public/concept/`, served live at **`/concept`** (linked
+  from the footer). Rebuild it from the branch if needed:
+  worktree the branch, set `basePath` to `/<repo>/concept`, `pnpm build`, and
+  copy `out/` into `public/concept/`.
 
 ## Where things live
 
 | What | Where |
 |---|---|
-| **Design tokens** (colours, max-width, easing) | CSS variables in [`src/app/globals.css`](src/app/globals.css) `:root`, mapped into Tailwind in [`tailwind.config.ts`](tailwind.config.ts) — change once, updates everywhere |
+| **Design tokens** (teal palette, spacing, radius, shadow) | `:root` in [`src/app/globals.css`](src/app/globals.css) |
 | **Fonts** (self-hosted Clash Display + Hanken Grotesk) | [`src/app/fonts.ts`](src/app/fonts.ts) + `src/app/fonts/*.woff2` |
-| **Copy / business details** | `src/content/*` — `business.ts` (NAP, phone, licence), `services.ts`, `reviews.ts`, `suburbs.ts`, `narrative.ts`, `whyUs.ts` |
-| **Sections** | `src/components/*` (e.g. `fluid/FluidHero`, `RisingNarrative`, `HorizontalServices`, `WhyUs`, `Reviews`, `Footer`) |
-| **Fluid sim tuning** | `FLUID_CONFIG` at the top of [`src/components/fluid/FluidHero.tsx`](src/components/fluid/FluidHero.tsx) (resolution, dissipation, curl, splat radius, DPR cap) |
-| **SEO** | metadata + OpenGraph in [`src/app/layout.tsx`](src/app/layout.tsx); `LocalBusiness`/`Plumber` JSON-LD in [`src/lib/jsonld.ts`](src/lib/jsonld.ts); favicon `src/app/icon.svg` |
-
-## Swapping placeholder → real content
-
-1. **Business details** — edit `src/content/business.ts` (phone, email, licence, area).
-   It feeds the nav, hero, CTA, footer, mobile bar, and JSON-LD.
-2. **Services / reviews / suburbs / narrative / why-us** — edit the matching file
-   in `src/content/`. Components map straight off these arrays.
-3. **Pricing** — in `src/content/services.ts`; **client must confirm every price.**
-4. **SEO** — set the real domain in `metadataBase` (layout) + `url` (jsonld), flip
-   `robots` to indexable in `layout.tsx`, and fill in real NAP/geo/hours in `jsonld.ts`.
-5. **Images** (when added) — use `next/image`; AVIF/WebP is already on in `next.config.mjs`.
+| **Brand logos** | `public/brand/*` (teal/white/navy lockups + `src/lib/asset.ts` for basePath-safe URLs) |
+| **Business details** (NAP, real licences) | [`src/content/business.ts`](src/content/business.ts) |
+| **Services** (residential + commercial, no pricing) | [`src/content/services.ts`](src/content/services.ts) |
+| **Filtration stages + RO add-on** | [`src/content/filtration.ts`](src/content/filtration.ts) — ⚠️ confirm media/claims against the supplied clear2o unit |
+| **Why-us / regions / FAQ / marketing copy** | `src/content/{whyUs,regions,faqs,copy}.ts` |
+| **Sections** | `src/components/*` (`Hero`, `Filtration`, `Services`, `HotWater`, `WhyUs`, `Respectful`, `Reviews`, `ServiceAreas`, `Faq`, `FinalCTA`, …) |
+| **SEO** | metadata in [`src/app/layout.tsx`](src/app/layout.tsx); `LocalBusiness`/`Plumber` JSON-LD in [`src/lib/jsonld.ts`](src/lib/jsonld.ts) |
 
 ### Programmatic suburb pages (the SEO engine)
-Suburb links point at `/areas/[suburb]`, generated from `src/content/suburbs.ts`
-via [`src/app/areas/[suburb]/page.tsx`](src/app/areas/%5Bsuburb%5D/page.tsx). It's
-a stub today — add suburbs to the data file and expand the template with
-suburb-specific copy, local reviews, a map, and FAQs to turn each into a real
-rankable landing page.
+Suburbs live in [`src/content/suburbs.ts`](src/content/suburbs.ts) and generate
+individually-rankable pages at `/areas/[suburb]` (reached via the **View all
+service areas** button → `/areas`). Expand the template with suburb-specific
+copy, local reviews, a map and FAQs to strengthen each page.
 
-## Reduced motion & WebGL fallback
+## Going live checklist
 
-The hero feature-detects WebGL: no context → a static CSS gradient frame. With
-**`prefers-reduced-motion: reduce`** the fluid sim never starts (static gradient),
-Lenis is disabled (native scroll), the rising-water narrative and horizontal
-services fall back to static / natively-scrollable layouts so all copy stays
-readable, the review autoplay is off, and every reveal/marquee/count-up renders
-in its final state instantly. The sim also caps `devicePixelRatio` at 2 and pauses
-its render loop (via IntersectionObserver) whenever the hero is off-screen.
+1. Confirm phone / email / ABN in `src/content/business.ts`.
+2. Confirm the filtration stage names + claims in `src/content/filtration.ts`.
+3. Set the real domain in `metadataBase` (layout) + `url` (jsonld), fill real
+   NAP/geo/hours in `jsonld.ts`, then **delete the `robots` block** in
+   `layout.tsx` to make the (SEO-ready) pages indexable.
 
 ---
 
-Concept design — **C4 Studios**. Scaffold is componentised for reuse (e.g. Next
-Gen Water Systems). A dark, type-led hero variant explored during the pitch is
-parked on the `concepts/hero-variants` branch.
+Designed & built by **C4 Studios**.

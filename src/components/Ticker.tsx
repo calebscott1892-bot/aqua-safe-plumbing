@@ -1,18 +1,16 @@
-import { Fragment } from "react";
 import { tickerServices } from "@/content/services";
 
 /**
- * Infinite services marquee. Two identical groups translated -50% on loop gives a
- * seamless scroll (pure CSS — pauses on hover and under reduced motion).
+ * Trust marquee — two identical groups scrolled -50% for a seamless loop.
+ * Pure CSS (pauses on hover, disabled under reduced motion).
  */
-function TickerGroup() {
+function Group() {
   return (
-    <span>
+    <span className="ticker-group">
       {tickerServices.map((s, i) => (
-        <Fragment key={i}>
+        <span className="tk" key={i}>
           {s}
-          <i className="dot" />
-        </Fragment>
+        </span>
       ))}
     </span>
   );
@@ -22,8 +20,8 @@ export function Ticker() {
   return (
     <div className="ticker" aria-hidden="true">
       <div className="ticker-track">
-        <TickerGroup />
-        <TickerGroup />
+        <Group />
+        <Group />
       </div>
     </div>
   );

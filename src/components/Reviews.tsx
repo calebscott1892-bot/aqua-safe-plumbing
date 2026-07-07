@@ -2,57 +2,50 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { reviews } from "@/content/reviews";
-import { IndexLabel } from "@/components/ui/IndexLabel";
-import { useReducedMotion } from "@/lib/useReducedMotion";
 
-/** Single large rotating quote with prev/next + autoplay (autoplay off when reduced). */
 export function Reviews() {
-  const [index, setIndex] = useState(0);
-  const reduced = useReducedMotion();
-  const total = reviews.length;
-
-  const go = useCallback((n: number) => setIndex((n + total) % total), [total]);
+  const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const go = useCallback((n: number) => setI((n + reviews.length) % reviews.length), []);
 
   useEffect(() => {
-    if (reduced) return; // don't auto-advance content for reduced-motion users
-    const t = setInterval(() => setIndex((p) => (p + 1) % total), 6000);
+    if (paused) return;
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+      return;
+    const t = setInterval(() => setI((p) => (p + 1) % reviews.length), 6500);
     return () => clearInterval(t);
-  }, [reduced, total]);
+  }, [paused]);
 
-  const r = reviews[index];
+  const r = reviews[i];
 
   return (
-    <section className="blk" id="reviews" style={{ background: "var(--abyss-2)" }}>
-      <div className="wrap">
-        <IndexLabel num="04" label="From 480+ five-star reviews" />
-        <div className="rev-wrap">
-          {/* key={index} replays the fade animation on each change */}
-          <div className="rev-quote" key={index}>
-            <span className="qq">“</span>
-            {r.quote}
-            <span className="qq">”</span>
-          </div>
-          <div className="rev-meta">
-            <div className="av" aria-hidden="true">
-              {r.initials}
-            </div>
-            <div>
-              <b>{r.name}</b>
-              <small>{r.location}</small>
-            </div>
-          </div>
-          <div className="rev-nav">
-            <button onClick={() => go(index - 1)} data-cursor aria-label="Previous review">
-              ←
-            </button>
-            <button onClick={() => go(index + 1)} data-cursor aria-label="Next review">
-              →
-            </button>
-            <span className="rev-count">
-              {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-            </span>
+    <section id="reviews" className="section rev">
+      <div className="wrap" onMouseEnter={() => setPaused(true)} onFocusCapture={() => setPaused(true)}>
+        <span className="eyebrow" style={{ justifyContent: "center" }}>What Perth says</span>
+        <blockquote className="rev-quote" key={i}>
+          <span className="qq">“</span>
+          {r.quote}
+          <span className="qq">”</span>
+        </blockquote>
+        <div className="rev-meta">
+          <div className="rev-avatar">{r.initials}</div>
+          <div style={{ textAlign: "left" }}>
+            <div className="rev-name">{r.name}</div>
+            <div className="rev-loc">{r.location}</div>
           </div>
         </div>
+        <div className="rev-nav">
+          <button className="rev-btn" onClick={() => { setPaused(true); go(i - 1); }} aria-label="Previous review">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 5l-7 7 7 7" /></svg>
+          </button>
+          <span className="areas-count">{String(i + 1).padStart(2, "0")} / {String(reviews.length).padStart(2, "0")}</span>
+          <button className="rev-btn" onClick={() => { setPaused(true); go(i + 1); }} aria-label="Next review">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 5l7 7-7 7" /></svg>
+          </button>
+        </div>
+        <span className="sr-only" aria-live="polite">
+          Review {i + 1} of {reviews.length}: {r.quote} — {r.name}, {r.location}
+        </span>
       </div>
     </section>
   );

@@ -1,30 +1,34 @@
 export type WhyItem = { n: string; title: string; body: string };
 
-export const whyUs = {
-  /** Count-up figure (years in business — placeholder). */
-  years: 15,
-  intro:
-    "Years keeping Perth homes flowing — one honest job at a time. No nonsense, no upsell, no surprises on the invoice.",
-  items: [
-    {
-      n: "01",
-      title: "Fixed quotes, in writing",
-      body: "You approve the price before we lift a spanner. The quote becomes the invoice — no hourly creep, no end-of-job shock.",
-    },
-    {
-      n: "02",
-      title: "We stay local",
-      body: "We’re not burning your time crossing the city. Local means we reach you faster and it costs you less.",
-    },
-    {
-      n: "03",
-      title: "Respectful in your home",
-      body: "Shoe covers on, mess cleaned up, and we explain the options so you decide — never a hard sell.",
-    },
-    {
-      n: "04",
-      title: "Guaranteed workmanship",
-      body: "Every job carries our workmanship guarantee. If something isn’t right, we come back and make it right.",
-    },
-  ] as WhyItem[],
-};
+export const whyUs: WhyItem[] = [
+  {
+    n: "01",
+    title: "No sales pressure or upselling",
+    body: "We explain your options in plain terms and let you decide. No hard sell — ever.",
+  },
+  {
+    n: "02",
+    title: "Advanced equipment",
+    body: "CCTV cameras, high-pressure jetting and electronic leak detection — so we find the real cause.",
+  },
+  {
+    n: "03",
+    title: "Licensed plumbers & gas fitters",
+    body: "Fully insured and licensed. Plumbing PL10802 · Gas Fitting GF22810.",
+  },
+  {
+    n: "04",
+    title: "Fixed prices for standard works",
+    body: "Standard jobs are quoted up front, so you know the price before we start.",
+  },
+  {
+    n: "05",
+    title: "Same-day service for urgent works",
+    body: "Burst pipes and no hot water can't wait — we prioritise urgent jobs.",
+  },
+  {
+    n: "06",
+    title: "We clean up before we leave",
+    body: "We leave your home or site the way we found it — tidy and sorted.",
+  },
+];

@@ -10,7 +10,7 @@ export const localBusinessJsonLd = {
   "@type": ["LocalBusiness", "Plumber"],
   name: business.name,
   description:
-    "Perth licensed plumbers & gas fitters — upfront fixed quotes, no call-out fees, workmanship guaranteed.",
+    "Perth's trusted maintenance plumbers and gas fitters — blocked drains, hot water, gas fitting, water filtration and commercial maintenance. Family-owned, fully insured, upfront pricing.",
   telephone: business.phoneDisplay,
   email: business.email,
   url: "https://aquasafeplumbing.example",

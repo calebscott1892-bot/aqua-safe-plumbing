@@ -1,48 +1,51 @@
 import Link from "next/link";
 import { business } from "@/content/business";
+import { asset } from "@/lib/asset";
 import C4FooterCredit from "@/components/c4-footer-credit/C4FooterCredit";
 
 export function Footer() {
   return (
-    <footer>
+    <footer className="foot">
       <div className="wrap">
         <div className="foot-top">
-          <div>
-            <Link className="brand" href="#top">
-              <svg viewBox="0 0 40 40" fill="none" width="26" height="26" aria-hidden="true">
-                <path d="M20 3s12 13 12 22a12 12 0 1 1-24 0C8 16 20 3 20 3Z" fill="#3ec5e6" />
-              </svg>
-              {business.shortName}
-            </Link>
-            <p className="about">
-              Perth’s straight-talking plumbers and gas fitters. Upfront pricing, no call-out fees,
-              workmanship we stand behind.
+          <div className="foot-brand">
+            <img
+              src={asset("/brand/aquasafe-horizontal-white.png")}
+              alt={business.name}
+              width={2452}
+              height={854}
+            />
+            <p className="foot-about">
+              Perth&rsquo;s trusted maintenance plumbers and gas fitters. Family-owned, fully
+              insured, and focused on doing the job properly.
             </p>
-            <div className="lic">
-              <span>{business.licence.plumbing}</span>
-              <span>{business.licence.gas}</span>
-              <span>Fully insured</span>
+            <div className="foot-badges">
+              <span className="foot-badge">Plumbing {business.licence.plumbing}</span>
+              <span className="foot-badge">Gas Fitting {business.licence.gas}</span>
+              <span className="foot-badge">Fully insured</span>
+              <span className="foot-badge">Family owned</span>
             </div>
           </div>
 
           <div>
             <h5>Services</h5>
             <ul>
-              <li><a href="#services">Blocked drains</a></li>
-              <li><a href="#services">Hot water</a></li>
-              <li><a href="#services">Gas fitting</a></li>
-              <li><a href="#services">Bathroom renos</a></li>
-              <li><a href="#services">Water filtration</a></li>
+              <li><Link href="/#services">Blocked drains</Link></li>
+              <li><Link href="/#services">Hot water systems</Link></li>
+              <li><Link href="/#services">Gas fitting</Link></li>
+              <li><Link href="/#filtration">Water filtration</Link></li>
+              <li><Link href="/#services">Commercial &amp; strata</Link></li>
             </ul>
           </div>
 
           <div>
             <h5>Company</h5>
             <ul>
-              <li><a href="#why">About</a></li>
-              <li><a href="#reviews">Reviews</a></li>
-              <li><a href="#areas">Service areas</a></li>
-              <li><a href="#book">Contact</a></li>
+              <li><Link href="/#specialists">About</Link></li>
+              <li><Link href="/#reviews">Reviews</Link></li>
+              <li><Link href="/#areas">Service areas</Link></li>
+              <li><Link href="/#faq">FAQ</Link></li>
+              <li><Link href="/#book">Book a quote</Link></li>
             </ul>
           </div>
 
@@ -57,9 +60,12 @@ export function Footer() {
         </div>
 
         <div className="foot-bottom">
-          <span>© 2026 {business.name} · Concept design</span>
+          <span>© 2026 {business.name}</span>
+          <a href={asset("/concept/")}>View the original concept design →</a>
           <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
-            <span style={{ fontSize: "10px", letterSpacing: "0.05em", opacity: 0.4 }}>Designed by</span>
+            <span style={{ fontSize: "11px", letterSpacing: "0.05em", opacity: 0.5 }}>
+              Designed by
+            </span>
             <C4FooterCredit
               href="https://c4studios.com.au"
               label="Designed by C4 Studios"

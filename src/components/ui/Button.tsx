@@ -1,42 +1,42 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
-type Variant = "fill" | "line";
+type Variant = "fill" | "line" | "aqua";
 
 type Props = {
   variant?: Variant;
   href?: string;
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   ariaLabel?: string;
 };
 
 /**
- * The two concept button styles (filled aqua / outlined) with the slide-up
- * hover fill. Renders an external <a> for tel:/mailto:/http, a Next <Link> for
- * internal hrefs, or a <button> when no href is given.
+ * Filled / outlined / aqua pill button. Renders an external <a> for
+ * tel:/mailto:/#/http, a Next <Link> for internal routes, or a <button>.
  */
 export function Button({ variant = "fill", href, children, className = "", ariaLabel }: Props) {
-  const cls = `btn ${variant === "fill" ? "btn-fill" : "btn-line"} ${className}`.trim();
+  const cls = `btn btn-${variant} ${className}`.trim();
 
   if (href) {
-    const external = /^(tel:|mailto:|https?:)/.test(href);
+    const external = /^(tel:|mailto:|https?:|#)/.test(href);
     if (external) {
       return (
-        <a className={cls} href={href} data-cursor aria-label={ariaLabel}>
-          <span>{children}</span>
+        <a className={cls} href={href} aria-label={ariaLabel}>
+          {children}
         </a>
       );
     }
     return (
-      <Link className={cls} href={href} data-cursor aria-label={ariaLabel}>
-        <span>{children}</span>
+      <Link className={cls} href={href} aria-label={ariaLabel}>
+        {children}
       </Link>
     );
   }
 
   return (
-    <button className={cls} data-cursor aria-label={ariaLabel}>
-      <span>{children}</span>
+    <button className={cls} aria-label={ariaLabel}>
+      {children}
     </button>
   );
 }
