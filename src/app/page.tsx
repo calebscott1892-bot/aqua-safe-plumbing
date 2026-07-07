@@ -2,7 +2,7 @@ import { Hero } from "@/components/Hero";
 import { Ticker } from "@/components/Ticker";
 import { Specialists } from "@/components/Specialists";
 import { Filtration } from "@/components/Filtration";
-import { RiseStory } from "@/components/RiseStory";
+import { RisingNarrative } from "@/components/RisingNarrative";
 import { Services } from "@/components/Services";
 import { HotWater } from "@/components/HotWater";
 import { WhyUs } from "@/components/WhyUs";
@@ -19,7 +19,7 @@ export default function Home() {
       <Ticker />
       <Specialists />
       <Filtration />
-      <RiseStory />
+      <RisingNarrative />
       <Services />
       <HotWater />
       <WhyUs />

@@ -68,34 +68,6 @@ export const copy = {
     points: ["Work area cleaned", "Options explained clearly", "No pressure", "No upselling"],
   },
 
-  /** "How we work" story — the problem -> call -> fix beat with the water-rise
-   *  visual (reinstated from the original design, now play-on-view / click, not
-   *  scroll-driven). */
-  story: {
-    kicker: "How we work",
-    heading: "From first call to fixed.",
-    panels: [
-      {
-        n: "01",
-        kicker: "The problem",
-        heading: "It always starts small.",
-        body: "A slow drain. A patch of damp. A water bill that crept up. The little things are the warning — and they never fix themselves.",
-      },
-      {
-        n: "02",
-        kicker: "The call",
-        heading: "One call, a real plumber.",
-        body: "No call centre, no runaround. You talk to someone who knows the job and can be at your door — often the same day.",
-      },
-      {
-        n: "03",
-        kicker: "The fix",
-        heading: "Done once. Done right.",
-        body: "A fixed price agreed before we start, quality parts, and workmanship we stand behind — so it stays fixed.",
-      },
-    ],
-  },
-
   /** Replaces the old "Perth's straight-talking plumbers" line. */
   trustedPlumbers: "Perth's trusted maintenance plumbers.",
 
