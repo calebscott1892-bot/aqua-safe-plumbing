@@ -19,7 +19,6 @@ export default function Home() {
       <Ticker />
       <Specialists />
       <Filtration />
-      <RisingNarrative />
       <Services />
       <HotWater />
       <WhyUs />
@@ -27,6 +26,7 @@ export default function Home() {
       <Reviews />
       <ServiceAreas />
       <Faq />
+      <RisingNarrative />
       <FinalCTA />
     </main>
   );
