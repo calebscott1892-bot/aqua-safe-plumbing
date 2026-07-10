@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { residentialServices, commercialServices } from "@/content/services";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
 
@@ -40,13 +41,17 @@ export function Services() {
 
         <div className="svc-grid">
           {list.map((s) => (
-            <article className="svc-card" key={s.title}>
+            <Link className="svc-card svc-card--link" key={s.slug} href={`/services/${s.slug}`}>
               <div className="svc-icon">
                 <ServiceIcon id={s.icon} />
               </div>
               <h3>{s.title}</h3>
               <p>{s.body}</p>
-            </article>
+              <span className="svc-more" aria-hidden="true">
+                Book or learn more
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </span>
+            </Link>
           ))}
         </div>
       </div>

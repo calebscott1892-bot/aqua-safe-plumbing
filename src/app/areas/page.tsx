@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { suburbs } from "@/content/suburbs";
-import { regions } from "@/content/regions";
+import { regions, uniqueSuburbs } from "@/content/regions";
 import { business } from "@/content/business";
 
 export const metadata: Metadata = {
@@ -9,6 +8,11 @@ export const metadata: Metadata = {
   description: `${business.name} services the whole Perth metro — north and south of the river, the eastern suburbs, the hills and the CBD. Find your suburb.`,
 };
 
+/**
+ * The "all suburbs" page (Aaron, 2026-07): every suburb we service, grouped
+ * by region, with a call-to-action. Individual per-suburb SEO landing pages
+ * are a separate (retainer) programme — see src/content/suburbs.ts.
+ */
 export default function AreasIndex() {
   return (
     <main>
@@ -21,38 +25,46 @@ export default function AreasIndex() {
             the Perth metro.
           </h1>
           <p className="lead">
-            We cover all of the Perth metro. Choose your suburb below, or call us — chances are
-            we&rsquo;re already working nearby.
+            {uniqueSuburbs().length}+ suburbs, one number. Find yours below — or just call, chances
+            are we&rsquo;re already working nearby.
           </p>
 
-          <div className="areas-grid" style={{ marginTop: 44 }}>
-            {regions.map((r) => (
-              <div className="area-card" key={r.name}>
-                <h3>{r.name}</h3>
-                <p>{r.blurb}</p>
+          {regions.map((r) => (
+            <div key={r.name} style={{ marginTop: 56 }}>
+              <h2 className="h-sec" style={{ fontSize: "clamp(24px, 3vw, 34px)" }}>
+                {r.name}
+              </h2>
+              <p className="lead" style={{ marginTop: 6, fontSize: 16 }}>
+                {r.blurb}
+              </p>
+              <div className="suburb-links">
+                {r.suburbs.map((s) => (
+                  <span className="suburb-chip" key={`${r.name}-${s}`}>
+                    {s}
+                  </span>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
 
-          <h2 className="h-sec" style={{ fontSize: "clamp(24px, 3vw, 34px)", marginTop: 64 }}>
-            All suburbs
-          </h2>
-          <div className="suburb-links">
-            {suburbs.map((s) => (
-              <Link key={s.slug} href={`/areas/${s.slug}`} className="suburb-link">
-                {s.name}
+          <div className="areas-cta">
+            <h2>In one of these suburbs?</h2>
+            <p>Licensed plumbers and gas fitters, upfront pricing, and workmanship we stand behind.</p>
+            <div className="areas-actions" style={{ marginTop: 20 }}>
+              <a className="btn btn-fill" href={business.phoneHref}>
+                Call {business.phoneDisplay}
+              </a>
+              <Link className="btn btn-line" href="/#book">
+                Book your quote
               </Link>
-            ))}
+            </div>
           </div>
 
-          <div className="areas-actions" style={{ marginTop: 48 }}>
-            <a className="btn btn-fill" href={business.phoneHref}>
-              Call {business.phoneDisplay}
-            </a>
-            <Link className="btn btn-line" href="/">
+          <p style={{ marginTop: 40, fontSize: 15 }}>
+            <Link href="/" style={{ color: "var(--teal)", fontWeight: 600 }}>
               ← Back home
             </Link>
-          </div>
+          </p>
         </div>
       </section>
     </main>

@@ -16,6 +16,9 @@ const ICONS: Record<string, JSX.Element> = {
   camera: (<><rect x="3" y="7" width="18" height="12" rx="2" {...P} /><circle cx="12" cy="13" r="3" {...P} /><path d="M8 7l1.5-2h5L16 7" {...P} /></>),
   calendar: (<><rect x="4" y="5" width="16" height="15" rx="2" {...P} /><path d="M4 9h16M8 3v4M16 3v4M9 14l2 2 4-4" {...P} /></>),
   search: (<><circle cx="11" cy="11" r="6" {...P} /><path d="M20 20l-4-4" {...P} /></>),
+  hotwater: (<><rect x="7" y="3" width="10" height="15" rx="3" {...P} /><path d="M9.5 10c.8-1 .8-2 0-3M12.5 11c1-1.2 1-2.6 0-3.8M9 21h2M13 21h2M9 18v3M15 18v3" {...P} /></>),
+  facility: (<><path d="M3 20h18" {...P} /><path d="M5 20V8l5-3v15M14 20V10h5v10" {...P} /><path d="M7 9h.01M7 12h.01M7 15h.01M16.5 13h.01M16.5 16h.01" {...P} /></>),
+  fitout: (<><rect x="4" y="4" width="16" height="16" rx="1" {...P} /><path d="M4 12h7M11 12V4M11 12a4 4 0 0 1 4 4" {...P} /><path d="M15 20v-1" {...P} /></>),
 };
 
 export function ServiceIcon({ id }: { id: string }) {

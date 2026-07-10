@@ -1,9 +1,9 @@
 import { business } from "@/content/business";
 
 /**
- * LocalBusiness + Plumber structured data.
- * ⚠️ PLACEHOLDER NAP — client to verify (and add real address, geo, hours,
- *    aggregateRating, sameAs social links) before launch.
+ * LocalBusiness + Plumber structured data. Phone + email are real
+ * (client-supplied 2026-07). ⚠️ Still to add before launch: real address,
+ * geo, hours, aggregateRating, sameAs social links — and confirm the domain.
  */
 export const localBusinessJsonLd = {
   "@context": "https://schema.org",
@@ -13,8 +13,8 @@ export const localBusinessJsonLd = {
     "Perth's trusted maintenance plumbers and gas fitters — blocked drains, hot water, gas fitting, water filtration and commercial maintenance. Family-owned, fully insured, upfront pricing.",
   telephone: business.phoneDisplay,
   email: business.email,
-  url: "https://aquasafeplumbing.example",
-  image: "https://aquasafeplumbing.example/icon.svg",
+  url: "https://aquasafeplumbing.com",
+  image: "https://aquasafeplumbing.com/icon.svg",
   priceRange: "$$",
   address: {
     "@type": "PostalAddress",

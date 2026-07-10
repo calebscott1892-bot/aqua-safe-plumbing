@@ -18,8 +18,9 @@ export default function Home() {
       <Hero />
       <Ticker />
       <Specialists />
-      <Filtration />
+      {/* Aaron 2026-07: services first, filtration second */}
       <Services />
+      <Filtration />
       <HotWater />
       <WhyUs />
       <Respectful />

@@ -19,9 +19,11 @@ export const copy = {
     {
       id: "water",
       kicker: "Whole-home water filtration",
-      title: ["Water,", "handled properly."],
+      // Aaron 2026-07: second heading changed from "Water, handled properly."
+      // so "properly" isn't said twice across the first two panels.
+      title: ["Cleaner water,", "from every tap."],
       body:
-        "Cleaner water from every tap in the house — one whole-home filtration system, professionally installed. Reverse-osmosis drinking-water add-on available.",
+        "One whole-home filtration system, installed where the water enters your home — every shower, tap and appliance runs on filtered water. Reverse-osmosis drinking-water add-on available.",
       primary: { label: "See how it works", href: "#filtration" },
       secondary: { label: "Book your quote", href: "#book" },
     },

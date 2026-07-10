@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { filtration } from "@/content/filtration";
+import { business } from "@/content/business";
 
 const CLARITY = ["#b3ad63", "#5fa8a0", "#2ba6c6"]; // murky → clear per stage
 const CAP = ["#e7aebf", "#b9a7dd", "#9ec7e8"]; // stage caps (echo the product: rose / lavender / blue)
@@ -65,6 +66,32 @@ export function Filtration() {
           {/* ---- right: interactive schematic ---- */}
           <div className="filt-vis" role="img" aria-label={`Whole-house filter, stage ${stage.n}: ${stage.name}`}>
             <FilterSchematic active={a} />
+          </div>
+        </div>
+
+        {/* ---- why choose whole-house filtration (Aaron's copy, 2026-07) ---- */}
+        <div className="filt-why reveal">
+          <h3>{filtration.why.title}</h3>
+          <ul className="filt-why-list">
+            {filtration.why.points.map((p) => (
+              <li key={p}>{p}</li>
+            ))}
+          </ul>
+        </div>
+
+        {/* ---- dedicated-solution CTA band ---- */}
+        <div className="filt-band reveal">
+          <p>{filtration.dedicated.line}</p>
+          <div className="filt-band-actions">
+            <a className="btn btn-aqua" href={filtration.dedicated.primary.href}>
+              {filtration.dedicated.primary.label}
+            </a>
+            <a
+              className="btn btn-line"
+              href={`mailto:${business.email}?subject=${encodeURIComponent("Water filtration enquiry")}`}
+            >
+              {filtration.dedicated.secondary.label}
+            </a>
           </div>
         </div>
       </div>
