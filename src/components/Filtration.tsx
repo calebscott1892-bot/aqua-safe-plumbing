@@ -6,7 +6,7 @@ import { business } from "@/content/business";
 
 const CLARITY = ["#b3ad63", "#5fa8a0", "#2ba6c6"]; // murky → clear per stage
 const CAP = ["#e7aebf", "#b9a7dd", "#9ec7e8"]; // stage caps (echo the product: rose / lavender / blue)
-const CX = [130, 210, 290]; // canister centres in the 420-wide viewBox
+const CX = [128, 220, 312]; // canister centres in the 440-wide viewBox
 
 export function Filtration() {
   const [a, setA] = useState(0);
@@ -101,23 +101,79 @@ export function Filtration() {
 
 function FilterSchematic({ active }: { active: number }) {
   return (
-    <svg viewBox="0 0 420 420" width="100%" height="100%" aria-hidden="true">
-      <text x="60" y="72" fontSize="11" fill="#46626f">MAINS IN</text>
+    <svg viewBox="0 0 440 440" width="100%" height="100%" aria-hidden="true">
+      <defs>
+        {/* brushed-stainless sump: dark edges, bright centre */}
+        <linearGradient id="fs-sump" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#b7c7ce" />
+          <stop offset="0.26" stopColor="#eef4f6" />
+          <stop offset="0.5" stopColor="#fafcfd" />
+          <stop offset="0.74" stopColor="#dae5ea" />
+          <stop offset="1" stopColor="#a6b8c0" />
+        </linearGradient>
+        <linearGradient id="fs-cap" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#33404a" />
+          <stop offset="0.5" stopColor="#54636d" />
+          <stop offset="1" stopColor="#28333b" />
+        </linearGradient>
+        <linearGradient id="fs-bracket" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#dde6eb" />
+          <stop offset="1" stopColor="#a9bbc4" />
+        </linearGradient>
+      </defs>
 
-      {/* stainless frame */}
-      <rect x="58" y="84" width="304" height="286" rx="18" fill="none" stroke="#9fb6c2" strokeWidth="6" />
-      <rect x="58" y="84" width="304" height="286" rx="18" fill="none" stroke="#dce9ee" strokeWidth="2" />
+      {/* IN / OUT — labels sit in the top margin, clear of everything */}
+      <text x="40" y="60" fontSize="12.5" letterSpacing="1.6" fill="#5b7683">MAINS IN</text>
+      <text
+        x="400"
+        y="60"
+        fontSize="12.5"
+        letterSpacing="1.6"
+        textAnchor="end"
+        fill={active >= 2 ? "#1789a8" : "#8aa2ad"}
+        fontWeight={active >= 2 ? 700 : 400}
+        style={{ transition: "fill 0.5s" }}
+      >
+        FILTERED
+      </text>
+      <path d="M52 70 V98 H74" fill="none" stroke="#b7cdd6" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M366 98 H392 V70"
+        fill="none"
+        stroke={active >= 2 ? "#2ba6c6" : "#b7cdd6"}
+        strokeWidth="9"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ transition: "stroke 0.5s" }}
+      />
 
-      {/* top manifold rail */}
-      <line x1="80" y1="126" x2="340" y2="126" stroke="#b7cdd6" strokeWidth="10" strokeLinecap="round" />
-      {/* clean-water progress along the rail (grows with stage) */}
-      <line x1="80" y1="126" x2={CX[active]} y2="126" stroke="#2ba6c6" strokeWidth="10" strokeLinecap="round" className="filt-flow" />
+      {/* mounting bracket the housings hang from */}
+      <rect x="72" y="88" width="296" height="20" rx="6" fill="url(#fs-bracket)" stroke="#93aab6" strokeWidth="1.4" />
+      {/* clean-water progress creeping along the bracket per stage */}
+      <rect
+        x="82"
+        y="94"
+        width={Math.max(0, CX[active] - 82)}
+        height="8"
+        rx="4"
+        fill="#2ba6c6"
+        opacity="0.9"
+        className="filt-flow"
+      />
 
-      {/* pressure gauges on top */}
-      {CX.map((cx, i) => (
-        <g key={`g${i}`} opacity={i <= active ? 1 : 0.5} style={{ transition: "opacity 0.4s" }}>
-          <circle cx={cx} cy="106" r="12" fill="#fff" stroke="#9fb6c2" strokeWidth="2" />
-          <line x1={cx} y1="106" x2={cx + (i <= active ? 7 : -3)} y2={i <= active ? 99 : 101} stroke="#0f5c7a" strokeWidth="2" strokeLinecap="round" />
+      {/* pressure gauges seated on the bracket */}
+      {[172, 264].map((gx, i) => (
+        <g key={gx} opacity={active >= i ? 1 : 0.55} style={{ transition: "opacity 0.4s" }}>
+          <circle cx={gx} cy="98" r="9" fill="#fff" stroke="#7f9aa6" strokeWidth="1.6" />
+          <line
+            x1={gx}
+            y1="98"
+            x2={gx + (active >= i ? 5 : -4)}
+            y2={active >= i ? 92 : 94}
+            stroke="#0f5c7a"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+          />
         </g>
       ))}
 
@@ -125,44 +181,76 @@ function FilterSchematic({ active }: { active: number }) {
         const on = i <= active;
         const current = i === active;
         return (
-          <g key={i} opacity={on ? 1 : 0.45} style={{ transition: "opacity 0.4s" }}>
-            {/* down-tube */}
-            <line x1={cx} y1="126" x2={cx} y2="156" stroke="#9fbecb" strokeWidth="7" />
-            {/* housing */}
-            <rect x={cx - 30} y="156" width="60" height="174" rx="16" fill="#eef5f8" stroke={current ? "#2ba6c6" : "#a9c4cf"} strokeWidth={current ? 3 : 2} />
-            {/* coloured stage cap (echoes the product) */}
-            <rect x={cx - 24} y="148" width="48" height="16" rx="5" fill={CAP[i]} />
-            {/* water fill (clarity improves per stage) */}
+          <g key={i} opacity={on ? 1 : 0.5} style={{ transition: "opacity 0.4s" }}>
+            {/* soft ground shadow grounds the housing */}
+            <ellipse cx={cx} cy="364" rx="32" ry="7" fill="#1a3a49" opacity="0.13" />
+            {/* down-tube from the bracket */}
+            <rect x={cx - 4} y="106" width="8" height="20" fill="#9fbecb" />
+            {/* dark charcoal cap */}
+            <rect x={cx - 35} y="122" width="70" height="30" rx="7" fill="url(#fs-cap)" />
+            {/* coloured stage band (teal when it's the active stage) */}
             <rect
-              x={cx - 25}
-              y="170"
-              width="50"
-              height="158"
-              rx="11"
-              fill={CLARITY[i]}
-              opacity={on ? 0.9 : 0}
-              style={{ transition: "opacity 0.5s, fill 0.5s" }}
+              x={cx - 35}
+              y="147"
+              width="70"
+              height="6"
+              rx="2"
+              fill={current ? "#2ba6c6" : CAP[i]}
+              style={{ transition: "fill 0.4s" }}
             />
-            {on && (
-              <g fill="#ffffff" opacity="0.32">
-                <circle cx={cx - 11} cy="200" r="2.4" />
-                <circle cx={cx + 9} cy="232" r="2" />
-                <circle cx={cx - 4} cy="266" r="2.5" />
-                <circle cx={cx + 11} cy="298" r="2" />
-              </g>
-            )}
-            {/* stage label */}
-            <text x={cx} y="352" fontSize="12" fontWeight="600" textAnchor="middle" fill={current ? "#0f5c7a" : "#46626f"}>
+            {/* brushed sump */}
+            <rect
+              x={cx - 34}
+              y="156"
+              width="68"
+              height="198"
+              rx="22"
+              fill="url(#fs-sump)"
+              stroke={current ? "#2ba6c6" : "#a4c0cc"}
+              strokeWidth={current ? 2.5 : 1.4}
+              style={{ transition: "stroke 0.4s" }}
+            />
+            {/* water inside, clarifying per stage (clipped to the sump) */}
+            <clipPath id={`fs-clip${i}`}>
+              <rect x={cx - 31} y="168" width="62" height="184" rx="18" />
+            </clipPath>
+            <g clipPath={`url(#fs-clip${i})`}>
+              <rect
+                x={cx - 31}
+                y="184"
+                width="62"
+                height="170"
+                fill={CLARITY[i]}
+                opacity={on ? 0.9 : 0}
+                style={{ transition: "opacity 0.5s, fill 0.5s" }}
+              />
+              {on && <ellipse cx={cx} cy="184" rx="31" ry="5" fill="#fff" opacity="0.4" />}
+              {on && (
+                <g fill="#fff" opacity="0.42">
+                  <circle cx={cx - 12} cy="220" r="2.6" />
+                  <circle cx={cx + 10} cy="256" r="2" />
+                  <circle cx={cx - 4} cy="296" r="2.6" />
+                  <circle cx={cx + 12} cy="326" r="1.8" />
+                </g>
+              )}
+            </g>
+            {/* vertical specular streak — reads as polished metal */}
+            <rect x={cx - 21} y="162" width="6" height="188" rx="3" fill="#ffffff" opacity="0.45" />
+            {/* stage label, in the bottom margin */}
+            <text
+              x={cx}
+              y="392"
+              fontSize="13"
+              fontWeight="600"
+              textAnchor="middle"
+              fill={current ? "#0f5c7a" : "#5b7683"}
+              style={{ transition: "fill 0.4s" }}
+            >
               Stage {i + 1}
             </text>
           </g>
         );
       })}
-
-      {/* outlet (clear only once fully filtered) */}
-      <path d="M340 126 H372 V300 H354" fill="none" stroke={active >= 2 ? "#2ba6c6" : "#b7cdd6"} strokeWidth="8" strokeLinecap="round" style={{ transition: "stroke 0.5s" }} />
-      {active >= 2 && <circle cx="371" cy="330" r="6" fill="#2ba6c6" className="filt-drip" />}
-      <text x="368" y="356" fontSize="11" textAnchor="middle" fill="#46626f">FILTERED</text>
     </svg>
   );
 }

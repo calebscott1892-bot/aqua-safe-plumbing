@@ -22,11 +22,14 @@ export function ServiceAreas() {
           Perth, we&rsquo;ll get to you. Tap a region to see its suburbs.
         </p>
 
-        <div className="areas-grid areas-grid--wide">
+        {/* `reveal` lives on the STATIC grid, not the cards: the cards
+            recompute className from state on every toggle, which would wipe
+            the JS-added `is-in` class and make them vanish (the reported bug) */}
+        <div className="areas-grid areas-grid--wide reveal">
           {regions.map((r, i) => {
             const isOpen = open === i;
             return (
-              <div className={`area-card area-card--toggle reveal${isOpen ? " is-open" : ""}`} key={r.name}>
+              <div className={`area-card area-card--toggle${isOpen ? " is-open" : ""}`} key={r.name}>
                 <button
                   className="area-toggle"
                   onClick={() => setOpen(isOpen ? null : i)}
