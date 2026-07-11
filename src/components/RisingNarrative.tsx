@@ -1,26 +1,31 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { narrative } from "@/content/narrative";
 import { createWaterSurface } from "@/components/fluid/waterSurface";
+import { GooeyText } from "@/components/ui/GooeyText";
+
+const HEADINGS = narrative.map((n) => n.heading);
 
 /**
- * Pinned "problem -> call -> fix" narrative. As you scroll the tall section the
- * WATER LEVEL RISES, panels cross-fade, and the side dot-progress tracks along.
+ * Pinned "problem → call → fix" narrative. As you scroll the tall section the
+ * WATER LEVEL RISES and the story advances: the KICKER + BODY cross-fade and
+ * the TITLE gooey-morphs from one heading to the next (blur-melt through an
+ * SVG threshold filter). The side dot-progress tracks along.
  *
- * The water is a bespoke WebGL surface (wavy/foamy waterline + depth tint +
- * animated caustics + sheen) driven by the same ScrollTrigger progress. If WebGL
- * is unavailable it falls back to the CSS gradient div. Under reduced motion the
- * whole section becomes static stacked panels (narrative--static) so all the
- * copy stays readable.
+ * The water is a bespoke WebGL surface driven by the same ScrollTrigger
+ * progress (CSS gradient fallback). Under reduced motion the whole section is
+ * static stacked panels so all the copy stays readable — no morph, no water.
  */
 export function RisingNarrative() {
   const reduced = useReducedMotion();
   const rootRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const waterRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+  const activeRef = useRef(0);
 
   useEffect(() => {
     if (reduced) return;
@@ -29,10 +34,8 @@ export function RisingNarrative() {
 
     const canvas = canvasRef.current;
     const water = waterRef.current;
-    const panels = gsap.utils.toArray<HTMLElement>(".narr-panel", root);
     const dots = gsap.utils.toArray<HTMLElement>(".narr-progress i", root);
 
-    // Bespoke WebGL water surface; the CSS gradient div is the fallback.
     const surface = canvas ? createWaterSurface(canvas) : null;
     const useGL = !!surface && surface.supported;
     if (useGL && water) water.style.display = "none";
@@ -50,7 +53,6 @@ export function RisingNarrative() {
     }
 
     const ctx = gsap.context(() => {
-      gsap.set(panels[0], { opacity: 1 });
       ScrollTrigger.create({
         trigger: root,
         start: "top top",
@@ -58,13 +60,13 @@ export function RisingNarrative() {
         scrub: 0.6,
         onUpdate: (self) => {
           const p = self.progress;
-          // map scroll progress to a fill level (a sliver at the start, near top at the end)
           if (useGL && surface) surface.setFill(0.04 + p * 0.92);
           else if (water) water.style.height = p * 100 + "%";
-          const idx = Math.min(panels.length - 1, Math.floor(p * panels.length));
-          panels.forEach((pan, i) =>
-            gsap.to(pan, { opacity: i === idx ? 1 : 0, duration: 0.3, overwrite: true }),
-          );
+          const idx = Math.min(HEADINGS.length - 1, Math.floor(p * HEADINGS.length));
+          if (idx !== activeRef.current) {
+            activeRef.current = idx;
+            setActive(idx);
+          }
           dots.forEach((d, i) => d.classList.toggle("on", i === idx));
         },
       });
@@ -79,14 +81,13 @@ export function RisingNarrative() {
     };
   }, [reduced]);
 
-  return (
-    <section className={`narrative ${reduced ? "narrative--static" : ""}`.trim()} id="story" ref={rootRef}>
-      <div className="narr-stick">
-        <div className="narr-water" ref={waterRef} aria-hidden="true" />
-        <canvas className="narr-canvas" ref={canvasRef} aria-hidden="true" />
-        <div className="narr-panels">
+  // reduced motion / no-JS: static stacked panels, every heading readable
+  if (reduced) {
+    return (
+      <section className="narrative narrative--static" id="story" ref={rootRef}>
+        <div className="narr-static">
           {narrative.map((panel, i) => (
-            <div className="narr-panel" key={i} data-panel={i}>
+            <div className="narr-panel" key={i}>
               <div className="wrap">
                 <div className="kic">{panel.kicker}</div>
                 <h3>{panel.heading}</h3>
@@ -94,6 +95,24 @@ export function RisingNarrative() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="narrative" id="story" ref={rootRef}>
+      <div className="narr-stick">
+        <div className="narr-water" ref={waterRef} aria-hidden="true" />
+        <canvas className="narr-canvas" ref={canvasRef} aria-hidden="true" />
+        <div className="narr-lead">
+          <div className="wrap">
+            <div className="kic" key={`k${active}`}>
+              {narrative[active].kicker}
+            </div>
+            <GooeyText texts={HEADINGS} activeIndex={active} className="narr-gooey" />
+            <p key={`b${active}`}>{narrative[active].body}</p>
+          </div>
         </div>
         <div className="narr-progress" aria-hidden="true">
           {narrative.map((_, i) => (

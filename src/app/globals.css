@@ -1143,6 +1143,57 @@
     color: #fff;
   }
   .narr-panel p { margin-top: 24px; font-size: 19px; color: #cfe4ec; max-width: 42ch; }
+
+  /* scroll-driven lead: kicker + gooey-morph title + body, centred in the pin.
+     kicker + body remount on each step (React key) so they re-fade in. */
+  .narr-lead { position: relative; z-index: 2; width: 100%; }
+  .narr-lead .wrap { width: 100%; }
+  .narr-lead .kic {
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #7fd3ea;
+    margin-bottom: 20px;
+    font-weight: 600;
+    animation: narrCopyIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .narr-lead p {
+    margin-top: 24px;
+    font-size: 19px;
+    color: #cfe4ec;
+    max-width: 42ch;
+    animation: narrCopyIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
+  }
+  @keyframes narrCopyIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* gooey title: two overlapping spans blur-melt through the SVG alpha
+     threshold filter (#gooey-threshold) as the active heading changes. */
+  .gooey { position: relative; }
+  .gooey-defs { position: absolute; width: 0; height: 0; pointer-events: none; }
+  .gooey-stage {
+    position: relative;
+    /* reserve two lines of title height so the kicker/body never jump */
+    min-height: 2.02em;
+    font-size: clamp(34px, 6vw, 84px);
+    line-height: 0.98;
+  }
+  .gooey-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    max-width: 16ch;
+    font-size: inherit;
+    font-weight: 600;
+    line-height: 0.98;
+    color: #fff;
+    white-space: normal;
+    will-change: filter, opacity;
+  }
+
   .narr-progress {
     position: absolute;
     right: 32px;
@@ -1172,7 +1223,8 @@
     display: block;
     padding: clamp(80px, 10vh, 140px) 0;
   }
-  .narrative--static .narr-panels { display: flex; flex-direction: column; gap: 64px; }
+  .narr-static { position: relative; z-index: 2; width: 100%; }
+  .narrative--static .narr-static { display: flex; flex-direction: column; gap: 64px; }
   .narrative--static .narr-panel { position: static; opacity: 1; }
   .narrative--static .narr-water,
   .narrative--static .narr-progress { display: none; }
