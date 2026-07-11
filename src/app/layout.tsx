@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   applicationName: business.name,
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_AU",
@@ -48,7 +49,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${clash.variable} ${hanken.variable}`}>
+    <html lang="en-AU" className={`${clash.variable} ${hanken.variable}`}>
       <body>
         <script
           type="application/ld+json"

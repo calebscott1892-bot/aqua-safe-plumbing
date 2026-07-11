@@ -282,13 +282,18 @@
     from { opacity: 0; transform: translateY(14px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .hero h1 {
+  .hero h1,
+  .hero .hero-h {
+    font-family: var(--font-clash), var(--font-hanken), sans-serif;
+    font-weight: 600;
+    color: var(--teal-ink);
     font-size: clamp(44px, 8vw, 104px);
     line-height: 0.98;
     letter-spacing: -0.035em;
     margin: 18px 0 0;
   }
-  .hero h1 .ln2 { color: var(--teal); display: block; }
+  .hero h1 .ln2,
+  .hero .hero-h .ln2 { color: var(--teal); display: block; }
   .hero-body {
     color: var(--muted);
     font-size: clamp(16px, 1.6vw, 20px);
