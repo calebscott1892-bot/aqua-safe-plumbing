@@ -77,7 +77,7 @@ export const copy = {
       },
     ],
     note: "No hot water today? Talk to our team about your replacement options.",
-    cta: { label: "No hot water? Get help", href: "/services/hot-water-systems" },
+    cta: { label: "Get a hot water quote", href: "/services/hot-water-systems" },
   },
 
   /** "Respectful in your home" block (shoe-covers line removed per brief). */
