@@ -18,10 +18,11 @@ export default function Home() {
       <Hero />
       <Ticker />
       <Specialists />
-      {/* Aaron 2026-07: services first, filtration second */}
+      {/* Aaron 2026-07: services first, then the two higher-margin showcases —
+          Hot Water directly above Water Filtration */}
       <Services />
-      <Filtration />
       <HotWater />
+      <Filtration />
       <WhyUs />
       <Respectful />
       <Reviews />

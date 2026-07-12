@@ -56,15 +56,15 @@ export const residentialServices: Service[] = [
   }),
   svc({
     title: "Burst Pipes",
-    body: "Fast isolation and a permanent repair of burst and leaking pipes — before the damage spreads.",
+    body: "Fast isolation and a proper repair of burst and leaking pipes, plus longer-term options when ageing pipework keeps failing.",
     icon: "pipe",
     detail:
-      "Water where it shouldn't be does damage fast. We isolate the leak quickly, then make a permanent repair — not a patch — and check the surrounding pipework so the same section doesn't let go next month.",
+      "Water where it shouldn't be does damage fast. We isolate the leak quickly and make a proper repair, not a patch, and we guarantee our own workmanship and pass on any applicable manufacturer warranties. With WA's water quality and the condition of a lot of existing pipework, we can't guarantee that another section further along an older service won't fail down the track, and we see this often on underground mains. So where bursts keep happening close together, we'll talk you through longer-term fixes: a full mains rerun, replacing the affected service, or a complete ceiling rerun where the pipework is failing throughout the property.",
     points: [
       "Fast isolation to stop the damage",
-      "Permanent repairs, not patches",
-      "Leak detection for hidden pipework",
-      "Insurance-ready documentation on request",
+      "Proper repairs — our workmanship guaranteed",
+      "Manufacturer warranties passed on where applicable",
+      "Longer-term options: full mains or ceiling reruns",
     ],
   }),
   svc({

@@ -56,11 +56,28 @@ export function Footer() {
               <li><a href={`mailto:${business.email}`}>{business.email}</a></li>
               <li>{business.area}</li>
             </ul>
+            <div className="foot-social" aria-label="Follow Aqua-Safe">
+              <a href={business.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                  <path d="M14 9h3V6h-3c-1.9 0-3 1.4-3 3.2V11H9v3h2v6h3v-6h2.4l.6-3H14V9.4c0-.3.2-.4.5-.4Z" />
+                </svg>
+              </a>
+              <a href={business.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <rect x="4" y="4" width="16" height="16" rx="5" />
+                  <circle cx="12" cy="12" r="3.6" />
+                  <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+                </svg>
+              </a>
+            </div>
+            <a className="foot-review" href={business.reviewUrl} target="_blank" rel="noopener noreferrer">
+              ★ Leave us a Google review
+            </a>
           </div>
         </div>
 
         <div className="foot-bottom">
-          <span>© 2026 {business.name}</span>
+          <span>© 2026 {business.name} · ABN {business.abn}</span>
           <a href={asset("/concept/")}>View the original concept design →</a>
           <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
             <span style={{ fontSize: "11px", letterSpacing: "0.05em", opacity: 0.5 }}>

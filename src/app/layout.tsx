@@ -12,9 +12,8 @@ const SITE_DESCRIPTION =
   "Aqua-Safe Plumbing & Maintenance — Perth's trusted maintenance plumbers and gas fitters. Blocked drains, hot water, gas fitting, water filtration and commercial maintenance, done properly.";
 
 export const metadata: Metadata = {
-  // Domain inferred from the client's email domain (info@aquasafeplumbing.com)
-  // — confirm before launch.
-  metadataBase: new URL("https://aquasafeplumbing.com"),
+  // Real domain — Aaron bought aquasafeplumbing.com.au via Wix (2026-07).
+  metadataBase: new URL(`https://${business.domain}`),
   title: {
     default: "Aqua-Safe Plumbing & Maintenance — Perth | Plumbing, done properly",
     template: "%s | Aqua-Safe Plumbing & Maintenance",

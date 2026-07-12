@@ -14,11 +14,14 @@ export function FinalCTA() {
         <span className="eyebrow" style={{ justifyContent: "center" }}>Book your quote</span>
         <h2>Let&rsquo;s get it sorted.</h2>
         <div className="cta-actions">
-          <a className="btn btn-aqua" href={business.phoneHref}>
+          <a className="btn btn-aqua" href={business.bookingUrl} target="_blank" rel="noopener noreferrer">
+            Book online
+          </a>
+          <a className="btn btn-line" href={business.phoneHref}>
             Call {business.phoneDisplay}
           </a>
           <a className="btn btn-line" href={mailto}>
-            Request a quote by email
+            Enquire by email
           </a>
         </div>
         <a className="cta-phone" href={business.phoneHref}>

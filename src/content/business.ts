@@ -13,6 +13,18 @@ export const business = {
   phoneHref: "tel:0473072642",
   email: "info@aquasafeplumbing.com",
   area: "All Perth metro",
+  // Real, client-supplied (Aaron, 2026-07). Domain purchased via Wix.
+  abn: "25 770 821 226",
+  domain: "aquasafeplumbing.com.au",
+  // ServiceM8 online booking — the MAIN booking path (email is the fallback).
+  bookingUrl:
+    "https://book.servicem8.com/request_service_online_booking?strVendorUUID=54228034-eee8-4346-a58a-2185fa28d65b#e1553522-a798-49d2-b3c2-2241b7bc29db",
+  // Google review link (Aaron wants to chase reviews).
+  reviewUrl: "https://share.google/Yf1t8aThGAXZwWtMS",
+  social: {
+    facebook: "https://www.facebook.com/profile.php?id=61556701599749",
+    instagram: "https://www.instagram.com/aquasafeplumbing/",
+  },
   // Real, client-supplied licences.
   licence: {
     plumbing: "PL10802",

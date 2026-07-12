@@ -64,10 +64,11 @@ export const filtration = {
       "Installed by licensed Perth plumbers",
     ],
   },
-  /** Dedicated-solution CTA band under the feature (Aaron, 2026-07). */
+  /** Dedicated-solution CTA band under the feature (Aaron, 2026-07). Primary
+   *  tile leads to the Water Filtration service page (matches Hot Water). */
   dedicated: {
     line: "Looking for a dedicated water filtration solution?",
-    primary: { label: "Book now", href: "#book" },
-    secondary: { label: "Enquire now", href: "#book" },
+    primary: { label: "See whole-home filtration", href: "/services/water-filtration" },
+    secondary: { label: "Book online", href: "#book" },
   },
 };

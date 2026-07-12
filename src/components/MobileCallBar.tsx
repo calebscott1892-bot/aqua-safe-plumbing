@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { business } from "@/content/business";
 
 /** Sticky mobile action bar — call + book. Shown under 900px (see globals.css). */
@@ -8,9 +7,9 @@ export function MobileCallBar() {
       <a className="btn btn-line" href={business.phoneHref}>
         Call us
       </a>
-      <Link className="btn btn-fill" href="/#book">
-        Book your quote
-      </Link>
+      <a className="btn btn-fill" href={business.bookingUrl} target="_blank" rel="noopener noreferrer">
+        Book online
+      </a>
     </div>
   );
 }

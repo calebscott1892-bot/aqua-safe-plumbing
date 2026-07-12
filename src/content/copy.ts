@@ -56,12 +56,28 @@ export const copy = {
       "Trusted by homeowners, real-estate agencies, strata managers and commercial clients across Perth.",
   },
 
-  /** Hot water focus block. */
+  /** Hot water focus block (Aaron's copy, 2026-07 — a higher-margin service
+   *  showcased at filtration-level detail, directly above filtration). */
   hotWater: {
-    kicker: "Hot water",
-    title: "Hot water, sorted fast.",
-    body: "Gas, electric and heat-pump systems — servicing and replacement.",
-    note: "Same-day service available.",
+    kicker: "Hot water systems",
+    title: "No hot water? We'll help you choose the right replacement.",
+    body: "From emergency breakdowns to complete hot water upgrades, Aqua-Safe supplies, installs and replaces hot water systems across Perth. We work with gas instantaneous, electric storage and energy-efficient heat pump systems — helping customers choose the right option based on their property, hot water usage and ongoing running costs.",
+    types: [
+      {
+        name: "Gas Instantaneous",
+        body: "Continuous hot water when you need it. A great option for busy homes and properties with high hot water demand.",
+      },
+      {
+        name: "Heat Pump Hot Water",
+        body: "Reduce ongoing energy costs with an efficient heat pump hot water system. Ideal for homeowners and investors looking to lower running costs.",
+      },
+      {
+        name: "Electric & Gas Storage",
+        body: "Reliable, straightforward hot water replacement options with systems sized to suit the household and existing services.",
+      },
+    ],
+    note: "No hot water today? Talk to our team about your replacement options.",
+    cta: { label: "No hot water? Get help", href: "/services/hot-water-systems" },
   },
 
   /** "Respectful in your home" block (shoe-covers line removed per brief). */

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { filtration } from "@/content/filtration";
 import { business } from "@/content/business";
@@ -83,13 +84,10 @@ export function Filtration() {
         <div className="filt-band reveal">
           <p>{filtration.dedicated.line}</p>
           <div className="filt-band-actions">
-            <a className="btn btn-aqua" href={filtration.dedicated.primary.href}>
+            <Link className="btn btn-aqua" href={filtration.dedicated.primary.href}>
               {filtration.dedicated.primary.label}
-            </a>
-            <a
-              className="btn btn-line"
-              href={`mailto:${business.email}?subject=${encodeURIComponent("Water filtration enquiry")}`}
-            >
+            </Link>
+            <a className="btn btn-line" href={business.bookingUrl} target="_blank" rel="noopener noreferrer">
               {filtration.dedicated.secondary.label}
             </a>
           </div>

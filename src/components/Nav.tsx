@@ -46,9 +46,9 @@ export function Nav() {
           <a className="nav-phone" href={business.phoneHref}>
             {business.phoneDisplay}
           </a>
-          <Link className="btn btn-fill" href="/#book">
-            Book your quote
-          </Link>
+          <a className="btn btn-fill" href={business.bookingUrl} target="_blank" rel="noopener noreferrer">
+            Book online
+          </a>
         </div>
         <button
           className="nav-toggle"
@@ -72,9 +72,15 @@ export function Nav() {
         <a className="nav-menu-phone" href={business.phoneHref} onClick={() => setOpen(false)} style={{ padding: "14px 4px" }}>
           {business.phoneDisplay}
         </a>
-        <Link className="btn btn-fill" href="/#book" onClick={() => setOpen(false)}>
-          Book your quote
-        </Link>
+        <a
+          className="btn btn-fill"
+          href={business.bookingUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setOpen(false)}
+        >
+          Book online
+        </a>
       </nav>
     </header>
   );
