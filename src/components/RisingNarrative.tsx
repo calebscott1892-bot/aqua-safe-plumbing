@@ -1,23 +1,26 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { narrative } from "@/content/narrative";
 import { createWaterSurface } from "@/components/fluid/waterSurface";
 import { GooeyText } from "@/components/ui/GooeyText";
 
 const HEADINGS = narrative.map((n) => n.heading);
+// water level per stage — low → nearly full as the story resolves
+const FILL = [0.18, 0.56, 0.96];
 
 /**
- * Pinned "problem → call → fix" narrative. As you scroll the tall section the
- * WATER LEVEL RISES and the story advances: the KICKER + BODY cross-fade and
- * the TITLE gooey-morphs from one heading to the next (blur-melt through an
- * SVG threshold filter). The side dot-progress tracks along.
+ * "Problem → call → fix" narrative, advanced by TAPPING an isolation-valve
+ * selector (no scroll-jacking — the old version scrubbed a pinned 300vh section,
+ * which broke Aaron's click/tap-only rule). Opening a valve raises the WATER
+ * LEVEL to that stage and the TITLE gooey-morphs from one heading to the next
+ * (blur-melt through an SVG threshold filter); the kicker + body cross-fade.
  *
- * The water is a bespoke WebGL surface driven by the same ScrollTrigger
- * progress (CSS gradient fallback). Under reduced motion the whole section is
- * static stacked panels so all the copy stays readable — no morph, no water.
+ * The water is a bespoke WebGL surface (CSS-gradient fallback), its fill tweened
+ * on each tap. Under reduced motion the whole section is static stacked panels
+ * so every heading stays readable — no morph, no water.
  */
 export function RisingNarrative() {
   const reduced = useReducedMotion();
@@ -25,24 +28,25 @@ export function RisingNarrative() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const waterRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
-  const activeRef = useRef(0);
+  const surfaceRef = useRef<ReturnType<typeof createWaterSurface> | null>(null);
+  const fill = useRef({ v: FILL[0] });
 
   useEffect(() => {
     if (reduced) return;
-    const root = rootRef.current;
-    if (!root) return;
-
     const canvas = canvasRef.current;
     const water = waterRef.current;
-    const dots = gsap.utils.toArray<HTMLElement>(".narr-progress i", root);
+    if (!canvas) return;
 
-    const surface = canvas ? createWaterSurface(canvas) : null;
+    const surface = createWaterSurface(canvas);
     const useGL = !!surface && surface.supported;
+    surfaceRef.current = useGL ? surface : null;
     if (useGL && water) water.style.display = "none";
+    if (useGL) surface.setFill(fill.current.v);
+    else if (water) water.style.height = fill.current.v * 100 + "%";
 
     let io: IntersectionObserver | null = null;
     let ro: ResizeObserver | null = null;
-    if (useGL && surface && canvas) {
+    if (useGL) {
       ro = new ResizeObserver(() => surface.resize());
       ro.observe(canvas);
       io = new IntersectionObserver(
@@ -52,34 +56,31 @@ export function RisingNarrative() {
       io.observe(canvas);
     }
 
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: root,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 0.6,
-        onUpdate: (self) => {
-          const p = self.progress;
-          if (useGL && surface) surface.setFill(0.04 + p * 0.92);
-          else if (water) water.style.height = p * 100 + "%";
-          const idx = Math.min(HEADINGS.length - 1, Math.floor(p * HEADINGS.length));
-          if (idx !== activeRef.current) {
-            activeRef.current = idx;
-            setActive(idx);
-          }
-          dots.forEach((d, i) => d.classList.toggle("on", i === idx));
-        },
-      });
-    }, root);
-
     return () => {
-      ctx.revert();
       io?.disconnect();
       ro?.disconnect();
       surface?.destroy();
+      surfaceRef.current = null;
       if (water) water.style.display = "";
     };
   }, [reduced]);
+
+  const go = (i: number) => {
+    if (i === active) return;
+    setActive(i);
+    const target = FILL[i];
+    const s = surfaceRef.current;
+    gsap.to(fill.current, {
+      v: target,
+      duration: 1,
+      ease: "power2.inOut",
+      overwrite: true,
+      onUpdate: () => {
+        if (s) s.setFill(fill.current.v);
+        else if (waterRef.current) waterRef.current.style.height = fill.current.v * 100 + "%";
+      },
+    });
+  };
 
   // reduced motion / no-JS: static stacked panels, every heading readable
   if (reduced) {
@@ -101,7 +102,7 @@ export function RisingNarrative() {
   }
 
   return (
-    <section className="narrative" id="story" ref={rootRef}>
+    <section className="narrative narrative--tap" id="story" ref={rootRef}>
       <div className="narr-stick">
         <div className="narr-water" ref={waterRef} aria-hidden="true" />
         <canvas className="narr-canvas" ref={canvasRef} aria-hidden="true" />
@@ -112,12 +113,23 @@ export function RisingNarrative() {
             </div>
             <GooeyText texts={HEADINGS} activeIndex={active} className="narr-gooey" />
             <p key={`b${active}`}>{narrative[active].body}</p>
+
+            <div className="narr-valves" role="group" aria-label="Advance the story">
+              {narrative.map((n, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  className={`narr-valve${i === active ? " is-open" : ""}`}
+                  onClick={() => go(i)}
+                  aria-pressed={i === active}
+                >
+                  <span className="narr-valve-dial" aria-hidden="true" />
+                  <span className="narr-valve-num">{i + 1}</span>
+                  <span className="narr-valve-label">{n.kicker}</span>
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="narr-progress" aria-hidden="true">
-          {narrative.map((_, i) => (
-            <i key={i} className={i === 0 ? "on" : ""} />
-          ))}
         </div>
       </div>
     </section>

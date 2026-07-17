@@ -1255,18 +1255,71 @@
      sits as a dark band on the light site. WebGL surface + CSS gradient fallback.
      =========================================================================== */
   .narrative {
-    height: 300vh;
+    /* was a 300vh scroll-jacked pin (broke Aaron's no-scroll rule); now a
+       normal-height section advanced by TAPPING the valve selector */
+    min-height: 100svh;
     position: relative;
     background: radial-gradient(120% 90% at 50% 0%, #123a4e 0%, #08222e 72%);
     color: #eaf4f8;
   }
   .narr-stick {
-    position: sticky;
-    top: 0;
-    height: 100svh;
+    position: relative;
+    min-height: 100svh;
     overflow: hidden;
     display: flex;
     align-items: center;
+  }
+  /* the isolation-valve selector — Problem / Call / Fixed, click to advance */
+  .narr-valves {
+    display: flex;
+    gap: 10px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .narr-valve {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px 12px 14px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.04);
+    color: #cfe4ec;
+    font-family: var(--font-hanken), sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: border-color 0.3s, background 0.3s, color 0.3s;
+  }
+  .narr-valve:hover { border-color: rgba(127, 211, 234, 0.6); color: #fff; }
+  .narr-valve.is-open {
+    border-color: #3ec5e6;
+    background: rgba(62, 197, 230, 0.14);
+    color: #fff;
+  }
+  .narr-valve-dial {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    position: relative;
+    flex: none;
+  }
+  .narr-valve-dial::before {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 2px; height: 10px;
+    background: currentColor;
+    transform: translate(-50%, -50%) rotate(0deg);
+    transform-origin: center;
+    transition: transform 0.4s var(--ease);
+  }
+  .narr-valve.is-open .narr-valve-dial::before { transform: translate(-50%, -50%) rotate(90deg); }
+  .narr-valve-num {
+    font-variant-numeric: tabular-nums;
+    color: #7fd3ea;
+    font-weight: 700;
   }
   .narr-water {
     position: absolute;
