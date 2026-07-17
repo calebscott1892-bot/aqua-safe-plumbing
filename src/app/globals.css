@@ -276,15 +276,19 @@
      =========================================================================== */
   .hero {
     position: relative;
-    min-height: clamp(560px, 88vh, 860px);
-    display: flex;
-    align-items: center;
-    padding: 120px 0 80px;
+    padding: clamp(96px, 12vh, 140px) 0 clamp(48px, 6vw, 84px);
     overflow: hidden;
     background:
-      radial-gradient(90% 120% at 88% -10%, #d9edf3 0%, rgba(217,237,243,0) 55%),
-      linear-gradient(180deg, #f5fafc 0%, var(--paper) 60%);
+      radial-gradient(78% 120% at 94% -12%, #dcecf2 0%, rgba(220, 236, 242, 0) 56%),
+      linear-gradient(180deg, #f6fbfc 0%, var(--paper) 62%);
   }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(28px, 5vw, 72px);
+    align-items: center;
+  }
+  .hero-copy { position: relative; z-index: 2; }
   .hero-waves {
     position: absolute;
     left: 0; right: 0; bottom: 0;
@@ -300,20 +304,104 @@
     from { opacity: 0; transform: translateY(14px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .hero h1 {
-    font-size: clamp(44px, 8vw, 104px);
-    line-height: 0.98;
+  .hero-h {
+    font-family: var(--font-clash), sans-serif;
+    font-weight: 600;
+    font-size: clamp(44px, 7.2vw, 92px);
+    line-height: 0.96;
     letter-spacing: -0.035em;
-    margin: 18px 0 0;
+    color: var(--teal-ink);
+    margin: 0;
+    text-wrap: balance;
   }
-  .hero h1 .ln2 { color: var(--teal); display: block; }
+  .hero-h .ln2 { color: var(--teal); display: block; }
   .hero-body {
     color: var(--muted);
-    font-size: clamp(16px, 1.6vw, 20px);
-    max-width: 52ch;
-    margin: 22px 0 34px;
+    font-size: clamp(16px, 1.5vw, 19px);
+    max-width: 46ch;
+    margin: 22px 0 30px;
   }
   .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+  /* licence/area spec strip — tabular datasheet, not chips */
+  .hero-spec {
+    display: flex;
+    gap: clamp(22px, 3vw, 44px);
+    margin-top: 34px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .hero-spec div { display: flex; flex-direction: column; gap: 3px; }
+  .hero-spec dt { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .hero-spec dd {
+    margin: 0;
+    font-family: var(--font-hanken), sans-serif;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    color: var(--teal-ink);
+    font-size: 16px;
+  }
+
+  /* ── the live pressure test (hero signature) ── */
+  .ptest { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .ptest-svg { width: 100%; max-width: 400px; height: auto; display: block; overflow: visible; }
+  .ptest-pipe-steel { fill: none; stroke: #c3d2d9; stroke-width: 11; stroke-linecap: round; stroke-linejoin: round; }
+  .ptest-pipe-water {
+    fill: none; stroke: var(--aqua); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 1; stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .ptest--running .ptest-pipe-water, .ptest--held .ptest-pipe-water { stroke-dashoffset: 0; }
+  .ptest-valve-body { fill: #eef4f6; stroke: #8fa8b2; stroke-width: 2; }
+  .ptest-valve-lever {
+    stroke: var(--teal); stroke-width: 4; stroke-linecap: round;
+    transform-box: fill-box; transform-origin: 50% 100%;
+    transition: transform 0.5s var(--ease);
+  }
+  .ptest--running .ptest-valve-lever, .ptest--held .ptest-valve-lever { transform: rotate(90deg); }
+  .ptest-joint-ring { fill: #fff; stroke: #8fa8b2; stroke-width: 2; transition: stroke 0.3s; }
+  .ptest-joint-tick { fill: none; stroke: var(--gold); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity 0.3s; }
+  .ptest--held .ptest-joint-tick { opacity: 1; }
+  .ptest--held .ptest-joint-ring { stroke: var(--gold); }
+  .ptest-face { fill: #fbfdfe; stroke: #dbe6ea; stroke-width: 1.5; }
+  .ptest-bezel { fill: none; stroke: #b9cad2; stroke-width: 4; }
+  .ptest-passband { fill: none; stroke: var(--gold); stroke-width: 5; opacity: 0.85; stroke-linecap: round; }
+  .ptest-tick { stroke: #6a828d; stroke-width: 1.4; }
+  .ptest-tick.is-major { stroke: var(--teal-ink); stroke-width: 2.4; }
+  .ptest-num { fill: var(--teal-ink); font-family: var(--font-hanken), sans-serif; font-weight: 600; font-size: 16px; font-variant-numeric: tabular-nums; }
+  .ptest-unit { fill: var(--muted); font-family: var(--font-hanken), sans-serif; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .ptest-brand { fill: var(--teal); font-family: var(--font-clash), sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.18em; }
+  .ptest-needle {
+    fill: var(--teal-deep);
+    transform-box: fill-box; transform-origin: 50% 100%;
+    transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .ptest-hub { fill: var(--teal-ink); }
+  .ptest-hub-dot { fill: #fff; }
+  .ptest-console { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+  .ptest-run {
+    font-family: var(--font-hanken), sans-serif; font-weight: 600; font-size: 15px;
+    color: #fff; background: var(--teal); border: none; border-radius: 999px;
+    padding: 13px 28px; cursor: pointer;
+    transition: background 0.25s, transform 0.2s var(--ease);
+    box-shadow: 0 2px 10px rgba(15, 92, 122, 0.22);
+  }
+  .ptest-run:hover { background: var(--teal-deep); transform: translateY(-1px); }
+  .ptest--held .ptest-run { background: var(--teal-ink); }
+  .ptest-readout {
+    margin: 0; min-height: 20px;
+    font-family: var(--font-hanken), sans-serif; font-variant-numeric: tabular-nums;
+    font-size: 14px; letter-spacing: 0.03em; color: var(--teal-ink); text-align: center;
+  }
+  .ptest-idle { color: var(--muted); }
+  .ptest-pass { color: var(--gold); font-weight: 700; letter-spacing: 0.06em; }
+  @media (prefers-reduced-motion: reduce) {
+    .ptest-needle, .ptest-pipe-water, .ptest-valve-lever, .ptest-joint-tick { transition: none; }
+  }
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 34px; }
+    .ptest { order: 2; }
+  }
   .hero-controls {
     display: flex;
     align-items: center;
