@@ -879,36 +879,37 @@
   /* ===========================================================================
      WHY US
      =========================================================================== */
+  /* Why-us as a SIGN-OFF LEDGER — ruled rows, a gold "verified" stamp per line
+     (no cards, no banned side-stripe, no reflex 01-06 numbers). Shares the
+     parts-schedule language so the page reads as one datasheet world. */
   .why-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-    margin-top: 40px;
+    margin-top: 30px;
+    border-top: 1.5px solid var(--teal-ink);
   }
   .why-item {
-    padding: 28px 26px;
-    border-radius: var(--radius);
-    background: #fff;
-    border: 1px solid var(--line);
-    position: relative;
-    overflow: hidden;
+    display: grid;
+    grid-template-columns: 30px minmax(180px, 0.85fr) 1.6fr;
+    gap: 20px;
+    padding: 18px 2px;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
   }
-  .why-item::before {
-    content: "";
-    position: absolute; left: 0; top: 0; bottom: 0;
-    width: 3px; background: var(--aqua);
-    transform: scaleY(0); transform-origin: top;
-    transition: transform 0.35s var(--ease);
-  }
-  .why-item:hover::before { transform: scaleY(1); }
-  .why-n {
+  .why-check { color: var(--gold); align-self: center; }
+  .why-check svg { width: 24px; height: 24px; display: block; }
+  .why-item h3 {
     font-family: var(--font-clash), sans-serif;
-    font-size: 14px;
-    color: var(--aqua);
     font-weight: 600;
+    font-size: clamp(16px, 1.6vw, 19px);
+    letter-spacing: -0.01em;
+    color: var(--teal-ink);
+    margin: 0;
+    line-height: 1.15;
   }
-  .why-item h3 { font-size: 19px; margin: 8px 0 8px; }
-  .why-item p { color: var(--muted); font-size: 15px; }
+  .why-item p { color: var(--muted); font-size: 15px; margin: 0; line-height: 1.5; }
+  @media (max-width: 760px) {
+    .why-item { grid-template-columns: 26px 1fr; gap: 8px 14px; }
+    .why-item p { grid-column: 2; margin-top: 4px; }
+  }
 
   /* ===========================================================================
      RESPECTFUL strip
