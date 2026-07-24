@@ -403,10 +403,18 @@
   .filt-grid {
     display: grid;
     grid-template-columns: 1.05fr 1fr;
-    gap: clamp(30px, 5vw, 70px);
-    align-items: center;
+    grid-template-areas:
+      "detail vis"
+      "steps  vis"
+      "addon  vis";
+    gap: clamp(24px, 4vw, 44px) clamp(30px, 5vw, 70px);
+    align-items: start;
     margin-top: 40px;
   }
+  .filt-stage-detail { grid-area: detail; }
+  .filt-steps { grid-area: steps; }
+  .filt-addon { grid-area: addon; }
+  .filt-vis { grid-area: vis; align-self: center; }
   .filt-stage-detail {
     min-height: 230px;
   }
@@ -628,6 +636,30 @@
   .svc-card--link:focus-visible .svc-more { opacity: 1; transform: translateX(0); }
 
   /* per-service booking pages */
+  /* service-page hero: copy + a real job photo (Aaron's photos, 2026-07) */
+  .svc-hero--photo {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(28px, 5vw, 60px);
+    align-items: center;
+  }
+  .svc-hero-photo {
+    margin: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    background: var(--mist);
+    aspect-ratio: 4 / 5;
+    max-height: 560px;
+  }
+  .svc-hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .svc-or-email { margin-top: 14px; font-size: 14px; color: var(--muted); }
+  .svc-or-email a { color: var(--teal); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+  @media (max-width: 820px) {
+    .svc-hero--photo { grid-template-columns: 1fr; gap: 26px; }
+    .svc-hero-photo { aspect-ratio: 4 / 3; max-height: 360px; }
+  }
+
   .svc-detail-points { margin-top: 52px; }
   .svc-detail-points h2 { font-size: clamp(22px, 2.6vw, 30px); }
   .svc-detail-points ul {
@@ -820,6 +852,8 @@
   .rev-name { font-weight: 600; color: var(--teal-ink); }
   .rev-loc { color: var(--muted); font-size: 14px; }
   .rev-nav { display: inline-flex; gap: 10px; margin-top: 30px; align-items: center; }
+  .rev-cta { display: flex; justify-content: center; margin-top: 28px; }
+  .rev-cta .btn { background: #fff; }
   .rev-btn {
     width: 44px; height: 44px; border-radius: 50%;
     border: 1.5px solid var(--line); background: #fff;
@@ -1268,12 +1302,19 @@
      Responsive
      =========================================================================== */
   @media (max-width: 860px) {
-    .filt-grid, .resp { grid-template-columns: 1fr; }
+    .resp { grid-template-columns: 1fr; }
+    /* filtration reflows: detail → schematic → tappable stages → RO add-on, so
+       tapping a stage shows the schematic change right below it (Aaron, mobile) */
+    .filt-grid {
+      grid-template-columns: 1fr;
+      grid-template-areas: "detail" "steps" "vis" "addon";
+      gap: 22px;
+    }
     .hw-types { grid-template-columns: 1fr; }
     .resp { text-align: left; }
     .foot-top { grid-template-columns: 1fr 1fr; gap: 32px; }
     .foot-brand { grid-column: 1 / -1; }
-    .filt-vis { max-width: 420px; }
+    .filt-vis { max-width: 460px; margin: 0 auto; width: 100%; }
   }
   @media (max-width: 560px) {
     .foot-top { grid-template-columns: 1fr; }

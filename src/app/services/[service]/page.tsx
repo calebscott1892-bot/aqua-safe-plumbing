@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { allServices, getService } from "@/content/services";
+import { hasServicePhoto } from "@/content/servicePhotos";
 import { business } from "@/content/business";
+import { asset } from "@/lib/asset";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
 
 /*
@@ -29,29 +31,59 @@ export default function ServicePage({ params }: { params: { service: string } })
   if (!s) notFound();
 
   const mailto = `mailto:${business.email}?subject=${encodeURIComponent(
-    `${s.title} — booking enquiry`
+    `${s.title} — enquiry`
   )}&body=${encodeURIComponent(
     `Hi Aqua-Safe,\n\nI'd like to book / get a quote for: ${s.title}\n\nSuburb:\nBest contact number:\nA few details about the job:\n\nThanks.`
   )}`;
+
+  // Real-estate / strata managers book through by email; everyone else uses the
+  // ServiceM8 online booking link (Aaron, 2026-07).
+  const emailFirst = s.contact === "email";
+  const photo = hasServicePhoto(s.slug);
 
   return (
     <main>
       <section className="section" style={{ paddingTop: "clamp(130px, 18vh, 200px)" }}>
         <div className="wrap">
-          <span className="eyebrow">{s.group} · Perth metro</span>
-          <h1 className="h-sec" style={{ fontSize: "clamp(38px, 6vw, 76px)", maxWidth: "18ch" }}>
-            {s.title}
-            <span style={{ color: "var(--teal)" }}>.</span>
-          </h1>
-          <p className="lead">{s.detail}</p>
+          <div className={`svc-hero${photo ? " svc-hero--photo" : ""}`}>
+            <div className="svc-hero-copy">
+              <span className="eyebrow">{s.group} · Perth metro</span>
+              <h1 className="h-sec" style={{ fontSize: "clamp(38px, 6vw, 72px)", maxWidth: "16ch" }}>
+                {s.title}
+                <span style={{ color: "var(--teal)" }}>.</span>
+              </h1>
+              <p className="lead">{s.detail}</p>
 
-          <div className="areas-actions" style={{ marginTop: 32 }}>
-            <a className="btn btn-fill" href={business.phoneHref}>
-              Call {business.phoneDisplay}
-            </a>
-            <a className="btn btn-line" href={mailto}>
-              Book by email
-            </a>
+              <div className="areas-actions" style={{ marginTop: 32 }}>
+                {emailFirst ? (
+                  <a className="btn btn-fill" href={mailto}>
+                    Enquire by email
+                  </a>
+                ) : (
+                  <a className="btn btn-fill" href={business.bookingUrl} target="_blank" rel="noopener noreferrer">
+                    Book online
+                  </a>
+                )}
+                <a className="btn btn-line" href={business.phoneHref}>
+                  Call {business.phoneDisplay}
+                </a>
+              </div>
+              {!emailFirst && (
+                <p className="svc-or-email">
+                  or <a href={mailto}>enquire by email</a>
+                </p>
+              )}
+            </div>
+
+            {photo && (
+              <figure className="svc-hero-photo">
+                <img
+                  src={asset(`/photos/services/${s.slug}.jpg`)}
+                  alt={`Aqua-Safe ${s.title.toLowerCase()} work in Perth`}
+                  loading="lazy"
+                />
+              </figure>
+            )}
           </div>
 
           <div className="svc-detail-points">

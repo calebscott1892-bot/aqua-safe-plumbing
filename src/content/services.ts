@@ -9,6 +9,9 @@ export type Service = {
   detail: string;
   /** "What we do" bullets for the service's own page. */
   points: string[];
+  /** Preferred contact route on the service page. Real-estate / strata managers
+   *  book through by EMAIL; everything else uses the ServiceM8 booking link. */
+  contact?: "email" | "booking";
 };
 
 const slugify = (t: string) =>
@@ -131,6 +134,7 @@ export const residentialServices: Service[] = [
       "Clear communication with PMs and tenants",
       "Compliance checks available",
     ],
+    contact: "email",
   }),
   svc({
     title: "Pre-Purchase Plumbing Inspections",
@@ -160,6 +164,7 @@ export const commercialServices: Service[] = [
       "Planned and reactive maintenance",
       "Fully licensed and insured",
     ],
+    contact: "email",
   }),
   svc({
     title: "Commercial Hot Water Systems",

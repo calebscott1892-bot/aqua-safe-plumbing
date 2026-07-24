@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { reviews } from "@/content/reviews";
+import { business } from "@/content/business";
 
 export function Reviews() {
   const [i, setI] = useState(0);
@@ -42,6 +43,12 @@ export function Reviews() {
           <button className="rev-btn" onClick={() => { setPaused(true); go(i + 1); }} aria-label="Next review">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 5l7 7-7 7" /></svg>
           </button>
+        </div>
+        <div className="rev-cta">
+          <a className="btn btn-line" href={business.reviewUrl} target="_blank" rel="noopener noreferrer">
+            <span aria-hidden="true" style={{ color: "var(--gold)", marginRight: 2 }}>★</span>
+            Read &amp; leave a Google review
+          </a>
         </div>
         <span className="sr-only" aria-live="polite">
           Review {i + 1} of {reviews.length}: {r.quote} — {r.name}, {r.location}

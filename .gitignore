@@ -36,3 +36,17 @@ pnpm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Aaron's raw source photos (phone originals) — optimized copies committed under public/photos/services/
+/Blocked Drains/
+/Burst Pipes/
+/Hot water system/
+/Main Photo/
+/bathroom renovation/
+/cctv drain inspection/
+/gas fitting/
+/general plumbing and maintenance/
+/high pressure jetting/
+/pre-purchase inspection/
+/real estate maintenance/
+/water filtration/

@@ -21,9 +21,10 @@ export function Filtration() {
         <p className="filt-spec">{filtration.spec}</p>
         <p className="lead">{filtration.lead}</p>
 
+        {/* grid areas place these on desktop (detail/steps/addon left, schematic
+            right); on mobile they reflow to detail → schematic → steps → addon so
+            tapping a stage shows the change right there, RO add-on last */}
         <div className="filt-grid">
-          {/* ---- left: stage detail + step controls ---- */}
-          <div>
             <div className="filt-stage-detail" key={a}>
               <div className="filt-badge">
                 <b>{stage.n}</b>
@@ -62,7 +63,6 @@ export function Filtration() {
                 <p>{filtration.addon.body}</p>
               </div>
             </div>
-          </div>
 
           {/* ---- right: interactive schematic ---- */}
           <div className="filt-vis" role="img" aria-label={`Whole-house filter, stage ${stage.n}: ${stage.name}`}>
