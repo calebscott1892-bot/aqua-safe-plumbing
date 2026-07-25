@@ -96,7 +96,7 @@ export default function ServicePage({ params }: { params: { service: string } })
           </div>
 
           <div className="svc-detail-trust">
-            <span>Licensed &amp; insured — PL {business.licence.plumbing} · GF {business.licence.gas}</span>
+            <span>Licensed &amp; insured — {business.licence.plumbing} · {business.licence.gas}</span>
             <span>Upfront pricing before work begins</span>
             <span>Workmanship we stand behind</span>
           </div>

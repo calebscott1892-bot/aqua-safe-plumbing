@@ -45,7 +45,7 @@ export function Footer() {
               <li><Link href="/#reviews">Reviews</Link></li>
               <li><Link href="/#areas">Service areas</Link></li>
               <li><Link href="/#faq">FAQ</Link></li>
-              <li><Link href="/#book">Book a quote</Link></li>
+              <li><Link href="/contact">Contact &amp; enquiries</Link></li>
             </ul>
           </div>
 

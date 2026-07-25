@@ -1,8 +1,10 @@
 name: Deploy to GitHub Pages
 
+# RETIRED — the site now deploys to Vercel at the root domain (see next.config.mjs).
+# The push trigger is removed so this no longer runs on every commit (it would
+# fail anyway: the enquiry /api route can't be statically exported). Kept as
+# manual-only (workflow_dispatch) for reference / emergency fallback.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
