@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { business } from "@/content/business";
 import { asset } from "@/lib/asset";
@@ -16,6 +17,12 @@ const LINKS = [
 export function Nav() {
   const [stuck, setStuck] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  // The homepage hero is a dark photo; before the nav sticks, it floats over it
+  // and needs light treatment (white logo + light links). Every other page, and
+  // the stuck state, keep the default white-bar look.
+  const overHero = pathname === "/" && !stuck && !open;
 
   useEffect(() => {
     const onScroll = () => setStuck(window.scrollY > 24);
@@ -25,11 +32,11 @@ export function Nav() {
   }, []);
 
   return (
-    <header className={`nav${stuck ? " is-stuck" : ""}`}>
+    <header className={`nav${stuck ? " is-stuck" : ""}${overHero ? " is-over-hero" : ""}`}>
       <div className="wrap">
         <Link className="nav-brand" href="/" aria-label={`${business.name} — home`}>
           <img
-            src={asset("/brand/aquasafe-horizontal-teal.png")}
+            src={asset(overHero ? "/brand/aquasafe-horizontal-white.png" : "/brand/aquasafe-horizontal-teal.png")}
             alt={business.name}
             width={2452}
             height={854}

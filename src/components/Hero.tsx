@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { copy } from "@/content/copy";
 import { business } from "@/content/business";
+import { asset } from "@/lib/asset";
 
 const panels = copy.heroPanels;
 
@@ -34,6 +35,16 @@ export function Hero() {
       aria-roledescription="carousel"
       aria-label="Aqua-Safe headline"
     >
+      <img
+        className="hero-photo"
+        src={asset("/brand/hero-fleet.jpg")}
+        alt="The Aqua-Safe plumbing and gas fleet lined up above the beach in Perth"
+        width={1672}
+        height={941}
+        fetchPriority="high"
+        decoding="async"
+      />
+      <div className="hero-scrim" aria-hidden="true" />
       <HeroWaves />
       <div className="wrap">
         {panels.map((p, idx) => (
@@ -98,9 +109,9 @@ export function Hero() {
 function HeroWaves() {
   return (
     <svg className="hero-waves" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true">
-      <path fill="#d4e9f0" fillOpacity="0.6" d="M0 220 C 240 180 480 260 720 220 C 960 180 1200 250 1440 210 L1440 320 L0 320 Z" />
-      <path fill="#a9d4e2" fillOpacity="0.5" d="M0 250 C 260 220 520 290 780 250 C 1040 210 1200 280 1440 245 L1440 320 L0 320 Z" />
-      <path fill="#0f5c7a" fillOpacity="0.14" d="M0 280 C 300 255 600 305 900 280 C 1140 260 1300 300 1440 282 L1440 320 L0 320 Z" />
+      <path fill="#ffffff" fillOpacity="0.18" d="M0 220 C 240 180 480 260 720 220 C 960 180 1200 250 1440 210 L1440 320 L0 320 Z" />
+      <path fill="#ffffff" fillOpacity="0.5" d="M0 250 C 260 220 520 290 780 250 C 1040 210 1200 280 1440 245 L1440 320 L0 320 Z" />
+      <path fill="#ffffff" fillOpacity="1" d="M0 282 C 300 258 600 306 900 282 C 1140 263 1300 300 1440 284 L1440 320 L0 320 Z" />
     </svg>
   );
 }

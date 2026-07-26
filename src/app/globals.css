@@ -181,6 +181,14 @@
     border-bottom-color: var(--line);
     box-shadow: var(--shadow-sm);
   }
+  /* Homepage hero is a dark photo — float the un-stuck nav in light treatment. */
+  .nav.is-over-hero .nav-link { color: #fff; }
+  .nav.is-over-hero .nav-phone { color: #fff; }
+  .nav.is-over-hero .nav-toggle {
+    color: #fff;
+    background: rgba(9, 38, 52, 0.42);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
   .nav .wrap {
     display: flex;
     align-items: center;
@@ -265,21 +273,40 @@
     min-height: clamp(560px, 88vh, 860px);
     display: flex;
     align-items: center;
-    padding: 120px 0 80px;
+    padding: 150px 0 92px;
     overflow: hidden;
+    background: var(--teal-ink); /* fallback behind the fleet photo */
+    color: #fff;
+  }
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% 46%;
+    z-index: 0;
+  }
+  /* Readable-text scrim: deep teal weighted to the left (text side) and top,
+     clearing toward the lower-right so the vans and ocean stay visible. */
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
     background:
-      radial-gradient(90% 120% at 88% -10%, #d9edf3 0%, rgba(217,237,243,0) 55%),
-      linear-gradient(180deg, #f5fafc 0%, var(--paper) 60%);
+      linear-gradient(90deg, rgba(7,30,42,0.95) 0%, rgba(7,30,42,0.85) 32%, rgba(7,30,42,0.55) 56%, rgba(7,30,42,0.22) 80%, rgba(7,30,42,0.05) 100%),
+      linear-gradient(180deg, rgba(7,30,42,0.55) 0%, rgba(7,30,42,0.12) 26%, rgba(7,30,42,0.12) 55%, rgba(7,30,42,0.5) 100%);
   }
   .hero-waves {
     position: absolute;
-    left: 0; right: 0; bottom: 0;
+    left: 0; right: 0; bottom: -1px;
     width: 100%;
-    height: 42%;
-    z-index: 0;
+    height: 26%;
+    z-index: 2;
     pointer-events: none;
   }
-  .hero .wrap { position: relative; z-index: 2; width: 100%; }
+  .hero .wrap { position: relative; z-index: 3; width: 100%; }
   .hero-panel { display: none; }
   .hero-panel.is-active { display: block; animation: heroIn 0.6s var(--ease); }
   @keyframes heroIn {
@@ -291,13 +318,28 @@
     line-height: 0.98;
     letter-spacing: -0.035em;
     margin: 18px 0 0;
+    color: #fff;
+    text-shadow: 0 2px 30px rgba(6, 28, 38, 0.4);
   }
-  .hero h1 .ln2 { color: var(--teal); display: block; }
+  .hero h1 .ln2 { color: #86dcf2; display: block; }
   .hero-body {
-    color: var(--muted);
+    color: #eaf5f9;
     font-size: clamp(16px, 1.6vw, 20px);
-    max-width: 52ch;
+    max-width: 46ch;
     margin: 22px 0 34px;
+    text-shadow: 0 1px 14px rgba(6, 24, 34, 0.55);
+  }
+  .hero .eyebrow { color: #a6e4f5; }
+  .hero .nav-phone { color: #fff; }
+  /* Outline CTA needs a light treatment over the photo (default is teal-on-white). */
+  .hero .btn-line {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .hero .btn-line:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.16);
   }
   .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
   .hero-controls {
@@ -318,19 +360,20 @@
     color: var(--teal);
     transition: border-color 0.25s, background 0.25s, transform 0.2s;
   }
+  .hero-arrow { box-shadow: var(--shadow-sm); }
   .hero-arrow:hover { border-color: var(--teal); transform: translateY(-2px); }
   .hero-dots { display: flex; gap: 9px; }
   .hero-dot {
     width: 9px; height: 9px;
     border-radius: 50%;
-    background: var(--line);
+    background: rgba(255, 255, 255, 0.5);
     border: none;
     padding: 0;
     cursor: pointer;
     transition: background 0.25s, transform 0.25s, width 0.25s;
   }
   .hero-dot.is-active { background: var(--aqua); width: 26px; border-radius: 6px; }
-  .hero-count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .hero-count { font-size: 13px; color: rgba(255, 255, 255, 0.82); font-variant-numeric: tabular-nums; }
 
   /* ===========================================================================
      TICKER (trust marquee)
