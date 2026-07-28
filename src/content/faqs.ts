@@ -18,6 +18,10 @@ export const faqs: Faq[] = [
     a: "Yes — we're fully insured and licensed. Plumbing PL10802 and Gas Fitting GF22810.",
   },
   {
+    q: "Do you warrant your work?",
+    a: "Yes — a 12-month workmanship warranty on the work we carry out, plus any manufacturer's warranty on the parts and equipment we install, passed straight on to you. We'd rather quote you an honest 12 months than advertise a longer number that the conditions quietly cut back down. This is on top of the guarantees you're already entitled to under Australian Consumer Law.",
+  },
+  {
     q: "Can you come out the same day?",
     a: "For urgent works like burst pipes or no hot water, we prioritise same-day attendance wherever possible.",
   },

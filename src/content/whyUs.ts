@@ -28,7 +28,7 @@ export const whyUs: WhyItem[] = [
   },
   {
     n: "06",
-    title: "We clean up before we leave",
-    body: "We leave your home or site the way we found it — tidy and sorted.",
+    title: "12-month workmanship warranty",
+    body: "A straight 12 months on our workmanship, in writing. No fine print that quietly shrinks it back down.",
   },
 ];

@@ -20,7 +20,7 @@ export function generateMetadata({ params }: { params: { suburb: string } }): Me
   if (!s) return {};
   return {
     title: `Plumber in ${s.name}`,
-    description: `Licensed plumbers and gas fitters servicing ${s.name} and the surrounding Perth metro — upfront pricing, fully insured, and a workmanship guarantee.`,
+    description: `Licensed plumbers and gas fitters servicing ${s.name} and the surrounding Perth metro — upfront pricing, fully insured, and a 12-month workmanship warranty.`,
   };
 }
 
@@ -39,7 +39,7 @@ export default function SuburbPage({ params }: { params: { suburb: string } }) {
           </h1>
           <p className="lead">
             Licensed plumbers and gas fitters servicing {s.name} and the surrounding Perth metro —
-            upfront pricing, fully insured, and workmanship we stand behind.
+            upfront pricing, fully insured, and a 12-month workmanship warranty.
           </p>
           <div className="areas-actions" style={{ marginTop: 32 }}>
             <Link className="btn btn-fill" href="/#book">

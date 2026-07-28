@@ -30,6 +30,16 @@ export const business = {
     plumbing: "PL10802",
     gas: "GF22810",
   },
+  /**
+   * Aaron, 2026-07: a real 12-month workmanship warranty. He asked for it to be
+   * stated plainly — competitors advertise "lifetime" warranties that, once the
+   * stipulations are applied, amount to about 12 months anyway. So we say the
+   * honest number rather than a vague "workmanship we stand behind".
+   */
+  warranty: {
+    months: 12,
+    label: "12-month workmanship warranty",
+  },
   description:
     "Aqua-Safe Plumbing & Maintenance is a family-owned business specialising in maintenance plumbing, hot water systems, blocked drains, gas fitting, renovation works and water filtration — residential and commercial, across the Perth metro.",
 } as const;

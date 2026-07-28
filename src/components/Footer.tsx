@@ -24,6 +24,7 @@ export function Footer() {
               <span className="foot-badge">Gas Fitting {business.licence.gas}</span>
               <span className="foot-badge">Fully insured</span>
               <span className="foot-badge">Family owned</span>
+              <span className="foot-badge">{business.warranty.label}</span>
             </div>
           </div>
 

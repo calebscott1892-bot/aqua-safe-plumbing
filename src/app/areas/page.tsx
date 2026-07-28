@@ -49,7 +49,7 @@ export default function AreasIndex() {
 
           <div className="areas-cta">
             <h2>In one of these suburbs?</h2>
-            <p>Licensed plumbers and gas fitters, upfront pricing, and workmanship we stand behind.</p>
+            <p>Licensed plumbers and gas fitters, upfront pricing, and a 12-month workmanship warranty.</p>
             <div className="areas-actions" style={{ marginTop: 20 }}>
               <a className="btn btn-fill" href={business.phoneHref}>
                 Call {business.phoneDisplay}

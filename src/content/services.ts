@@ -62,10 +62,10 @@ export const residentialServices: Service[] = [
     body: "Fast isolation and a proper repair of burst and leaking pipes, plus longer-term options when ageing pipework keeps failing.",
     icon: "pipe",
     detail:
-      "Water where it shouldn't be does damage fast. We isolate the leak quickly and make a proper repair, not a patch, and we guarantee our own workmanship and pass on any applicable manufacturer warranties. With WA's water quality and the condition of a lot of existing pipework, we can't guarantee that another section further along an older service won't fail down the track, and we see this often on underground mains. So where bursts keep happening close together, we'll talk you through longer-term fixes: a full mains rerun, replacing the affected service, or a complete ceiling rerun where the pipework is failing throughout the property.",
+      "Water where it shouldn't be does damage fast. We isolate the leak quickly and make a proper repair, not a patch, and we back our own workmanship with a 12-month warranty and pass on any applicable manufacturer warranties. With WA's water quality and the condition of a lot of existing pipework, we can't guarantee that another section further along an older service won't fail down the track, and we see this often on underground mains. So where bursts keep happening close together, we'll talk you through longer-term fixes: a full mains rerun, replacing the affected service, or a complete ceiling rerun where the pipework is failing throughout the property.",
     points: [
       "Fast isolation to stop the damage",
-      "Proper repairs — our workmanship guaranteed",
+      "Proper repairs — 12-month workmanship warranty",
       "Manufacturer warranties passed on where applicable",
       "Longer-term options: full mains or ceiling reruns",
     ],
@@ -119,7 +119,7 @@ export const residentialServices: Service[] = [
       "Taps, toilets and cisterns",
       "Leaks, pressure and noise issues",
       "Upfront pricing before work begins",
-      "Workmanship we stand behind",
+      "12-month workmanship warranty",
     ],
   }),
   svc({

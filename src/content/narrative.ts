@@ -15,6 +15,6 @@ export const narrative: NarrativePanel[] = [
   {
     kicker: "The fix",
     heading: "Done once. Done right.",
-    body: "A fixed price agreed before we start, quality parts, and a workmanship guarantee that means it stays fixed.",
+    body: "A fixed price agreed before we start, quality parts, and a 12-month workmanship warranty that means it stays fixed.",
   },
 ];
