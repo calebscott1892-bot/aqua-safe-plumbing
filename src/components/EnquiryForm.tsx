@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { business } from "@/content/business";
-import { residentialServices, commercialServices } from "@/content/services";
+import { residentialServices, commercialServices, allServices } from "@/content/services";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -14,6 +14,19 @@ export function EnquiryForm() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState("");
   const [sentTo, setSentTo] = useState<{ name: string; email: string }>({ name: "", email: "" });
+  const [service, setService] = useState("");
+
+  /*
+    Service pages link here as /contact/?service=Blocked%20Drains so the person
+    doesn't re-pick what they just clicked. Read from window rather than
+    useSearchParams — this page is statically rendered and useSearchParams would
+    drag in a Suspense boundary for no benefit. Only accept an exact service
+    title so a crafted URL can't inject arbitrary text into the email.
+  */
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("service");
+    if (q && allServices.some((s) => s.title === q)) setService(q);
+  }, []);
 
   const clearError = (name: string) =>
     setFieldErrors((prev) => {
@@ -71,6 +84,7 @@ export function EnquiryForm() {
         setSentTo({ name: payload.name, email: payload.email });
         setStatus("sent");
         form.reset();
+        setService(""); // controlled, so reset() won't clear it
         return;
       }
 
@@ -130,7 +144,12 @@ export function EnquiryForm() {
       <div className="field">
         <label htmlFor="ef-service">What do you need?</label>
         <div className="field-select">
-          <select id="ef-service" name="service" defaultValue="">
+          <select
+            id="ef-service"
+            name="service"
+            value={service}
+            onChange={(e) => setService(e.target.value)}
+          >
             <option value="">General enquiry</option>
             <optgroup label="Residential">
               {residentialServices.map((s) => (

@@ -30,11 +30,9 @@ export default function ServicePage({ params }: { params: { service: string } })
   const s = getService(params.service);
   if (!s) notFound();
 
-  const mailto = `mailto:${business.email}?subject=${encodeURIComponent(
-    `${s.title} — enquiry`
-  )}&body=${encodeURIComponent(
-    `Hi Aqua-Safe,\n\nI'd like to book / get a quote for: ${s.title}\n\nSuburb:\nBest contact number:\nA few details about the job:\n\nThanks.`
-  )}`;
+  // Enquiries go to the on-site form (prefilled with this service) rather than
+  // a mailto: — plenty of people have no mail client wired up on desktop.
+  const enquireHref = `/contact/?service=${encodeURIComponent(s.title)}`;
 
   // Real-estate / strata managers book through by email; everyone else uses the
   // ServiceM8 online booking link (Aaron, 2026-07).
@@ -56,9 +54,9 @@ export default function ServicePage({ params }: { params: { service: string } })
 
               <div className="areas-actions" style={{ marginTop: 32 }}>
                 {emailFirst ? (
-                  <a className="btn btn-fill" href={mailto}>
-                    Enquire by email
-                  </a>
+                  <Link className="btn btn-fill" href={enquireHref}>
+                    Send an enquiry
+                  </Link>
                 ) : (
                   <a className="btn btn-fill" href={business.bookingUrl} target="_blank" rel="noopener noreferrer">
                     Book online
@@ -70,7 +68,7 @@ export default function ServicePage({ params }: { params: { service: string } })
               </div>
               {!emailFirst && (
                 <p className="svc-or-email">
-                  or <a href={mailto}>enquire by email</a>
+                  or <Link href={enquireHref}>send an enquiry</Link>
                 </p>
               )}
             </div>

@@ -1,11 +1,6 @@
+import Link from "next/link";
 import { business } from "@/content/business";
 import { copy } from "@/content/copy";
-
-const mailto = `mailto:${business.email}?subject=${encodeURIComponent(
-  "Quote request — Aqua-Safe Plumbing"
-)}&body=${encodeURIComponent(
-  "Hi Aqua-Safe,\n\nI'd like a quote for:\n\nSuburb:\nBest contact number:\n\nThanks."
-)}`;
 
 export function FinalCTA() {
   return (
@@ -20,9 +15,9 @@ export function FinalCTA() {
           <a className="btn btn-line" href={business.phoneHref}>
             Call {business.phoneDisplay}
           </a>
-          <a className="btn btn-line" href={mailto}>
-            Enquire by email
-          </a>
+          <Link className="btn btn-line" href="/contact/">
+            Send an enquiry
+          </Link>
         </div>
         <a className="cta-phone" href={business.phoneHref}>
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
