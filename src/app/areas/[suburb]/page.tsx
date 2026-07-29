@@ -5,6 +5,8 @@ import { suburbs, getSuburb, suburbContext, nearbyWithPages } from "@/content/su
 import { business } from "@/content/business";
 import { residentialServices, allServices } from "@/content/services";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbJsonLd, areaServedJsonLd } from "@/lib/jsonld";
 
 /*
   Service-area page. Each one is built from three things that genuinely differ
@@ -45,6 +47,16 @@ export default function SuburbPage({ params }: { params: { suburb: string } }) {
 
   return (
     <main>
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Service areas", path: "/areas/" },
+            { name: s.name },
+          ]),
+          areaServedJsonLd(s.name, s.slug),
+        ]}
+      />
       <section className="section" style={{ paddingTop: "clamp(130px, 18vh, 200px)" }}>
         <div className="wrap">
           <nav className="crumbs" aria-label="Breadcrumb">

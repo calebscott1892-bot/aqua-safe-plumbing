@@ -6,6 +6,8 @@ import { hasServicePhoto } from "@/content/servicePhotos";
 import { business } from "@/content/business";
 import { asset } from "@/lib/asset";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbJsonLd, serviceJsonLd } from "@/lib/jsonld";
 
 /*
   Per-service booking pages (Aaron, 2026-07: "sub things like burst pipe if
@@ -23,6 +25,7 @@ export function generateMetadata({ params }: { params: { service: string } }): M
   return {
     title: `${s.title} — Perth`,
     description: `${s.body} Licensed Perth plumbers — upfront pricing, fully insured. Call ${business.phoneDisplay}.`,
+    alternates: { canonical: `/services/${s.slug}/` },
   };
 }
 
@@ -41,8 +44,22 @@ export default function ServicePage({ params }: { params: { service: string } })
 
   return (
     <main>
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: s.title },
+          ]),
+          serviceJsonLd(s),
+        ]}
+      />
       <section className="section" style={{ paddingTop: "clamp(130px, 18vh, 200px)" }}>
         <div className="wrap">
+          <nav className="crumbs" aria-label="Breadcrumb">
+            <Link href="/">Home</Link>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{s.title}</span>
+          </nav>
           <div className={`svc-hero${photo ? " svc-hero--photo" : ""}`}>
             <div className="svc-hero-copy">
               <span className="eyebrow">{s.group} · Perth metro</span>
