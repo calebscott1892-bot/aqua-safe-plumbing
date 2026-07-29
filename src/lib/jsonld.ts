@@ -25,7 +25,9 @@ export const localBusinessJsonLd = {
   telephone: "+61473072642", // E.164 for reliable click-to-call
   email: business.email,
   url: `${ORIGIN}/`,
-  image: `${ORIGIN}/icon.svg`, // TODO: swap for a raster logo/photo at launch
+  // Raster, not the SVG icon — Google won't use an SVG here.
+  image: `${ORIGIN}/brand/hero-fleet.jpg`,
+  logo: `${ORIGIN}/brand/aquasafe-horizontal-teal.png`,
   identifier: {
     "@type": "PropertyValue",
     propertyID: "ABN",

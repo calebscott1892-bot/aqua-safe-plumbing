@@ -29,11 +29,25 @@ export const metadata: Metadata = {
     siteName: business.name,
     title: "Aqua-Safe Plumbing & Maintenance — Perth",
     description: SITE_DESCRIPTION,
+    // Without this, sharing the site on Facebook or in a text message previews
+    // with no picture at all. The fleet photo is the real, recognisable one
+    // (1672x941 — above the 1200x630 minimum, close to the 1.91 target ratio).
+    // The service photos are portrait and would crop badly here, so every page
+    // shares this single landscape image.
+    images: [
+      {
+        url: "/brand/hero-fleet.jpg",
+        width: 1672,
+        height: 941,
+        alt: "The Aqua-Safe plumbing and gas fleet lined up above the beach in Perth",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Aqua-Safe Plumbing & Maintenance — Perth",
     description: SITE_DESCRIPTION,
+    images: ["/brand/hero-fleet.jpg"],
   },
   // Held out of the index until launch. Flip LAUNCHED in src/lib/seo.ts — it
   // drives this and robots.txt together.
