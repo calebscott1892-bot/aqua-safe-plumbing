@@ -959,6 +959,14 @@
     font-weight: 500;
     color: var(--teal-ink);
   }
+  /* suburbs with their own page read as clickable; the rest stay plain */
+  .suburb-chip--link {
+    background: #fff;
+    border-color: var(--teal);
+    color: var(--teal);
+    transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  }
+  .suburb-chip--link:hover { background: var(--teal); color: #fff; }
 
   /* expandable region cards (click → suburbs) */
   .areas-grid--wide { grid-template-columns: 1fr; gap: 12px; }
@@ -1346,6 +1354,65 @@
   .narrative--static .narr-panel { position: static; opacity: 1; }
   .narrative--static .narr-water,
   .narrative--static .narr-progress { display: none; }
+
+  /* ===========================================================================
+     Service-area pages (local SEO)
+     =========================================================================== */
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .crumbs a { color: var(--teal); font-weight: 500; }
+  .crumbs a:hover { text-decoration: underline; }
+  .crumbs span[aria-hidden] { opacity: 0.45; }
+
+  .area-local {
+    margin-top: clamp(40px, 5vw, 64px);
+    padding: clamp(24px, 3vw, 36px);
+    border-radius: var(--radius-lg);
+    background: var(--mist);
+    border: 1px solid var(--line-soft);
+  }
+  .area-local h2 { font-size: clamp(22px, 2.6vw, 30px); }
+  .area-local p {
+    color: var(--muted);
+    font-size: clamp(15.5px, 1.4vw, 17.5px);
+    margin-top: 14px;
+    max-width: 68ch;
+  }
+  .area-local h3 {
+    font-size: 17px;
+    margin-top: 28px;
+  }
+  .area-common {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px 26px;
+  }
+  .area-common li {
+    position: relative;
+    padding-left: 26px;
+    color: var(--ink);
+    font-size: 15.5px;
+  }
+  .area-common li::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 0.62em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--aqua);
+  }
 
   /* ===========================================================================
      Contact page + enquiry form

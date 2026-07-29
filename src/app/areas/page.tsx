@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { regions, uniqueSuburbs } from "@/content/regions";
+import { suburbs } from "@/content/suburbs";
 import { business } from "@/content/business";
+
+/** Suburbs with their own page, so the chips below can link to them. */
+const PAGE_BY_NAME = new Map(suburbs.map((s) => [s.name, s.slug]));
 
 export const metadata: Metadata = {
   title: "Service areas — Perth metro plumbing",
@@ -38,11 +42,18 @@ export default function AreasIndex() {
                 {r.blurb}
               </p>
               <div className="suburb-links">
-                {r.suburbs.map((s) => (
-                  <span className="suburb-chip" key={`${r.name}-${s}`}>
-                    {s}
-                  </span>
-                ))}
+                {r.suburbs.map((s) => {
+                  const slug = PAGE_BY_NAME.get(s);
+                  return slug ? (
+                    <Link className="suburb-chip suburb-chip--link" key={`${r.name}-${s}`} href={`/areas/${slug}`}>
+                      {s}
+                    </Link>
+                  ) : (
+                    <span className="suburb-chip" key={`${r.name}-${s}`}>
+                      {s}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           ))}

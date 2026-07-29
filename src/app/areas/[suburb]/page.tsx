@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { suburbs, getSuburb } from "@/content/suburbs";
+import { suburbs, getSuburb, suburbContext, nearbyWithPages } from "@/content/suburbs";
 import { business } from "@/content/business";
-import { residentialServices } from "@/content/services";
+import { residentialServices, allServices } from "@/content/services";
+import { ServiceIcon } from "@/components/ui/ServiceIcon";
 
 /*
-  Programmatic service-area landing page. Suburb data lives in
-  src/content/suburbs.ts — expand each with suburb-specific copy, local reviews,
-  a map and FAQs to make these individually rankable.
+  Service-area page. Each one is built from three things that genuinely differ
+  between suburbs: the note for this suburb, its region's plumbing character
+  (housing era, ground, water source), and a nearby-suburb list unique to its
+  position in the region. See the comment in content/suburbs.ts for why this
+  list is a curated tier rather than all 167 service-area suburbs.
 */
 
 export function generateStaticParams() {
@@ -20,7 +23,9 @@ export function generateMetadata({ params }: { params: { suburb: string } }): Me
   if (!s) return {};
   return {
     title: `Plumber in ${s.name}`,
-    description: `Licensed plumbers and gas fitters servicing ${s.name} and the surrounding Perth metro — upfront pricing, fully insured, and a 12-month workmanship warranty.`,
+    // The suburb note keeps every description genuinely different.
+    description: `${s.note} Licensed plumbers and gas fitters, upfront pricing and a ${business.warranty.months}-month workmanship warranty. Call ${business.phoneDisplay}.`,
+    alternates: { canonical: `/areas/${s.slug}/` },
   };
 }
 
@@ -28,36 +33,90 @@ export default function SuburbPage({ params }: { params: { suburb: string } }) {
   const s = getSuburb(params.suburb);
   if (!s) notFound();
 
+  const { region } = suburbContext(s.name);
+  const nearby = nearbyWithPages(s.name);
+
+  // Lead with what's actually most relevant here (hills → filtration, newer
+  // corridors → hot water). Falls back to the standard residential six.
+  const featured =
+    region?.featured
+      .map((slug) => allServices.find((sv) => sv.slug === slug))
+      .filter((sv): sv is (typeof allServices)[number] => !!sv) ?? residentialServices.slice(0, 6);
+
   return (
     <main>
       <section className="section" style={{ paddingTop: "clamp(130px, 18vh, 200px)" }}>
         <div className="wrap">
-          <span className="eyebrow">Service area</span>
+          <nav className="crumbs" aria-label="Breadcrumb">
+            <Link href="/">Home</Link>
+            <span aria-hidden="true">/</span>
+            <Link href="/areas">Service areas</Link>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{s.name}</span>
+          </nav>
+
+          <span className="eyebrow">{region ? region.name : "Service area"}</span>
           <h1 className="h-sec" style={{ fontSize: "clamp(40px, 7vw, 88px)", maxWidth: "16ch" }}>
-            Plumber in{" "}
-            <span style={{ color: "var(--teal)" }}>{s.name}</span>.
+            Plumber in <span style={{ color: "var(--teal)" }}>{s.name}</span>.
           </h1>
-          <p className="lead">
-            Licensed plumbers and gas fitters servicing {s.name} and the surrounding Perth metro —
-            upfront pricing, fully insured, and a 12-month workmanship warranty.
-          </p>
+
+          <p className="lead">{s.note}</p>
+
           <div className="areas-actions" style={{ marginTop: 32 }}>
-            <Link className="btn btn-fill" href="/#book">
-              Book your quote
-            </Link>
+            <a className="btn btn-fill" href={business.bookingUrl} target="_blank" rel="noopener noreferrer">
+              Book online
+            </a>
             <a className="btn btn-line" href={business.phoneHref}>
               Call {business.phoneDisplay}
             </a>
           </div>
 
-          <div className="svc-grid" style={{ marginTop: 56 }}>
-            {residentialServices.slice(0, 6).map((svc) => (
-              <article className="svc-card" key={svc.title}>
-                <h3>{svc.title}</h3>
-                <p>{svc.body}</p>
-              </article>
-            ))}
+          {region && (
+            <div className="area-local">
+              <h2>Plumbing in {s.name}</h2>
+              <p>{region.character}</p>
+              <h3>What we get called out for around here</h3>
+              <ul className="area-common">
+                {region.common.map((c) => (
+                  <li key={c}>{c}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div className="svc-detail-more" style={{ marginTop: 8 }}>
+            <h2>What we do in {s.name}</h2>
+            <div className="svc-grid" style={{ marginTop: 24 }}>
+              {featured.map((svc) => (
+                <Link className="svc-card" key={svc.slug} href={`/services/${svc.slug}`}>
+                  <span className="svc-link-icon" aria-hidden="true">
+                    <ServiceIcon id={svc.icon} />
+                  </span>
+                  <h3>{svc.title}</h3>
+                  <p>{svc.body}</p>
+                </Link>
+              ))}
+            </div>
           </div>
+
+          <div className="svc-detail-trust">
+            <span>Licensed &amp; insured — {business.licence.plumbing} · {business.licence.gas}</span>
+            <span>Upfront pricing before work begins</span>
+            <span>{business.warranty.label}</span>
+          </div>
+
+          {nearby.length > 0 && (
+            <div className="svc-detail-more">
+              <h2>Nearby suburbs we cover</h2>
+              <div className="suburb-links">
+                {nearby.map((n) => (
+                  <Link key={n.slug} href={`/areas/${n.slug}`} className="suburb-link">
+                    {n.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
           <p style={{ marginTop: 48, fontSize: 15 }}>
             <Link href="/areas" style={{ color: "var(--teal)", fontWeight: 600 }}>
