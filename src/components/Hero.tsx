@@ -54,10 +54,20 @@ export function Hero() {
             aria-hidden={idx !== i}
           >
             <span className="eyebrow">{p.kicker}</span>
-            <h1>
-              {p.title[0]}
-              <span className="ln2">{p.title[1]}</span>
-            </h1>
+            {/* One crawlable H1 (panel 1). The rotating panels are alternate
+                views of the same page, not extra headings, so they render as
+                styled paragraphs — three H1s split the page's main heading. */}
+            {idx === 0 ? (
+              <h1 className="hero-h">
+                {p.title[0]}
+                <span className="ln2">{p.title[1]}</span>
+              </h1>
+            ) : (
+              <p className="hero-h" role="heading" aria-level={2}>
+                {p.title[0]}
+                <span className="ln2">{p.title[1]}</span>
+              </p>
+            )}
             <p className="hero-body">{p.body}</p>
             <div className="hero-cta">
               <a className="btn btn-fill" href={p.primary.href}>

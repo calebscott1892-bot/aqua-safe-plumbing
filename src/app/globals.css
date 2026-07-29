@@ -313,7 +313,12 @@
     from { opacity: 0; transform: translateY(14px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .hero h1 {
+  /* .hero-h covers both the real <h1> (panel 1) and the <p> stand-ins used by
+     the rotating panels, so they look identical while the page keeps one H1. */
+  .hero h1,
+  .hero .hero-h {
+    font-family: var(--font-clash), var(--font-hanken), sans-serif;
+    font-weight: 600;
     font-size: clamp(44px, 8vw, 104px);
     line-height: 0.98;
     letter-spacing: -0.035em;
@@ -321,7 +326,8 @@
     color: #fff;
     text-shadow: 0 2px 30px rgba(6, 28, 38, 0.4);
   }
-  .hero h1 .ln2 { color: #86dcf2; display: block; }
+  .hero h1 .ln2,
+  .hero .hero-h .ln2 { color: #86dcf2; display: block; }
   .hero-body {
     color: #eaf5f9;
     font-size: clamp(16px, 1.6vw, 20px);

@@ -7,7 +7,9 @@ import { business } from "@/content/business";
  * opening hours, a raster logo/photo, and aggregateRating (only once REAL
  * reviews exist).
  */
-const ORIGIN = `https://${business.domain}`;
+/** Canonical site origin. Single source for metadata, sitemap and robots. */
+export const SITE_ORIGIN = `https://${business.domain}`;
+const ORIGIN = SITE_ORIGIN;
 
 export const localBusinessJsonLd = {
   "@context": "https://schema.org",
