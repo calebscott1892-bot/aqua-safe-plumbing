@@ -9,7 +9,22 @@ const panels = copy.heroPanels;
 
 export function Hero() {
   const [i, setI] = useState(0);
-  const [paused, setPaused] = useState(false);
+  /**
+   * Two different reasons to stop, and they must stay separate.
+   *
+   * `hovered` is TEMPORARY — hold still while someone reads or mouses over the
+   * panel, then carry on. Previously this was one `paused` flag set true on
+   * mouseenter with nothing to unset it, so the first time your cursor crossed
+   * the hero (which fills the top of the page, so almost immediately) the
+   * rotation stopped for the rest of the session. That's the "scrolling on top
+   * stops and doesn't keep going" Aaron reported.
+   *
+   * `stopped` is PERMANENT — once someone picks a panel themselves, don't yank
+   * it out from under them by auto-advancing again.
+   */
+  const [hovered, setHovered] = useState(false);
+  const [stopped, setStopped] = useState(false);
+  const paused = hovered || stopped;
 
   const go = useCallback((n: number) => setI((n + panels.length) % panels.length), []);
 
@@ -23,15 +38,21 @@ export function Hero() {
   }, [paused]);
 
   const interact = (n: number) => {
-    setPaused(true);
+    setStopped(true);
     go(n);
   };
 
   return (
     <section
       className="hero"
-      onMouseEnter={() => setPaused(true)}
-      onFocusCapture={() => setPaused(true)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setHovered(true)}
+      // Only resume once focus has actually left the hero, not when it moves
+      // between the arrows and dots inside it.
+      onBlurCapture={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setHovered(false);
+      }}
       aria-roledescription="carousel"
       aria-label="Aqua-Safe headline"
     >

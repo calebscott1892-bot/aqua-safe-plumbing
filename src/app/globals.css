@@ -38,6 +38,10 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+    /* The nav is position:fixed and 78px tall, so without this every #anchor
+       link scrolls its section to y=0 — i.e. underneath the nav — and cuts the
+       heading off. Nav height plus a little breathing room. */
+    scroll-padding-top: 96px;
   }
   body {
     background: var(--paper);
