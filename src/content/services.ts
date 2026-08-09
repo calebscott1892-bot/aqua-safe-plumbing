@@ -9,6 +9,20 @@ export type Service = {
   detail: string;
   /** "What we do" bullets for the service's own page. */
   points: string[];
+  /**
+   * Symptoms that bring people to this page. Most plumbing searches describe a
+   * symptom rather than a service — "why is my drain gurgling", "hot water
+   * runs out fast" — so these earn the page relevance it otherwise can't get
+   * from a 40-word description.
+   */
+  signs?: string[];
+  /**
+   * Service-specific questions. Plain answers to what people actually ask
+   * before booking. No pricing (site-wide rule) — describe the work, not the
+   * cost. Rendered as text, NOT FAQPage schema: Google stopped serving FAQ
+   * rich results in May 2026, so the markup would add nothing.
+   */
+  faqs?: { q: string; a: string }[];
   /** Preferred contact route on the service page. Real-estate / strata managers
    *  book through by EMAIL; everything else uses the ServiceM8 booking link. */
   contact?: "email" | "booking";
@@ -43,6 +57,16 @@ export const residentialServices: Service[] = [
       "Tree-root cutting and removal",
       "Advice on preventing repeat blockages",
     ],
+    signs: [
+      `Water pooling around a floor waste, or draining away far slower than it used to`,
+      `Gurgling from a toilet or sink when something else on the property drains`,
+      `A smell coming back up through drains, especially in warmer weather`,
+      `More than one fixture backing up at once — usually the main line, not the fixture`,
+    ],
+    faqs: [
+      { q: `Why does the same drain keep blocking?`, a: `A blockage that returns is usually a symptom rather than the problem. Tree roots, a collapsed or misaligned section of pipe, or a fall that was never right will all re-block once whatever cleared it washes through. That is why we put a camera down rather than just clearing it — you want to know whether you are looking at a five-minute job or a section of pipe that needs replacing.` },
+      { q: `Will jetting damage my pipes?`, a: `Not when it is set correctly for the pipe it is going into. Pressure and nozzle are matched to the material and condition of the line, which is another reason we look first. Old clay and damaged sections get treated differently to sound PVC.` },
+    ],
   }),
   svc({
     title: "Hot Water Systems",
@@ -55,6 +79,16 @@ export const residentialServices: Service[] = [
       "Servicing, repairs and replacements",
       "Correct sizing for your household",
       "Same-day service available",
+    ],
+    signs: [
+      `Hot water runs out much faster than it used to`,
+      `Water runs rusty or discoloured when you first turn the hot tap on`,
+      `Pooling water, damp or rust staining around the base of the unit`,
+      `The relief valve is constantly dripping, or the unit is making noise it did not used to`,
+    ],
+    faqs: [
+      { q: `Repair or replace?`, a: `It depends on the age of the unit and what has failed. Elements, thermostats and valves are routine repairs and often worth doing. But once a tank itself is leaking, it is replacement — a corroded cylinder cannot be patched. We will tell you which one you are looking at before any work starts.` },
+      { q: `How long does a hot water system last?`, a: `Most storage units give you somewhere around eight to twelve years, though water quality and whether the sacrificial anode was ever replaced make a real difference. If yours is past ten and starting to misbehave, it is worth planning a replacement rather than waiting for it to fail on a weekend.` },
     ],
   }),
   svc({
@@ -69,6 +103,16 @@ export const residentialServices: Service[] = [
       "Manufacturer warranties passed on where applicable",
       "Longer-term options: full mains or ceiling reruns",
     ],
+    signs: [
+      `A water bill that has jumped without any change in how much you are using`,
+      `Damp patches, bubbling paint or a section of wall or floor that stays wet`,
+      `Water pressure that has dropped across the whole property`,
+      `The water meter still ticking over when everything in the house is turned off`,
+    ],
+    faqs: [
+      { q: `What should I do before you arrive?`, a: `Turn the water off at the meter — that stops the damage getting worse and is the single most useful thing you can do. If water is anywhere near electrical fittings or the switchboard, isolate the power to that area as well and stay clear of it.` },
+      { q: `Can you find a leak without digging the place up?`, a: `In most cases, yes. Leak detection narrows it down before anything is opened up, so the excavation is targeted rather than exploratory. That usually means far less reinstatement work afterwards.` },
+    ],
   }),
   svc({
     title: "Gas Fitting",
@@ -81,6 +125,16 @@ export const residentialServices: Service[] = [
       "Cooktops, heaters and gas hot water",
       "Gas leak detection and repair",
       "Compliance certificates supplied",
+    ],
+    signs: [
+      `You can smell gas near an appliance, the meter or a bayonet fitting`,
+      `A burner that is burning yellow or orange rather than blue`,
+      `A gas appliance that keeps dropping out or will not stay lit`,
+      `Soot marks or staining around a heater or cooktop`,
+    ],
+    faqs: [
+      { q: `I can smell gas — what now?`, a: `Do not use switches, appliances or anything that could spark. Turn the gas off at the meter if you can reach it safely, open up windows and doors, get everyone outside, and call from outside the property. Treat it as urgent rather than something to look at tomorrow.` },
+      { q: `Do I get paperwork for gas work?`, a: `Yes. Gas work is certified, and you get the compliance documentation for what was carried out. It matters for insurance and it matters when you sell.` },
     ],
   }),
   svc({
@@ -95,6 +149,16 @@ export const residentialServices: Service[] = [
       "Fixture supply advice or install-only",
       "Laundries and kitchens too",
     ],
+    signs: [
+      `You are planning a renovation and need the rough-in coordinated with your builder or tiler`,
+      `Moving a toilet, vanity or shower to a new position`,
+      `An older bathroom where the existing pipework is due to be replaced while it is open`,
+      `Waterproofing and falls that need to be right before anything gets tiled`,
+    ],
+    faqs: [
+      { q: `When do you need to be on site?`, a: `Twice, usually. Rough-in happens once the walls are open and before anything is closed up or waterproofed, then fit-off happens after tiling when the fixtures go on. Getting the rough-in right is what stops problems later, because after that it is behind a wall.` },
+      { q: `Do you work with our builder?`, a: `Yes. Most bathroom work is a sequence between trades, and the plumbing has to land in the right order against the waterproofer and tiler. We coordinate around the build rather than turning up whenever suits.` },
+    ],
   }),
   svc({
     title: "Water Filtration",
@@ -107,6 +171,16 @@ export const residentialServices: Service[] = [
       "Under-sink and reverse-osmosis options",
       "Supplied, installed and maintained",
       "Installed by licensed Perth plumbers",
+    ],
+    signs: [
+      `Water that tastes or smells strongly of chlorine`,
+      `Scale building up on tapware, kettles, shower screens and glassware`,
+      `Sediment or discolouration coming through, particularly on bore or tank supply`,
+      `You are on rainwater or bore supply and want it filtered before it reaches the house`,
+    ],
+    faqs: [
+      { q: `Whole-home or under-sink?`, a: `A whole-home system is installed where water enters the property, so every shower, tap and appliance runs on filtered water. Under-sink is a single dedicated tap. Plenty of people do both — the whole-home unit for everything, with reverse osmosis at the kitchen for drinking water.` },
+      { q: `How often do the cartridges need changing?`, a: `It depends on the system and how hard your supply is on it. The systems we install are designed for long service intervals, and we will tell you what yours is at handover so it is not a guess.` },
     ],
   }),
   svc({
@@ -121,6 +195,16 @@ export const residentialServices: Service[] = [
       "Upfront pricing before work begins",
       "12-month workmanship warranty",
     ],
+    signs: [
+      `A tap that drips, or a mixer that has gone stiff or started leaking behind the wall`,
+      `A toilet that runs on after flushing or refills by itself`,
+      `Water pressure that has dropped off at one fixture or across the property`,
+      `Pipes that bang or hammer when a tap is shut off`,
+    ],
+    faqs: [
+      { q: `Is a dripping tap worth calling about?`, a: `Usually yes, and sooner rather than later. A drip is a worn washer or seat most of the time, which is a quick job. Left long enough it wears the seat itself, and then a small repair becomes replacing the tap.` },
+      { q: `Can you look at a few small things in one visit?`, a: `That is generally the sensible way to do it. If you have a list of small jobs around the house, getting them done in a single attendance is more efficient than calling someone out for each one.` },
+    ],
   }),
   svc({
     title: "Real Estate Maintenance",
@@ -133,6 +217,16 @@ export const residentialServices: Service[] = [
       "Photos and reports on completion",
       "Clear communication with PMs and tenants",
       "Compliance checks available",
+    ],
+    signs: [
+      `A tenant has reported a plumbing fault that needs attending and documenting`,
+      `You need work carried out and reported without the owner being on site`,
+      `A property between tenancies that needs its plumbing checked over`,
+      `Recurring faults at a property that need a proper diagnosis rather than another patch`,
+    ],
+    faqs: [
+      { q: `How do you handle access?`, a: `We coordinate directly with the tenant or the agency, whichever the property manager prefers, and work to the access arrangements you already have in place.` },
+      { q: `What do we get afterwards?`, a: `Documentation of what was found and what was done, so it can go straight onto the file and to the owner without you chasing anyone for detail.` },
     ],
     contact: "email",
   }),
@@ -147,6 +241,16 @@ export const residentialServices: Service[] = [
       "Hot water, gas and fixture checks",
       "Written condition report",
       "Negotiation-ready findings",
+    ],
+    signs: [
+      `You are buying an older property and want to know what the plumbing is actually like`,
+      `The building inspection flagged something plumbing-related and you want it looked at properly`,
+      `A property with mature trees over the sewer line`,
+      `You want to know about the hot water system, drains and gas before you commit, not after`,
+    ],
+    faqs: [
+      { q: `How is this different from a building inspection?`, a: `A building inspector does not put a camera down the sewer. We look at the parts of the plumbing that actually cost money to fix — the drains, the hot water system, the gas and the fixtures — so the condition is known before you sign rather than discovered afterwards.` },
+      { q: `What do I get?`, a: `A clear account of the condition of the plumbing and anything that needs attention, in language you can use when deciding what to offer or what to ask the vendor to address.` },
     ],
   }),
 ];
@@ -164,6 +268,16 @@ export const commercialServices: Service[] = [
       "Planned and reactive maintenance",
       "Fully licensed and insured",
     ],
+    signs: [
+      `A fault in one lot that is affecting a neighbouring lot`,
+      `Recurring blockages in shared or common-property lines`,
+      `Work that needs coordinating through a strata manager rather than a single owner`,
+      `Common-property plumbing that needs assessing before it becomes an emergency`,
+    ],
+    faqs: [
+      { q: `Who do you deal with?`, a: `Whoever the building wants us to. Strata manager, building manager or committee — we work to the reporting and approval process already in place rather than cutting across it.` },
+      { q: `Can you tell us whether it is common property?`, a: `We can tell you what has failed and where it sits, which is usually what the determination turns on. That gives the strata manager what they need to work out responsibility.` },
+    ],
     contact: "email",
   }),
   svc({
@@ -178,6 +292,16 @@ export const commercialServices: Service[] = [
       "Replacement and efficiency upgrades",
       "Compliance and certification handled",
     ],
+    signs: [
+      `Hot water demand the current system cannot keep up with during trade`,
+      `A commercial unit that is nearing end of life and worth planning around`,
+      `Rising running costs from an ageing or poorly specified system`,
+      `Tempering and delivery temperatures that need checking for compliance`,
+    ],
+    faqs: [
+      { q: `Can you work outside trading hours?`, a: `Where the work allows it, yes. Hot water going down during service is the expensive part, so scheduling the disruptive stage outside trade is usually the point of the exercise.` },
+      { q: `Repair or upgrade?`, a: `It depends on the unit and what it is costing to run. Sometimes the right answer is a repair; sometimes the running costs of an ageing system make an upgrade the cheaper option over a couple of years. We will give you the honest comparison.` },
+    ],
   }),
   svc({
     title: "High Pressure Jetting",
@@ -190,6 +314,16 @@ export const commercialServices: Service[] = [
       "Grease, scale and root removal",
       "CCTV verification after clearing",
       "Scheduled jetting programs available",
+    ],
+    signs: [
+      `A line that keeps blocking after being cleared with a machine`,
+      `Grease build-up in commercial kitchen waste lines`,
+      `Roots that have found their way into an older sewer line`,
+      `Silt or debris build-up in stormwater lines`,
+    ],
+    faqs: [
+      { q: `How is jetting different from an electric eel?`, a: `An eel punches a hole through a blockage. Jetting scours the pipe wall, so grease, silt and root matter come away rather than being left to catch the next thing through. That is why jetted lines tend to stay clear longer.` },
+      { q: `Do you check the line afterwards?`, a: `Where it matters, yes. A camera after jetting confirms the line is actually clear and shows whether there is damage underneath that was causing the blockages in the first place.` },
     ],
   }),
   svc({
@@ -204,6 +338,16 @@ export const commercialServices: Service[] = [
       "Repairs coordinated with insurers",
       "Photos and documentation throughout",
     ],
+    signs: [
+      `A burst or leak that has caused damage you intend to claim on`,
+      `Your insurer has asked for a plumber's report on the cause`,
+      `Water damage where the source needs to be identified and documented`,
+      `A claim that needs the cause of loss established before it can proceed`,
+    ],
+    faqs: [
+      { q: `Will you deal with my insurer?`, a: `We provide the documentation of cause and scope that insurers ask for. That is usually the part claims stall on — establishing what failed and why.` },
+      { q: `Should I fix it before I claim?`, a: `Make it safe first — turn the water off and stop further damage. Beyond that, it is worth having the cause documented before everything is repaired, because once it is fixed the evidence is gone.` },
+    ],
   }),
   svc({
     title: "Commercial Maintenance",
@@ -216,6 +360,16 @@ export const commercialServices: Service[] = [
       "Reactive repairs with priority response",
       "After-hours works to suit trade",
       "One point of contact, clear reporting",
+    ],
+    signs: [
+      `Recurring plumbing faults across a site that keep being patched`,
+      `Plumbing issues that interrupt trade or operations`,
+      `A site with no scheduled plumbing maintenance in place`,
+      `Multiple tenancies or facilities needing one point of contact`,
+    ],
+    faqs: [
+      { q: `Can you work around our operating hours?`, a: `Where the work allows it. For most commercial sites the disruption costs more than the plumbing, so scheduling around trade is part of the job rather than an afterthought.` },
+      { q: `Do you handle multiple sites?`, a: `Yes. Where a business runs several premises it is generally easier for everyone to have consistent reporting and one number to call.` },
     ],
   }),
   svc({
@@ -230,6 +384,16 @@ export const commercialServices: Service[] = [
       "Written condition reports",
       "Pre-works and dilapidation surveys",
     ],
+    signs: [
+      `A drain that keeps blocking with no obvious cause`,
+      `You want to know the condition of a sewer line before buying a property`,
+      `Suspected root intrusion or a collapsed section`,
+      `You need the location and depth of a line before excavation or building work`,
+    ],
+    faqs: [
+      { q: `What does a camera actually tell you?`, a: `What the blockage is, where it is, and whether the pipe itself is damaged. That is the difference between clearing the same drain every few months and fixing the reason it keeps happening.` },
+      { q: `Can you tell where to dig?`, a: `Yes. The camera locates the position and depth of the fault, so any excavation goes to the right spot rather than opening up a whole run to find it.` },
+    ],
   }),
   svc({
     title: "Preventative Maintenance",
@@ -242,6 +406,16 @@ export const commercialServices: Service[] = [
       "Hot water, drains, backflow and fixtures",
       "Condition reporting each visit",
       "Budget-friendly planned works",
+    ],
+    signs: [
+      `A property or site where failures keep arriving as emergencies`,
+      `Ageing pipework or fixtures you would rather plan around than react to`,
+      `Multiple tenancies where small faults go unreported until they are large ones`,
+      `You want the plumbing checked over on a schedule rather than when it breaks`,
+    ],
+    faqs: [
+      { q: `What does it involve?`, a: `Checking the things that fail quietly — hot water units, valves, drains, visible pipework and fixtures — so problems are found while they are still small and can be scheduled rather than attended after hours.` },
+      { q: `Is it worth it on a single property?`, a: `It depends on the property. On older housing and anywhere failures cause real disruption, catching a hot water unit before it goes usually pays for itself the first time.` },
     ],
   }),
   svc({
@@ -256,6 +430,16 @@ export const commercialServices: Service[] = [
       "Compliance and testing programs",
       "Reporting built for facility managers",
     ],
+    signs: [
+      `A facility with plumbing across multiple areas needing one contractor`,
+      `Amenities that need to stay operational during opening hours`,
+      `Ageing infrastructure that needs assessing and planning around`,
+      `Compliance-related plumbing work required across a site`,
+    ],
+    faqs: [
+      { q: `Do you work to a schedule?`, a: `Yes. Facilities work generally has to fit around what the building is doing, so the work is scheduled against your operating requirements rather than ours.` },
+      { q: `Can you assess an existing site?`, a: `We can go through the plumbing across a facility and tell you what is sound, what is near end of life and what needs attention first, so budgeting is based on condition rather than guesswork.` },
+    ],
   }),
   svc({
     title: "Commercial Fit-outs",
@@ -268,6 +452,16 @@ export const commercialServices: Service[] = [
       "Rough-in to fit-off and certification",
       "Coordinated with builders and shopfitters",
       "Programmed to your schedule",
+    ],
+    signs: [
+      `A new tenancy needing plumbing rough-in and fit-off to programme`,
+      `A kitchen or amenities fit-out that needs coordinating with other trades`,
+      `A change of use requiring plumbing to be reconfigured`,
+      `A fit-out on a fixed opening date that cannot slip`,
+    ],
+    faqs: [
+      { q: `Can you work to a programme?`, a: `Yes, and on a fit-out that is the whole game. Plumbing has to land in the right order against the other trades, and the opening date is usually fixed, so sequencing matters more than anything else.` },
+      { q: `Do you handle the compliance side?`, a: `The work is carried out licensed and certified, and you get the documentation for it. On a commercial fit-out that paperwork is generally needed before you can open.` },
     ],
   }),
 ];

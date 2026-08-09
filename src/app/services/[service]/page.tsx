@@ -110,11 +110,37 @@ export default function ServicePage({ params }: { params: { service: string } })
             </ul>
           </div>
 
+          {s.signs && s.signs.length > 0 && (
+            <div className="svc-signs">
+              {/* "Signs you need blocked drains" reads as nonsense — nobody
+                  needs a blocked drain. This phrasing works for every service
+                  and still carries the service term for search. */}
+              <h2>When to call us about {s.title.toLowerCase()}</h2>
+              <ul>
+                {s.signs.map((sign) => (
+                  <li key={sign}>{sign}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <div className="svc-detail-trust">
             <span>Licensed &amp; insured — {business.licence.plumbing} · {business.licence.gas}</span>
             <span>Upfront pricing before work begins</span>
             <span>{business.warranty.label}</span>
           </div>
+
+          {s.faqs && s.faqs.length > 0 && (
+            <div className="svc-faqs">
+              <h2>Common questions</h2>
+              {s.faqs.map((f) => (
+                <div className="svc-faq" key={f.q}>
+                  <h3>{f.q}</h3>
+                  <p>{f.a}</p>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="svc-detail-more">
             <h2>Related services</h2>
