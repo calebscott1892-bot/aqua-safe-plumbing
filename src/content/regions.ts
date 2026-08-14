@@ -203,6 +203,10 @@ const REGION_OVERRIDE: Record<string, string> = {
   "Mount Pleasant": "south-of-the-river",
 };
 
+export function getRegion(slug: string): Region | undefined {
+  return regions.find((r) => r.slug === slug);
+}
+
 /** The region whose character best describes plumbing in this suburb. */
 export function regionForSuburb(name: string): Region | undefined {
   const forced = REGION_OVERRIDE[name];

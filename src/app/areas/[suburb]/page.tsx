@@ -52,6 +52,7 @@ export default function SuburbPage({ params }: { params: { suburb: string } }) {
           breadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Service areas", path: "/areas/" },
+            ...(region ? [{ name: region.name, path: `/areas/region/${region.slug}/` }] : []),
             { name: s.name },
           ]),
           areaServedJsonLd(s.name, s.slug),
@@ -63,6 +64,12 @@ export default function SuburbPage({ params }: { params: { suburb: string } }) {
             <Link href="/">Home</Link>
             <span aria-hidden="true">/</span>
             <Link href="/areas">Service areas</Link>
+            {region && (
+              <>
+                <span aria-hidden="true">/</span>
+                <Link href={`/areas/region/${region.slug}`}>{region.name}</Link>
+              </>
+            )}
             <span aria-hidden="true">/</span>
             <span aria-current="page">{s.name}</span>
           </nav>

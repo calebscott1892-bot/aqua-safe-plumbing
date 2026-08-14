@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { suburbs } from "@/content/suburbs";
+import { regions } from "@/content/regions";
 import { allServices } from "@/content/services";
 import { SITE_ORIGIN } from "@/lib/jsonld";
 
@@ -24,6 +25,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.8,
+    })),
+    // Region pages sit above the individual suburbs in both the site
+    // hierarchy and in priority — they cover far more ground per page.
+    ...regions.map((r) => ({
+      url: u(`/areas/region/${r.slug}/`),
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     })),
     ...suburbs.map((s) => ({
       url: u(`/areas/${s.slug}/`),

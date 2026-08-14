@@ -36,10 +36,15 @@ export default function AreasIndex() {
           {regions.map((r) => (
             <div key={r.name} style={{ marginTop: 56 }}>
               <h2 className="h-sec" style={{ fontSize: "clamp(24px, 3vw, 34px)" }}>
-                {r.name}
+                <Link href={`/areas/region/${r.slug}`} style={{ color: "inherit" }}>
+                  {r.name}
+                </Link>
               </h2>
               <p className="lead" style={{ marginTop: 6, fontSize: 16 }}>
-                {r.blurb}
+                {r.blurb}{" "}
+                <Link href={`/areas/region/${r.slug}`} style={{ color: "var(--teal)", fontWeight: 600, whiteSpace: "nowrap" }}>
+                  Plumbers in {r.name} →
+                </Link>
               </p>
               <div className="suburb-links">
                 {r.suburbs.map((s) => {
