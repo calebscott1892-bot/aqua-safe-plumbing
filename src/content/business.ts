@@ -41,5 +41,5 @@ export const business = {
     label: "12-month workmanship warranty",
   },
   description:
-    "Aqua-Safe Plumbing & Maintenance is a family-owned business specialising in maintenance plumbing, hot water systems, blocked drains, gas fitting, renovation works and water filtration — residential and commercial, across the Perth metro.",
+    "Aqua-Safe Plumbing & Maintenance is a family-owned business specialising in maintenance plumbing, hot water systems, blocked drains, gas fitting, renovation works and water filtration. Residential and commercial, across the Perth metro.",
 } as const;

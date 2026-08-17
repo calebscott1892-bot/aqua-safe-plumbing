@@ -74,7 +74,7 @@ export async function POST(req: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     // Not yet wired (e.g. local dev, or env var missing on the host).
-    console.error("[enquiry] RESEND_API_KEY is not set — cannot send.");
+    console.error("[enquiry] RESEND_API_KEY is not set, cannot send.");
     return NextResponse.json(
       { error: "The form isn't connected yet. Please call or email us directly." },
       { status: 503 }
@@ -91,7 +91,7 @@ export async function POST(req: Request) {
     ] as const
   ).filter(([, v]) => v);
 
-  const subject = `Website enquiry — ${name}${service ? ` · ${service}` : ""}`;
+  const subject = `Website enquiry: ${name}${service ? ` (${service})` : ""}`;
 
   const html = `<div style="font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:#163544;line-height:1.6;max-width:560px">
     <h2 style="margin:0 0 2px;color:#0f5c7a;font-size:19px">New website enquiry</h2>

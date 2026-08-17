@@ -18,7 +18,7 @@ export function ServiceAreas() {
         <span className="eyebrow">Service areas</span>
         <h2 className="h-sec">Across the Perth metro.</h2>
         <p className="lead">
-          North or south of the river, the eastern suburbs, the hills or the CBD — if you&rsquo;re in
+          North or south of the river, the eastern suburbs, the hills or the CBD. If you&rsquo;re in
           Perth, we&rsquo;ll get to you. Tap a region to see its suburbs.
         </p>
 

@@ -7,6 +7,7 @@ import { business } from "@/content/business";
 import { allServices } from "@/content/services";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { JsonLd } from "@/components/JsonLd";
+import { Crumbs } from "@/components/Crumbs";
 import { breadcrumbJsonLd, areaServedJsonLd } from "@/lib/jsonld";
 
 /*
@@ -35,7 +36,7 @@ export function generateMetadata({ params }: { params: { region: string } }): Me
   const r = getRegion(params.region);
   if (!r) return {};
   return {
-    title: `Plumbers in ${r.name} — Perth`,
+    title: `Plumbers in ${r.name}, Perth`,
     description: `Licensed plumbers and gas fitters across ${r.name}. ${r.blurb} Upfront pricing and a ${business.warranty.months}-month workmanship warranty. Call ${business.phoneDisplay}.`,
     alternates: { canonical: `/areas/region/${r.slug}/` },
   };
@@ -63,13 +64,7 @@ export default function RegionPage({ params }: { params: { region: string } }) {
       />
       <section className="section" style={{ paddingTop: "clamp(130px, 18vh, 200px)" }}>
         <div className="wrap">
-          <nav className="crumbs" aria-label="Breadcrumb">
-            <Link href="/">Home</Link>
-            <span aria-hidden="true">/</span>
-            <Link href="/areas">Service areas</Link>
-            <span aria-hidden="true">/</span>
-            <span aria-current="page">{r.name}</span>
-          </nav>
+          <Crumbs trail={[{ name: "Service areas", href: "/areas" }, { name: r.name }]} />
 
           <span className="eyebrow">Service area</span>
           <h1 className="h-sec" style={{ fontSize: "clamp(38px, 6.4vw, 80px)", maxWidth: "18ch" }}>
@@ -113,7 +108,7 @@ export default function RegionPage({ params }: { params: { region: string } }) {
           </div>
 
           <div className="svc-detail-trust">
-            <span>Licensed &amp; insured — {business.licence.plumbing} · {business.licence.gas}</span>
+            <span>Licensed &amp; insured · {business.licence.plumbing} · {business.licence.gas}</span>
             <span>Upfront pricing before work begins</span>
             <span>{business.warranty.label}</span>
           </div>

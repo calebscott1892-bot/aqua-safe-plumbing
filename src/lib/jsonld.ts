@@ -21,7 +21,7 @@ export const localBusinessJsonLd = {
   "@id": BUSINESS_ID,
   name: business.name,
   description:
-    "Perth's trusted maintenance plumbers and gas fitters — blocked drains, hot water, gas fitting, water filtration and commercial maintenance. Family-owned and fully insured.",
+    "Perth's trusted maintenance plumbers and gas fitters. Blocked drains, hot water, gas fitting, water filtration and commercial maintenance. Family-owned and fully insured.",
   telephone: "+61473072642", // E.164 for reliable click-to-call
   email: business.email,
   url: `${ORIGIN}/`,

@@ -1,24 +1,30 @@
 import type { Metadata } from "next";
 import { EnquiryForm } from "@/components/EnquiryForm";
+import { Crumbs } from "@/components/Crumbs";
 import { business } from "@/content/business";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with Aqua-Safe Plumbing & Maintenance — send an enquiry, book online or call. Licensed Perth plumbers and gas fitters, all metro suburbs.",
+    "Get in touch with Aqua-Safe Plumbing & Maintenance. Send an enquiry, book online or call. Licensed Perth plumbers and gas fitters, all metro suburbs.",
+  alternates: { canonical: "/contact/" },
 };
 
 export default function ContactPage() {
   return (
     <main>
-      <section className="section section--teal contact">
+      {/* data-hero-dark: the fixed nav floats over this band before it sticks,
+          so it needs the white logo and white links. See globals.css. */}
+      <section className="section section--teal contact" data-hero-dark="">
+        <div className="wrap">
+          <Crumbs trail={[{ name: "Contact" }]} />
+        </div>
         <div className="wrap contact-grid">
           <div className="contact-aside">
-            <span className="eyebrow">Get in touch</span>
             <h1 className="h-sec">Let&rsquo;s get it sorted.</h1>
             <p className="lead">
-              Tell us what&rsquo;s going on and we&rsquo;ll come back with the next step — a time to
-              book, a quote, or a callback. If it&rsquo;s urgent, call and we&rsquo;ll move.
+              Tell us what&rsquo;s going on and we&rsquo;ll come back with the next step. If
+              it&rsquo;s urgent, call and we&rsquo;ll move.
             </p>
 
             <ul className="contact-methods">
@@ -65,14 +71,28 @@ export default function ContactPage() {
               </li>
             </ul>
 
-            <div className="contact-meta">
-              <span>{business.area}</span>
-              <span>After-hours emergencies — call any time</span>
-              <span>
-                Licensed &amp; insured · {business.licence.plumbing} · {business.licence.gas}
-              </span>
-              <span>ABN {business.abn}</span>
-            </div>
+            <dl className="contact-facts">
+              <div>
+                <dt>Where we work</dt>
+                <dd>{business.area}</dd>
+              </div>
+              <div>
+                <dt>After hours</dt>
+                <dd>Call any time for emergencies</dd>
+              </div>
+              <div>
+                <dt>Licensed</dt>
+                <dd>
+                  {business.licence.plumbing} &middot; {business.licence.gas}
+                </dd>
+              </div>
+              <div>
+                <dt>Warranty</dt>
+                <dd>{business.warranty.label}</dd>
+              </div>
+            </dl>
+
+            <p className="contact-abn">ABN {business.abn}</p>
           </div>
 
           <EnquiryForm />

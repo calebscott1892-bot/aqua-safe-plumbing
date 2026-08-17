@@ -29,7 +29,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h5>Services</h5>
+            <h2 className="foot-h">Services</h2>
             <ul>
               <li><Link href="/#services">Blocked drains</Link></li>
               <li><Link href="/#services">Hot water systems</Link></li>
@@ -40,7 +40,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h5>Company</h5>
+            <h2 className="foot-h">Company</h2>
             <ul>
               <li><Link href="/#specialists">About</Link></li>
               <li><Link href="/#reviews">Reviews</Link></li>
@@ -51,7 +51,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h5>Contact</h5>
+            <h2 className="foot-h">Contact</h2>
             <ul>
               <li><a href={business.phoneHref}>{business.phoneDisplay}</a></li>
               <li><a href={`mailto:${business.email}`}>{business.email}</a></li>
@@ -79,11 +79,8 @@ export function Footer() {
 
         <div className="foot-bottom">
           <span>© 2026 {business.name} · ABN {business.abn}</span>
-          <a href={asset("/concept/")}>View the original concept design →</a>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
-            <span style={{ fontSize: "11px", letterSpacing: "0.05em", opacity: 0.5 }}>
-              Designed by
-            </span>
+          <span className="foot-credit">
+            <span className="foot-credit-label">Designed by</span>
             <C4FooterCredit
               href="https://c4studios.com.au"
               label="Designed by C4 Studios"

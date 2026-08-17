@@ -51,7 +51,7 @@ export function Reviews() {
           </a>
         </div>
         <span className="sr-only" aria-live="polite">
-          Review {i + 1} of {reviews.length}: {r.quote} — {r.name}, {r.location}
+          Review {i + 1} of {reviews.length}: {r.quote} Reviewed by {r.name}, {r.location}
         </span>
       </div>
     </section>

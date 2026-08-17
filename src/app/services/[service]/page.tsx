@@ -7,6 +7,7 @@ import { business } from "@/content/business";
 import { asset } from "@/lib/asset";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { JsonLd } from "@/components/JsonLd";
+import { Crumbs } from "@/components/Crumbs";
 import { breadcrumbJsonLd, serviceJsonLd } from "@/lib/jsonld";
 
 /*
@@ -23,8 +24,8 @@ export function generateMetadata({ params }: { params: { service: string } }): M
   const s = getService(params.service);
   if (!s) return {};
   return {
-    title: `${s.title} — Perth`,
-    description: `${s.body} Licensed Perth plumbers — upfront pricing, fully insured. Call ${business.phoneDisplay}.`,
+    title: `${s.title} in Perth`,
+    description: `${s.body} Licensed Perth plumbers with upfront pricing, fully insured. Call ${business.phoneDisplay}.`,
     alternates: { canonical: `/services/${s.slug}/` },
   };
 }
@@ -55,11 +56,7 @@ export default function ServicePage({ params }: { params: { service: string } })
       />
       <section className="section" style={{ paddingTop: "clamp(130px, 18vh, 200px)" }}>
         <div className="wrap">
-          <nav className="crumbs" aria-label="Breadcrumb">
-            <Link href="/">Home</Link>
-            <span aria-hidden="true">/</span>
-            <span aria-current="page">{s.title}</span>
-          </nav>
+          <Crumbs trail={[{ name: s.title }]} />
           <div className={`svc-hero${photo ? " svc-hero--photo" : ""}`}>
             <div className="svc-hero-copy">
               <span className="eyebrow">{s.group} · Perth metro</span>
@@ -125,7 +122,7 @@ export default function ServicePage({ params }: { params: { service: string } })
           )}
 
           <div className="svc-detail-trust">
-            <span>Licensed &amp; insured — {business.licence.plumbing} · {business.licence.gas}</span>
+            <span>Licensed &amp; insured · {business.licence.plumbing} · {business.licence.gas}</span>
             <span>Upfront pricing before work begins</span>
             <span>{business.warranty.label}</span>
           </div>
@@ -160,9 +157,12 @@ export default function ServicePage({ params }: { params: { service: string } })
             </div>
           </div>
 
-          <p style={{ marginTop: 48, fontSize: 15 }}>
-            <Link href="/#services" style={{ color: "var(--teal)", fontWeight: 600 }}>
-              ← All services
+          <p style={{ marginTop: 48 }}>
+            <Link className="svc-back" href="/#services">
+              <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14.5 5.5 8 12l6.5 6.5" />
+              </svg>
+              All services
             </Link>
           </p>
         </div>

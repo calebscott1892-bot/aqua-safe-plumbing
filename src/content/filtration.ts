@@ -19,14 +19,14 @@ export const filtration = {
   title: "Whole-home filtration.",
   spec: "3-stage · genuine 20″ stainless housings · up to 18-month cartridges",
   lead:
-    "One 3-stage system, installed where the water enters your home — so every shower, tap and appliance runs on filtered water. Click through the stages to see how it works.",
+    "One 3-stage system, installed where the water enters your home, so every shower, tap and appliance runs on filtered water. Click through the stages to see how it works.",
   stages: [
     {
       n: "01",
       name: "Sediment Filter",
       sub: "3-layer pre-filter",
       body:
-        "Advanced 3-layer media traps dirt, rust and grit down to 1 micron — protecting the carbon stages and your appliances. Food-grade throughout.",
+        "Advanced 3-layer media traps dirt, rust and grit down to 1 micron, protecting the carbon stages and your appliances. Food-grade throughout.",
       removes: ["Sediment", "Rust", "Grit", "1 micron"],
     },
     {
@@ -42,7 +42,7 @@ export const filtration = {
       name: "Limescale & Taste",
       sub: "Scale-reduction carbon",
       body:
-        "Limescale-reduction media — more efficient than the traditional stuff — plus coconut carbon gives a final 1-micron polish for softer, better-tasting water.",
+        "Limescale-reduction media, more efficient than the traditional stuff. Coconut carbon then gives a final 1-micron polish for softer, better-tasting water.",
       removes: ["Limescale", "Scale", "Odour"],
     },
   ] as FilterStage[],
@@ -50,7 +50,7 @@ export const filtration = {
     name: "Reverse Osmosis",
     tag: "Add-on · available separately",
     body:
-      "Want lab-grade drinking water too? Add an under-sink reverse-osmosis system for a dedicated drinking tap — removing the dissolved solids the whole-house filter leaves behind.",
+      "Want lab-grade drinking water too? Add an under-sink reverse-osmosis system for a dedicated drinking tap. It removes the dissolved solids the whole-house filter leaves behind.",
   },
   /** "Why choose whole-house water filtration?" — Aaron's copy, 2026-07. */
   why: {

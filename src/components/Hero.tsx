@@ -45,6 +45,9 @@ export function Hero() {
   return (
     <section
       className="hero"
+      // Tells the fixed nav to float in light treatment until it sticks.
+      // See `body:has([data-hero-dark])` in globals.css.
+      data-hero-dark=""
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocusCapture={() => setHovered(true)}

@@ -105,7 +105,7 @@ export function EnquiryForm() {
             <path d="M4 12.5l5 5 11-12" />
           </svg>
         </span>
-        <h3>Thanks{sentTo.name ? `, ${sentTo.name.split(" ")[0]}` : ""} — that's with us.</h3>
+        <h2>Thanks{sentTo.name ? `, ${sentTo.name.split(" ")[0]}` : ""}, that's with us.</h2>
         <p>
           We&rsquo;ll get back to you{sentTo.email ? <> at <b>{sentTo.email}</b></> : ""} or on the
           number you gave, usually the same day.
@@ -131,7 +131,7 @@ export function EnquiryForm() {
   return (
     <form ref={formRef} className="enquiry-panel enquiry-form" onSubmit={handleSubmit} noValidate>
       <div className="enquiry-form-head">
-        <h3>Send an enquiry</h3>
+        <h2>Send an enquiry</h2>
         <p>Tell us about the job and we&rsquo;ll come back to you with the next step.</p>
       </div>
 
@@ -192,11 +192,11 @@ export function EnquiryForm() {
 
       <div className="field">
         <label htmlFor="ef-message">
-          The job <span className="field-hint">— what&rsquo;s happening, and where</span>
+          The job <span className="field-hint">(what&rsquo;s happening, and where)</span>
         </label>
         <textarea
           id="ef-message" name="message" rows={5}
-          placeholder="e.g. Hot water system's stopped overnight in Yanchep — gas, about 8 years old."
+          placeholder="e.g. Hot water system stopped overnight in Yanchep. Gas, about 8 years old."
           aria-invalid={!!fieldErrors.message}
           aria-describedby={fieldErrors.message ? "ef-message-err" : undefined}
           onInput={() => clearError("message")}
@@ -219,7 +219,7 @@ export function EnquiryForm() {
       </button>
       <p className="enquiry-fineprint">
         We use your details only to respond to this enquiry. No hot water?{" "}
-        <a href={business.phoneHref}>Call {business.phoneDisplay}</a> — it&rsquo;s faster.
+        <a href={business.phoneHref}>Call {business.phoneDisplay}</a>. It&rsquo;s faster.
       </p>
     </form>
   );
@@ -241,7 +241,7 @@ function Field({
     <div className="field">
       <label htmlFor={id}>
         {label}
-        {optional && <span className="field-hint"> — optional</span>}
+        {optional && <span className="field-hint"> (optional)</span>}
       </label>
       <input
         id={id}

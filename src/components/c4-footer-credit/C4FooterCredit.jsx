@@ -792,7 +792,9 @@ export default function C4FooterCredit({
             <feGaussianBlur in="SourceGraphic" stdDeviation="14" />
           </filter>
           <clipPath id={cClipId} clipPathUnits="userSpaceOnUse">
-            <circle ref={cClipRectRef} />
+            {/* cx/cy/r are driven imperatively; without initial values the
+                browser logs three SVG attribute errors on every paint. */}
+            <circle ref={cClipRectRef} cx="0" cy="0" r="0" />
           </clipPath>
           <clipPath id={stemUpperClipId} clipPathUnits="userSpaceOnUse">
             <polygon points={FOUR_SEGMENTS.stemUpper} />

@@ -23,7 +23,7 @@ export const copy = {
       // so "properly" isn't said twice across the first two panels.
       title: ["Cleaner water,", "from every tap."],
       body:
-        "One whole-home filtration system, installed where the water enters your home — every shower, tap and appliance runs on filtered water. Reverse-osmosis drinking-water add-on available.",
+        "One whole-home filtration system, installed where the water enters your home, so every shower, tap and appliance runs on filtered water. Reverse-osmosis drinking-water add-on available.",
       primary: { label: "See how it works", href: "#filtration" },
       secondary: { label: "Book your quote", href: "#book" },
     },
@@ -42,12 +42,12 @@ export const copy = {
   specialists: {
     kicker: "Perth's maintenance plumbing specialists",
     body:
-      "From blocked drains and hot water systems to water filtration, gas fitting and commercial maintenance — we solve plumbing issues properly.",
+      "From blocked drains and hot water systems to water filtration, gas fitting and commercial maintenance. We solve plumbing issues properly.",
   },
 
   /** Upfront-pricing statement (Aaron's brief), shown in the specialists band. */
   upfront:
-    "Upfront pricing before work begins. Whether it's a fixed-price repair or time-based diagnostic work, you'll know exactly how we'll charge you before we start — no surprises.",
+    "Upfront pricing before work begins. Whether it's a fixed-price repair or time-based diagnostic work, you'll know exactly how we'll charge you before we start. No surprises.",
 
   /** Trust line under the specialists band. */
   trust: {
@@ -61,7 +61,7 @@ export const copy = {
   hotWater: {
     kicker: "Hot water systems",
     title: "No hot water? We'll help you choose the right replacement.",
-    body: "From emergency breakdowns to complete hot water upgrades, Aqua-Safe supplies, installs and replaces hot water systems across Perth. We work with gas instantaneous, electric storage and energy-efficient heat pump systems — helping customers choose the right option based on their property, hot water usage and ongoing running costs.",
+    body: "From emergency breakdowns to complete hot water upgrades, Aqua-Safe supplies, installs and replaces hot water systems across Perth. We work with gas instantaneous, electric storage and energy-efficient heat pump systems, helping customers choose the right option based on their property, hot water usage and ongoing running costs.",
     types: [
       {
         name: "Gas Instantaneous",
@@ -91,5 +91,5 @@ export const copy = {
 
   /** Compliance-safe note about charging (used near the final CTA + FAQ). */
   calloutNote:
-    "No separate call-out fee within normal working hours — our minimum charge includes travel and your first 30 minutes on site. After-hours and emergency works call-out fees apply.",
+    "There's no separate call-out fee within normal working hours. The minimum charge includes travel and your first 30 minutes on site. After-hours and emergency works call-out fees apply.",
 } as const;

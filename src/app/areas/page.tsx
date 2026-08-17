@@ -3,13 +3,14 @@ import Link from "next/link";
 import { regions, uniqueSuburbs } from "@/content/regions";
 import { suburbs } from "@/content/suburbs";
 import { business } from "@/content/business";
+import { Crumbs } from "@/components/Crumbs";
 
 /** Suburbs with their own page, so the chips below can link to them. */
 const PAGE_BY_NAME = new Map(suburbs.map((s) => [s.name, s.slug]));
 
 export const metadata: Metadata = {
-  title: "Service areas — Perth metro plumbing",
-  description: `${business.name} services the whole Perth metro — north and south of the river, the eastern suburbs, the hills and the CBD. Find your suburb.`,
+  title: "Service areas across the Perth metro",
+  description: `${business.name} services the whole Perth metro. North and south of the river, the eastern suburbs, the hills and the CBD. Find your suburb.`,
 };
 
 /**
@@ -22,6 +23,7 @@ export default function AreasIndex() {
     <main>
       <section className="section" style={{ paddingTop: "clamp(130px, 18vh, 200px)" }}>
         <div className="wrap">
+          <Crumbs trail={[{ name: "Service areas" }]} />
           <span className="eyebrow">Service areas</span>
           <h1 className="h-sec" style={{ fontSize: "clamp(38px, 6vw, 72px)" }}>
             Plumbers across
@@ -29,7 +31,7 @@ export default function AreasIndex() {
             the Perth metro.
           </h1>
           <p className="lead">
-            {uniqueSuburbs().length}+ suburbs, one number. Find yours below — or just call, chances
+            {uniqueSuburbs().length}+ suburbs, one number. Find yours below, or just call. Chances
             are we&rsquo;re already working nearby.
           </p>
 

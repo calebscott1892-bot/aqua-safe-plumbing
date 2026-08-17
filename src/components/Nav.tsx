@@ -1,16 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { business } from "@/content/business";
 import { asset } from "@/lib/asset";
 
+/*
+  Order matches the order these sections are reached scrolling down the
+  homepage: Services → Filtration → Reviews → Areas → FAQ. Contact is a page of
+  its own and sits last. If a section moves in src/app/page.tsx, move it here
+  too — a nav whose order disagrees with the page reads as scattered.
+*/
 const LINKS = [
   { label: "Services", href: "/#services" },
   { label: "Filtration", href: "/#filtration" },
-  { label: "Areas", href: "/#areas" },
   { label: "Reviews", href: "/#reviews" },
+  { label: "Areas", href: "/#areas" },
   { label: "FAQ", href: "/#faq" },
   { label: "Contact", href: "/contact/" },
 ];
@@ -18,12 +23,6 @@ const LINKS = [
 export function Nav() {
   const [stuck, setStuck] = useState(false);
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-
-  // The homepage hero is a dark photo; before the nav sticks, it floats over it
-  // and needs light treatment (white logo + light links). Every other page, and
-  // the stuck state, keep the default white-bar look.
-  const overHero = pathname === "/" && !stuck && !open;
 
   useEffect(() => {
     const onScroll = () => setStuck(window.scrollY > 24);
@@ -32,13 +31,29 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Light treatment over a dark hero is decided in CSS, not here:
+  // `body:has([data-hero-dark])` in globals.css. Any page that opens with a
+  // dark full-bleed band marks its first section `data-hero-dark` and gets the
+  // white logo and white links for free. Doing it in React meant it was keyed
+  // to pathname === "/", so the contact page painted teal links on dark teal.
+  // Both logos ship in the markup and CSS picks one, which also kills the
+  // src-swap flash on the homepage.
   return (
-    <header className={`nav${stuck ? " is-stuck" : ""}${overHero ? " is-over-hero" : ""}`}>
+    <header className={`nav${stuck ? " is-stuck" : ""}${open ? " is-open" : ""}`}>
       <div className="wrap">
-        <Link className="nav-brand" href="/" aria-label={`${business.name} — home`}>
+        <Link className="nav-brand" href="/" aria-label={`${business.name}, home`}>
           <img
-            src={asset(overHero ? "/brand/aquasafe-horizontal-white.png" : "/brand/aquasafe-horizontal-teal.png")}
+            className="nav-logo nav-logo--ink"
+            src={asset("/brand/aquasafe-horizontal-teal.png")}
             alt={business.name}
+            width={2452}
+            height={854}
+          />
+          <img
+            className="nav-logo nav-logo--light"
+            src={asset("/brand/aquasafe-horizontal-white.png")}
+            alt=""
+            aria-hidden="true"
             width={2452}
             height={854}
           />

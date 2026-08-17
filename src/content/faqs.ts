@@ -7,19 +7,19 @@ export const faqs: Faq[] = [
   },
   {
     q: "Do you charge a call-out fee?",
-    a: "There's no separate call-out fee within normal working hours — our minimum charge already includes travel and your first 30 minutes on site. After-hours and emergency work attract a call-out fee.",
+    a: "There's no separate call-out fee within normal working hours. The minimum charge already includes travel and your first 30 minutes on site. After-hours and emergency work attract a call-out fee.",
   },
   {
     q: "What areas do you cover?",
-    a: "All of the Perth metro — north and south of the river, the eastern suburbs, the hills and the CBD.",
+    a: "All of the Perth metro. North and south of the river, the eastern suburbs, the hills and the CBD.",
   },
   {
     q: "Are you licensed and insured?",
-    a: "Yes — we're fully insured and licensed. Plumbing PL10802 and Gas Fitting GF22810.",
+    a: "Yes. We're fully insured and licensed. Plumbing PL10802 and Gas Fitting GF22810.",
   },
   {
     q: "Do you warrant your work?",
-    a: "Yes — a 12-month workmanship warranty on the work we carry out, plus any manufacturer's warranty on the parts and equipment we install, passed straight on to you. We'd rather quote you an honest 12 months than advertise a longer number that the conditions quietly cut back down. This is on top of the guarantees you're already entitled to under Australian Consumer Law.",
+    a: "Yes. A 12-month workmanship warranty on the work we carry out, plus any manufacturer's warranty on the parts and equipment we install, passed straight on to you. We'd rather quote you an honest 12 months than advertise a longer number that the conditions quietly cut back down. This is on top of the guarantees you're already entitled to under Australian Consumer Law.",
   },
   {
     q: "Can you come out the same day?",
@@ -27,6 +27,6 @@ export const faqs: Faq[] = [
   },
   {
     q: "Do you do both residential and commercial work?",
-    a: "Yes — homes, rentals and managed properties, plus strata, commercial and industrial maintenance.",
+    a: "Yes. Homes, rentals and managed properties, plus strata, commercial and industrial maintenance.",
   },
 ];

@@ -10,13 +10,13 @@ import { LAUNCHED } from "@/lib/seo";
 import { business } from "@/content/business";
 
 const SITE_DESCRIPTION =
-  "Aqua-Safe Plumbing & Maintenance — Perth's trusted maintenance plumbers and gas fitters. Blocked drains, hot water, gas fitting, water filtration and commercial maintenance, done properly.";
+  "Aqua-Safe Plumbing & Maintenance. Perth's trusted maintenance plumbers and gas fitters. Blocked drains, hot water, gas fitting, water filtration and commercial maintenance, done properly.";
 
 export const metadata: Metadata = {
   // Real domain — Aaron bought aquasafeplumbing.com.au via Wix (2026-07).
   metadataBase: new URL(`https://${business.domain}`),
   title: {
-    default: "Aqua-Safe Plumbing & Maintenance — Perth | Plumbing, done properly",
+    default: "Aqua-Safe Plumbing & Maintenance, Perth | Plumbing, done properly",
     template: "%s | Aqua-Safe Plumbing & Maintenance",
   },
   description: SITE_DESCRIPTION,
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_AU",
     siteName: business.name,
-    title: "Aqua-Safe Plumbing & Maintenance — Perth",
+    title: "Aqua-Safe Plumbing & Maintenance, Perth",
     description: SITE_DESCRIPTION,
     // Without this, sharing the site on Facebook or in a text message previews
     // with no picture at all. The fleet photo is the real, recognisable one
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aqua-Safe Plumbing & Maintenance — Perth",
+    title: "Aqua-Safe Plumbing & Maintenance, Perth",
     description: SITE_DESCRIPTION,
     images: ["/brand/hero-fleet.jpg"],
   },
@@ -63,7 +63,19 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-AU" className={`${clash.variable} ${hanken.variable}`}>
+    // suppressHydrationWarning: the inline script below stamps data-reveal on
+    // <html> before React hydrates, which React would otherwise flag.
+    <html lang="en-AU" suppressHydrationWarning className={`${clash.variable} ${hanken.variable}`}>
+      <head>
+        {/* Scroll reveals hide their section until an observer fires. Set this
+            here, synchronously, before the body paints: with JS the reveals
+            work as designed; without it the CSS never matches and every
+            section ships visible instead of blank. */}
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: `document.documentElement.dataset.reveal="on"` }}
+        />
+      </head>
       <body>
         <script
           type="application/ld+json"
