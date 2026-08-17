@@ -780,7 +780,12 @@ export default function C4FooterCredit({
         style={{
           overflow: 'visible',
           transform: `translateX(${restShift}px)`,
-          transition: prefersReducedMotion ? 'none' : 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)',
+          // Server-rendered markup can't know the media query, so branching on
+          // it here made the first client render disagree with the HTML and
+          // logged a hydration error for every reduced-motion visitor. The
+          // global `prefers-reduced-motion` rule in globals.css already zeroes
+          // transition-duration, so this can just always be declared.
+          transition: 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)',
           willChange: 'transform',
         }}
       >

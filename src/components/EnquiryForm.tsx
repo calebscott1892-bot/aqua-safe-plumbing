@@ -196,6 +196,8 @@ export function EnquiryForm() {
         </label>
         <textarea
           id="ef-message" name="message" rows={5}
+          required
+          aria-required="true"
           placeholder="e.g. Hot water system stopped overnight in Yanchep. Gas, about 8 years old."
           aria-invalid={!!fieldErrors.message}
           aria-describedby={fieldErrors.message ? "ef-message-err" : undefined}
@@ -247,6 +249,8 @@ function Field({
         id={id}
         name={name}
         type={type}
+        required={!optional}
+        aria-required={!optional}
         autoComplete={autoComplete}
         aria-invalid={!!error}
         aria-describedby={error ? `${id}-err` : undefined}

@@ -8,11 +8,14 @@ export const metadata: Metadata = {
   description:
     "Get in touch with Aqua-Safe Plumbing & Maintenance. Send an enquiry, book online or call. Licensed Perth plumbers and gas fitters, all metro suburbs.",
   alternates: { canonical: "/contact/" },
+  // Without this every page inherits the layout's openGraph.title, so every
+  // shared link previewed with the same headline.
+  openGraph: { title: "Contact Aqua-Safe Plumbing & Maintenance, Perth" },
 };
 
 export default function ContactPage() {
   return (
-    <main>
+    <main id="main">
       {/* data-hero-dark: the fixed nav floats over this band before it sticks,
           so it needs the white logo and white links. See globals.css. */}
       <section className="section section--teal contact" data-hero-dark="">

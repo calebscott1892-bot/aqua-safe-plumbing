@@ -96,9 +96,15 @@
       radial-gradient(120% 140% at 12% 0%, #124d67 0%, var(--teal-deep) 55%, #072e40 100%);
     color: #eaf4f8;
   }
+  /* `h1..h4 { color: var(--teal-ink) }` is an authored rule, so it beats the
+     colour a dark container merely inherits down. Every dark block therefore
+     has to name its own headings, or they render near-black on near-black.
+     That was the contact h1 (1.6:1) and the areas CTA (2.0:1). Keep this list
+     in step with any new dark block. */
   .section--teal h1,
   .section--teal h2,
-  .section--teal h3 { color: #fff; }
+  .section--teal h3,
+  .areas-cta h2 { color: #fff; }
 
   .eyebrow {
     display: inline-flex;
@@ -165,8 +171,10 @@
     border-color: var(--line);
   }
   .btn-line:hover { border-color: var(--teal); background: #fff; }
-  .btn-aqua { background: var(--aqua); color: #fff; }
-  .btn-aqua:hover { background: #1787a8; }
+  /* --aqua (#1f9cc0) under white text is 3.3:1, and these buttons are 15.5px
+     so they need 4.5:1. Same family, two steps down. */
+  .btn-aqua { background: #147693; color: #fff; }
+  .btn-aqua:hover { background: #106279; }
   .section--teal .btn-line { color: #eaf4f8; border-color: rgba(255,255,255,0.3); }
   .section--teal .btn-line:hover { background: rgba(255,255,255,0.08); border-color: #fff; }
 
@@ -544,7 +552,8 @@
     font-family: var(--font-clash), sans-serif;
     display: block;
     font-size: 13px;
-    color: var(--aqua);
+    /* --aqua is 3.2:1 on white and 2.8:1 on --aqua-soft; at 13px this needs 4.5 */
+    color: var(--teal);
   }
   .filt-step span { font-size: 14px; font-weight: 600; color: var(--teal-ink); }
 
@@ -579,7 +588,8 @@
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--aqua);
+    /* 11px of --aqua on white is 3.3:1 */
+    color: var(--teal);
     font-weight: 600;
   }
   .filt-addon h4 { font-size: 19px; margin: 4px 0 6px; }
@@ -1394,6 +1404,23 @@
   }
   html[data-reveal="on"] .reveal.is-in { opacity: 1; transform: none; }
 
+  .skip-link {
+    position: absolute;
+    left: 12px;
+    top: -60px;
+    z-index: 200;
+    padding: 12px 18px;
+    border-radius: 0 0 12px 12px;
+    background: var(--teal);
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    transition: top 0.2s var(--ease);
+  }
+  /* :focus, not :focus-visible — a skip link only ever gets focus from the
+     keyboard, and it has to appear the instant it does. */
+  .skip-link:focus { top: 0; }
+
   .sr-only {
     position: absolute;
     width: 1px; height: 1px;
@@ -1625,7 +1652,7 @@
     color: var(--muted);
     margin-bottom: 18px;
   }
-  .crumbs a { color: var(--teal); font-weight: 500; }
+  .crumbs a { color: var(--teal); font-weight: 500; display: inline-flex; align-items: center; min-height: 28px; }
   .crumbs a:hover { text-decoration: underline; }
   .crumbs span[aria-hidden] { opacity: 0.45; }
   /* the first crumb is the way home from every interior page, so it gets to be
@@ -1788,7 +1815,7 @@
   .contact-abn {
     margin-top: 14px;
     font-size: 13px;
-    color: rgba(185, 214, 225, 0.92);
+    color: #cfe4ec;
   }
 
   /* ---- the white form panel floating on the teal ---- */

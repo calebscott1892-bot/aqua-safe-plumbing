@@ -27,6 +27,7 @@ export function generateMetadata({ params }: { params: { service: string } }): M
     title: `${s.title} in Perth`,
     description: `${s.body} Licensed Perth plumbers with upfront pricing, fully insured. Call ${business.phoneDisplay}.`,
     alternates: { canonical: `/services/${s.slug}/` },
+    openGraph: { title: `${s.title} in Perth` },
   };
 }
 
@@ -44,7 +45,7 @@ export default function ServicePage({ params }: { params: { service: string } })
   const photo = hasServicePhoto(s.slug);
 
   return (
-    <main>
+    <main id="main">
       <JsonLd
         data={[
           breadcrumbJsonLd([

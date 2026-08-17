@@ -14,7 +14,7 @@ import { FinalCTA } from "@/components/FinalCTA";
 
 export default function Home() {
   return (
-    <main>
+    <main id="main">
       <Hero />
       <Ticker />
       <Specialists />

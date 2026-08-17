@@ -11,6 +11,8 @@ const PAGE_BY_NAME = new Map(suburbs.map((s) => [s.name, s.slug]));
 export const metadata: Metadata = {
   title: "Service areas across the Perth metro",
   description: `${business.name} services the whole Perth metro. North and south of the river, the eastern suburbs, the hills and the CBD. Find your suburb.`,
+  alternates: { canonical: "/areas/" },
+  openGraph: { title: "Plumbers across the Perth metro" },
 };
 
 /**
@@ -20,7 +22,7 @@ export const metadata: Metadata = {
  */
 export default function AreasIndex() {
   return (
-    <main>
+    <main id="main">
       <section className="section" style={{ paddingTop: "clamp(130px, 18vh, 200px)" }}>
         <div className="wrap">
           <Crumbs trail={[{ name: "Service areas" }]} />

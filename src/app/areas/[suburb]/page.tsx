@@ -29,6 +29,7 @@ export function generateMetadata({ params }: { params: { suburb: string } }): Me
     // The suburb note keeps every description genuinely different.
     description: `${s.note} Licensed plumbers and gas fitters, upfront pricing and a ${business.warranty.months}-month workmanship warranty. Call ${business.phoneDisplay}.`,
     alternates: { canonical: `/areas/${s.slug}/` },
+    openGraph: { title: `Plumber in ${s.name}, Perth` },
   };
 }
 
@@ -47,7 +48,7 @@ export default function SuburbPage({ params }: { params: { suburb: string } }) {
       .filter((sv): sv is (typeof allServices)[number] => !!sv) ?? residentialServices.slice(0, 6);
 
   return (
-    <main>
+    <main id="main">
       <JsonLd
         data={[
           breadcrumbJsonLd([

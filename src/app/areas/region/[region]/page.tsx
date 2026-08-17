@@ -39,6 +39,7 @@ export function generateMetadata({ params }: { params: { region: string } }): Me
     title: `Plumbers in ${r.name}, Perth`,
     description: `Licensed plumbers and gas fitters across ${r.name}. ${r.blurb} Upfront pricing and a ${business.warranty.months}-month workmanship warranty. Call ${business.phoneDisplay}.`,
     alternates: { canonical: `/areas/region/${r.slug}/` },
+    openGraph: { title: `Plumbers in ${r.name}, Perth` },
   };
 }
 
@@ -51,7 +52,7 @@ export default function RegionPage({ params }: { params: { region: string } }) {
     .filter((sv): sv is (typeof allServices)[number] => !!sv);
 
   return (
-    <main>
+    <main id="main">
       <JsonLd
         data={[
           breadcrumbJsonLd([
