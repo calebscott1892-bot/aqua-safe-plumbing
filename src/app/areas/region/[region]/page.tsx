@@ -9,6 +9,7 @@ import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { JsonLd } from "@/components/JsonLd";
 import { Crumbs } from "@/components/Crumbs";
 import { breadcrumbJsonLd, areaServedJsonLd } from "@/lib/jsonld";
+import { clampDescription } from "@/lib/seo";
 
 /*
   Region landing pages — the middle tier between /areas and an individual
@@ -37,7 +38,9 @@ export function generateMetadata({ params }: { params: { region: string } }): Me
   if (!r) return {};
   return {
     title: `Plumbers in ${r.name}, Perth`,
-    description: `Licensed plumbers and gas fitters across ${r.name}. ${r.blurb} Upfront pricing and a ${business.warranty.months}-month workmanship warranty. Call ${business.phoneDisplay}.`,
+    description: clampDescription(
+      `Licensed plumbers and gas fitters across ${r.name}. ${r.blurb} Call ${business.phoneDisplay}.`,
+    ),
     alternates: { canonical: `/areas/region/${r.slug}/` },
     openGraph: { title: `Plumbers in ${r.name}, Perth` },
   };

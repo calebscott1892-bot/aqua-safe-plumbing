@@ -8,6 +8,7 @@ import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { JsonLd } from "@/components/JsonLd";
 import { Crumbs } from "@/components/Crumbs";
 import { breadcrumbJsonLd, areaServedJsonLd } from "@/lib/jsonld";
+import { clampDescription } from "@/lib/seo";
 
 /*
   Service-area page. Each one is built from three things that genuinely differ
@@ -27,7 +28,11 @@ export function generateMetadata({ params }: { params: { suburb: string } }): Me
   return {
     title: `Plumber in ${s.name}`,
     // The suburb note keeps every description genuinely different.
-    description: `${s.note} Licensed plumbers and gas fitters, upfront pricing and a ${business.warranty.months}-month workmanship warranty. Call ${business.phoneDisplay}.`,
+    // the suburb note is the differentiator, so it leads and the boilerplate
+    // only survives if there is room for it
+    description: clampDescription(
+      `${s.note} Licensed plumbers and gas fitters. Call ${business.phoneDisplay}.`,
+    ),
     alternates: { canonical: `/areas/${s.slug}/` },
     openGraph: { title: `Plumber in ${s.name}, Perth` },
   };

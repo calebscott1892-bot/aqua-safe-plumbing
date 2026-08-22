@@ -9,15 +9,19 @@ import { localBusinessJsonLd } from "@/lib/jsonld";
 import { LAUNCHED } from "@/lib/seo";
 import { business } from "@/content/business";
 
+// 155 characters or under: past that Google truncates and the tail is wasted.
 const SITE_DESCRIPTION =
-  "Aqua-Safe Plumbing & Maintenance. Perth's trusted maintenance plumbers and gas fitters. Blocked drains, hot water, gas fitting, water filtration and commercial maintenance, done properly.";
+  "Perth maintenance plumbers and gas fitters. Blocked drains, hot water, gas fitting and water filtration, done properly. Licensed, insured, upfront.";
 
 export const metadata: Metadata = {
   // Real domain — Aaron bought aquasafeplumbing.com.au via Wix (2026-07).
   metadataBase: new URL(`https://${business.domain}`),
   title: {
     default: "Aqua-Safe Plumbing & Maintenance, Perth | Plumbing, done properly",
-    template: "%s | Aqua-Safe Plumbing & Maintenance",
+    // 38 characters of suffix left almost nothing for the page name inside
+    // Google's ~60-character display limit, so several titles were truncating
+    // on the part that identifies the page
+    template: "%s | Aqua-Safe Plumbing",
   },
   description: SITE_DESCRIPTION,
   applicationName: business.name,

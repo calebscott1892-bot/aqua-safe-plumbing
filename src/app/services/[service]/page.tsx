@@ -9,6 +9,7 @@ import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { JsonLd } from "@/components/JsonLd";
 import { Crumbs } from "@/components/Crumbs";
 import { breadcrumbJsonLd, serviceJsonLd } from "@/lib/jsonld";
+import { clampDescription } from "@/lib/seo";
 
 /*
   Per-service booking pages (Aaron, 2026-07: "sub things like burst pipe if
@@ -25,7 +26,9 @@ export function generateMetadata({ params }: { params: { service: string } }): M
   if (!s) return {};
   return {
     title: `${s.title} in Perth`,
-    description: `${s.body} Licensed Perth plumbers with upfront pricing, fully insured. Call ${business.phoneDisplay}.`,
+    description: clampDescription(
+      `${s.body} Licensed Perth plumbers, fully insured. Call ${business.phoneDisplay}.`,
+    ),
     alternates: { canonical: `/services/${s.slug}/` },
     openGraph: { title: `${s.title} in Perth` },
   };

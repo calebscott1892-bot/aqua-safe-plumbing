@@ -4,13 +4,16 @@ import { regions, uniqueSuburbs } from "@/content/regions";
 import { suburbs } from "@/content/suburbs";
 import { business } from "@/content/business";
 import { Crumbs } from "@/components/Crumbs";
+import { clampDescription } from "@/lib/seo";
 
 /** Suburbs with their own page, so the chips below can link to them. */
 const PAGE_BY_NAME = new Map(suburbs.map((s) => [s.name, s.slug]));
 
 export const metadata: Metadata = {
   title: "Service areas across the Perth metro",
-  description: `${business.name} services the whole Perth metro. North and south of the river, the eastern suburbs, the hills and the CBD. Find your suburb.`,
+  description: clampDescription(
+    `${business.name} services the whole Perth metro: north and south of the river, the eastern suburbs, the hills and the CBD.`,
+  ),
   alternates: { canonical: "/areas/" },
   openGraph: { title: "Plumbers across the Perth metro" },
 };
