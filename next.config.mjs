@@ -34,6 +34,19 @@ const nextConfig = {
   assetPrefix: basePath ? `${basePath}/` : undefined,
   // Inlined into the client bundle so asset() builds correct URLs on both targets.
   env: { NEXT_PUBLIC_BASE_PATH: basePath },
+  // Clickjacking protection. Applies on the Vercel (server runtime) target;
+  // the retired GitHub Pages static export ignores headers() by design.
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Content-Security-Policy", value: "frame-ancestors 'none'" },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
